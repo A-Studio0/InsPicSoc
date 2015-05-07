@@ -1,0 +1,74 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/img_frame_background"
+    tools:context="com.astudio.inspicsoc.activity.MenuActivity" >
+    
+    
+    <LinearLayout
+        android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical"
+	 	android:layout_centerInParent="true"
+        >
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="120dp"
+            android:text="@string/upload_photo"
+            android:textSize="25sp"
+            android:textColor="#9932cc" />
+    
+	    <LinearLayout
+	           android:layout_width="wrap_content"
+	           android:layout_height="wrap_content"
+	           android:orientation="horizontal"
+	 		   android:gravity="center">
+	 		   
+	       	<Button
+	       	    android:id="@+id/photo_a"
+	       	    android:gravity="center_horizontal"
+	       	    android:paddingTop="@dimen/bottom_tab_padding_up"
+	       	    android:layout_width="120dp"
+	       	    android:layout_height="fill_parent"
+	       	    android:layout_marginTop="2.0dip"
+	       	    android:layout_weight="1.0"
+	       	    android:background="@drawable/transparent"
+	       	    android:drawableTop="@drawable/camera_icon" />
+	        
+	       	<Button
+	       	    android:id="@+id/photo_b"
+	       	    android:gravity="center_horizontal"
+	       	    android:paddingTop="@dimen/bottom_tab_padding_up"
+	       	    android:layout_width="120dp"
+	       	    android:layout_height="fill_parent"
+	       	    android:layout_marginTop="2.0dip"
+	       	    android:layout_weight="1.0"
+	       	    android:background="@drawable/transparent"
+	       	    android:drawableTop="@drawable/album_icon"/>
+
+		</LinearLayout>
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:gravity="center_vertical" >
+          
+       <Button
+           android:id="@+id/close_photo"
+	   	    android:gravity="center_horizontal"
+	   	    android:paddingTop="@dimen/bottom_tab_padding_up"
+	   	    android:layout_width="fill_parent"
+	   	    android:layout_marginTop="2.0dip"
+	   	    android:layout_weight="1.0"
+           android:layout_height="42dp"
+           android:background="@drawable/transparent"
+           android:drawableTop="@drawable/back_icon" />
+        
+	</LinearLayout>
+    
+</RelativeLayout>

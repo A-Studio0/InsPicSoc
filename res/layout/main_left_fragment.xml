@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView 
+    android:background="@color/tools_box_bg" 
+    android:scrollbars="none" 
+    android:layout_width="fill_parent" 
+    android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout 
+        android:orientation="vertical" 
+        android:id="@+id/llRoot" 
+        android:layout_width="fill_parent" 
+        android:layout_height="fill_parent">
+        <com.astudio.inspicsoc.view.RoundedImageView 
+            android:layout_gravity="center_horizontal" 
+            android:id="@+id/headImageView" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:layout_marginTop="25.0dip" 
+            android:src="@drawable/img_test_face" 
+            android:adjustViewBounds="true" 
+            android:maxHeight="80dip" 
+            android:maxWidth="80dip"/>
+        <TextView android:textSize="16.0sp" 
+            android:textColor="#ffccccc6" 
+            android:layout_gravity="center_horizontal" 
+            android:id="@+id/nickNameTextView" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:layout_marginTop="10.0dip" 
+            android:text="麦兜兜"/>
+        <TextView 
+            android:textSize="12.0sp" 
+            android:textColor="#ffa8a8a3" 
+            android:layout_gravity="center_horizontal" 
+            android:id="@+id/yixinCodeTextView" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:layout_marginLeft="10.0dip" 
+            android:layout_marginTop="6.0dip" 
+            android:layout_marginRight="10.0dip" 
+            android:layout_marginBottom="10.0dip" />
+        <include android:id="@+id/miaoBtnLayout" layout="@layout/toolbox_item_miao" />
+        <include android:id="@+id/circleBtnLayout" layout="@layout/toolbox_item_friend" />
+        <include android:id="@+id/settingBtnLayout" layout="@layout/toolbox_item_setting" />
+        <View 
+            android:background="#ff1c1c1b" 
+            android:layout_width="fill_parent" 
+            android:layout_height="1.3299866dip" />
+        <View 
+            android:background="#ff474745" 
+            android:layout_width="fill_parent" 
+            android:layout_height="1.0px" />
+        <TextView  
+            android:layout_gravity="bottom|right" 
+            android:id="@+id/notification_indicator" 
+            android:background="@drawable/tool_box_fragment_settings_icon" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:layout_marginRight="20.0dip"  
+            android:layout_marginTop="100.0dip" />
+    </LinearLayout>
+</ScrollView>

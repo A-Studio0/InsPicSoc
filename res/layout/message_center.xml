@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/kaixin_background"
+    android:clickable="true"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="48dip"
+        android:background="@drawable/comm_title_bg" >
+
+        <Button
+            android:id="@+id/friends_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:background="@drawable/br_prev" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="20dip"
+            android:layout_marginRight="20dip"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="8dip"
+                android:text="消息中心"
+                android:textColor="#ffffff"
+                android:textSize="18sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/button_settings_account"
+        android:layout_width="fill_parent"
+        android:layout_height="72.0dip" 
+        android:background="@drawable/selector_list_blockbg_top"
+        android:clickable="true"
+        android:focusable="true" >
+        <ImageView
+            android:id="@+id/face"
+            android:layout_width="48.0dip"
+            android:layout_height="48.0dip"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12.0dip"
+            android:src="@drawable/f2" />
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_toRightOf="@id/face"
+            android:layout_weight="1.0"
+            android:paddingLeft="12.0dip" >            
+            <TextView 
+                android:id="@+id/tx1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"               
+                android:text="小灰灰" 
+                android:textColor="#000000"
+                android:textSize="20dp"
+                android:layout_margin="2dp"/>
+            <TextView
+                android:id="@+id/tx2"
+                android:layout_below="@id/tx1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"               
+                android:text="好，谢谢！" 
+                android:textColor="#000000"
+                android:textSize="15dp"
+                android:layout_margin="2dp"/>"
+        </RelativeLayout>         
+    </RelativeLayout>
+    
+    <RelativeLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="72.0dip"
+        android:background="@drawable/selector_list_blockbg_top"
+        android:clickable="true"
+        android:focusable="true" >
+        <ImageView
+            android:id="@+id/face1"
+            android:layout_width="48.0dip"
+            android:layout_height="48.0dip"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12.0dip"
+            android:src="@drawable/f3" />
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_toRightOf="@id/face1"
+            android:layout_weight="1.0"
+            android:paddingLeft="12.0dip" >            
+            <TextView 
+                android:id="@+id/tx3"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"               
+                android:text="喵" 
+                android:textColor="#000000"
+                android:textSize="20dp"
+                android:layout_margin="2dp"/>
+            <TextView
+                android:id="@+id/tx4"
+                android:layout_below="@id/tx3"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"               
+                android:text="收到速回！！！" 
+                android:textColor="#000000"
+                android:textSize="15dp"
+                android:layout_margin="2dp"/>"
+        </RelativeLayout>         
+    </RelativeLayout>
+
+    <RelativeLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="72.0dip"
+        android:background="@drawable/selector_list_blockbg_top"
+        android:clickable="true"
+        android:focusable="true" >
+        <ImageView
+            android:id="@+id/face2"
+            android:layout_width="48.0dip"
+            android:layout_height="48.0dip"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12.0dip"
+            android:src="@drawable/f4" />
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_toRightOf="@id/face2"
+            android:layout_weight="1.0"
+            android:paddingLeft="12.0dip" >            
+            <TextView 
+                android:id="@+id/tx5"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"               
+                android:text="小西西" 
+                android:textColor="#000000"
+                android:textSize="20dp"
+                android:layout_margin="2dp"/>
+            <TextView
+                android:id="@+id/tx6"
+                android:layout_below="@id/tx5"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"               
+                android:text="在吗在吗？" 
+                android:textColor="#000000"
+                android:textSize="15dp"
+                android:layout_margin="2dp"/>"
+        </RelativeLayout>         
+    </RelativeLayout>
+    <RelativeLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="72.0dip"
+        android:background="@drawable/selector_list_blockbg_top"
+        android:clickable="true"
+        android:focusable="true" >
+        <ImageView
+            android:id="@+id/face3"
+            android:layout_width="48.0dip"
+            android:layout_height="48.0dip"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12.0dip"
+            android:src="@drawable/f5" />
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_toRightOf="@id/face3"
+            android:layout_weight="1.0"
+            android:paddingLeft="12.0dip" >            
+            <TextView 
+                android:id="@+id/tx7"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"               
+                android:text="小飞飞" 
+                android:textColor="#000000"
+                android:textSize="20dp"
+                android:layout_margin="2dp"/>
+            <TextView
+                android:id="@+id/tx8"
+                android:layout_below="@id/tx7"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"               
+                android:text="啊哦~" 
+                android:textColor="#000000"
+                android:textSize="15dp"
+                android:layout_margin="2dp"/>"
+        </RelativeLayout>         
+    </RelativeLayout>
+    <RelativeLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="72.0dip"
+        android:background="@drawable/selector_list_blockbg_top"
+        android:clickable="true"
+        android:focusable="true" >
+        <ImageView
+            android:id="@+id/face4"
+            android:layout_width="48.0dip"
+            android:layout_height="48.0dip"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12.0dip"
+            android:src="@drawable/f7" />
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_toRightOf="@id/face4"
+            android:layout_weight="1.0"
+            android:paddingLeft="12.0dip" >            
+            <TextView 
+                android:id="@+id/tx9"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"               
+                android:text="小露露" 
+                android:textColor="#000000"
+                android:textSize="20dp"
+                android:layout_margin="2dp"/>
+            <TextView
+                android:id="@+id/tx10"
+                android:layout_below="@id/tx9"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"               
+                android:text="嗯嗯！" 
+                android:textColor="#000000"
+                android:textSize="15dp"
+                android:layout_margin="2dp"/>"
+        </RelativeLayout>         
+    </RelativeLayout>
+</LinearLayout>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#d8e0e8"
+    android:orientation="vertical" >
+    <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="48dip"
+            android:background="@drawable/comm_title_bg" >
+
+            <Button
+                android:id="@+id/photo_vs_result_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:background="@drawable/br_prev" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="20dip"
+                android:layout_marginRight="20dip"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dip"
+                    android:text="照片PK"
+                    android:textColor="#ffffff"
+                    android:textSize="22sp" 
+                    android:textStyle="bold"
+                    android:layout_gravity="center"/>
+            </LinearLayout>
+
+            
+        </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/win" 
+        android:layout_marginLeft="40dp"/>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp" >
+
+        <ImageView
+            android:id="@+id/bottomRight"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_alignRight="@+id/topRight"
+            android:layout_below="@+id/topRight"
+            android:layout_margin="14dp"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/sunny" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textView1"
+            android:layout_alignBottom="@+id/textView1"
+            android:layout_alignRight="@+id/bottomRight"
+            android:text="Jack"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="80dp"
+            android:layout_toRightOf="@+id/topLeft"
+            android:text="VS"
+            android:textColor="#E81A0B"
+            android:textSize="30dp"
+            android:textStyle="bold|italic" />
+
+        <ImageView
+            android:id="@+id/topRight"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_alignParentTop="true"
+            android:layout_margin="10dp"
+            android:layout_toRightOf="@+id/textView3"
+            android:background="@drawable/bg_border"
+            android:padding="3dp"
+            android:src="@drawable/img05" />
+
+        <ImageView
+            android:id="@+id/topLeft"
+            android:layout_width="116dp"
+            android:layout_height="196dp"
+            android:layout_above="@+id/bottomRight"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="10dp"
+            android:background="@drawable/bg_border"
+            android:padding="3dp"
+            android:src="@drawable/rabbit" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/bottomLeft"
+            android:layout_below="@+id/bottomLeft"
+            android:text="Rose"
+            android:textSize="20dp" />
+
+        <ImageView
+            android:id="@+id/bottomLeft"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_alignLeft="@+id/topLeft"
+            android:layout_below="@+id/topLeft"
+            android:layout_margin="14dp"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/b" />
+
+    </RelativeLayout>
+    
+</LinearLayout>
+

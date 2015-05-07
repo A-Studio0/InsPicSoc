@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/touxiang"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/b"
+                android:layout_alignParentLeft="true" />
+
+            <TextView
+                android:id="@+id/user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/guanzhu"
+                android:layout_alignBottom="@+id/guanzhu"
+                android:layout_toRightOf="@+id/touxiang"
+                android:layout_centerVertical="true"
+                android:text="McDull"
+                android:layout_margin="15dp" />
+
+            <Button
+                android:id="@+id/guanzhu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/attention_button" />
+
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/photo"
+            android:layout_width="fill_parent"
+            android:layout_height="300dp"
+            android:src="@drawable/img05"
+            android:layout_margin="10dp" />
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Good Day"
+            android:layout_marginLeft="10dp" />
+
+        <TextView
+            android:id="@+id/tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="#UniversalStudio#" 
+            android:textSize="15dp"
+            android:layout_marginLeft="10dp"
+            android:clickable="true"/>
+
+        <RelativeLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/collect"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:clickable="true" 
+                android:background="#ffffff"
+                android:src="@drawable/collect_button" />
+
+            <ImageButton
+                android:id="@+id/zan"
+                android:layout_width="50dp"
+                android:layout_height="50dp" 
+                android:layout_toLeftOf="@id/collect"
+                android:layout_centerVertical="true" 
+                android:clickable="true"
+                 android:layout_marginLeft="10dp"
+                android:background="#ffffff"
+                android:src="@drawable/zan_button" />
+
+            <ImageButton
+                android:id="@+id/comment"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerVertical="true"
+                android:background="#ffffff"
+                android:layout_toLeftOf="@+id/zan"
+                
+                android:clickable="true"
+                android:src="@drawable/comment_button" />
+            
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>
+ 

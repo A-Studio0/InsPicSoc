@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:background="@drawable/tool_box_fragment_bg_selector"  
+    android:layout_width="fill_parent" android:layout_height="65.0dip"
+  xmlns:android="http://schemas.android.com/apk/res/android" >
+    <TextView 
+        android:textSize="16.0sp" 
+        android:textStyle="bold" 
+        android:textColor="#ffccccc6" 
+        android:gravity="center" 
+        android:id="@+id/toolbox_title" 
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content" 
+        android:layout_marginLeft="21.0dip" 
+        android:text="@string/friend" 
+        android:singleLine="true" 
+        android:drawablePadding="20.0dip" 
+        android:layout_centerVertical="true" 
+        android:layout_centerInParent="true"/>
+    <ImageView 
+        android:id="@+id/notification_indicator"  
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content" 
+        android:layout_marginLeft="10.0dip"  
+        android:src="@drawable/tool_box_friend_icon" 
+        android:layout_alignParentLeft="true" 
+        android:layout_centerVertical="true" 
+        android:contentDescription="@string/empty" />
+</RelativeLayout>

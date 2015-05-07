@@ -1,0 +1,348 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android1="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/img_bg_texture">
+    
+    <include layout="@layout/perinfo_title" android:focusable="true"/>
+    <!-- 整个settings页面的 滚动布局-->
+    <ScrollView 
+        android:focusable="true" 
+        android:focusableInTouchMode="true" 
+        android:visibility="visible" 
+        android:layout_width="fill_parent" 
+        android:layout_height="fill_parent" >
+        <LinearLayout 
+            android:background="@drawable/img_bg_texture"
+            android:orientation="vertical" 
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content">
+            
+            <!-- 账户设置 与个人信息-->
+            <LinearLayout 
+            	android:orientation="vertical" 
+            	android:layout_width="fill_parent" 
+            	android:layout_height="wrap_content" 
+            	android:layout_marginLeft="10.0dip" 
+            	android:layout_marginTop="12.0dip" 
+            	android:layout_marginRight="10.0dip">
+            	
+                <!-- 账户设置 -->
+             	<RelativeLayout 
+             	    android:id="@+id/button_settings_account" 
+             	    android:background="@drawable/selector_list_blockbg_top" 
+             	    android:focusable="true" 
+             	    android:clickable="true" 
+             	    android:layout_width="fill_parent" 
+             	    android:layout_height="72.0dip">
+                    <ImageView 
+                        android:id="@+id/face" 
+                        android:layout_width="48.0dip" 
+                        android:layout_height="48.0dip" 
+                        android:layout_marginLeft="12.0dip" 
+                        android:src="@drawable/img_test_face" 
+                        android:layout_centerVertical="true" />
+                    <RelativeLayout 
+                        android:layout_gravity="center_vertical" 
+                        android:paddingLeft="12.0dip" 
+                        android:layout_width="fill_parent" 
+                        android:layout_height="wrap_content" 
+                        android:layout_weight="1.0" 
+                        android:layout_toRightOf="@id/face" 
+                        android:layout_centerVertical="true">
+	                    <TextView 
+	                         android:ellipsize="end" 
+	                         android:id="@+id/nick" 
+	                         android:layout_width="wrap_content" 
+	                         android:layout_height="wrap_content" 
+	                         android:layout_marginRight="22.0dip" 
+	                         android:singleLine="true" 
+	                         android:text="麦兜兜"
+	                          />
+                    	<ImageView 
+                    	    android:id="@+id/statusIcon" 
+                    	    android:layout_width="18.0dip" 
+                    	    android:layout_height="18.0dip" 
+                    	    android:layout_marginTop="1.0dip" 
+                    	    android:src="@drawable/status_online" 
+                    	    android:layout_below="@id/nick" />
+                        <TextView 
+                            android:id="@+id/status" 
+                            android:text="hello world"
+                            android:layout_width="wrap_content" 
+                            android:layout_height="wrap_content" 
+                            android:layout_marginLeft="2.0dip" 
+                            android:layout_toRightOf="@id/statusIcon" 
+                            android:layout_below="@id/nick" 
+                            style="@style/Font_Settings" />
+                    </RelativeLayout>
+                    <ImageView 
+                        android:layout_width="14.0dip" 
+                        android:layout_height="14.0dip" 
+                        android:layout_marginRight="8.0dip" 
+                        android:src="@drawable/open_arrow" 
+                        android:layout_alignParentRight="true" 
+                        android:layout_centerVertical="true" />
+                </RelativeLayout>
+                <!-- 账户设置 END-->
+             	
+                <!-- 个人信息 -->
+                <RelativeLayout 
+                    android:layout_width="fill_parent"
+                    android:layout_height="52.0dip"
+                    android:background="@drawable/selector_list_blockbg_middle"
+                    android:clickable="true"
+                    android:focusable="true" >
+
+                    <View
+                        android1:id="@+id/view2"
+                        android:layout_width="fill_parent"
+                        android:layout_height="1.0dip"
+                        android:background="@drawable/list_blockbg_divider" />
+ 
+
+                    <RelativeLayout
+                        android1:layout_width="fill_parent"
+                        android1:layout_height="50.0dip"
+                        android1:layout_alignParentBottom="true"
+                        android1:layout_alignParentLeft="true"
+                        android1:background="@drawable/selector_list_blockbg_middle"
+                        android1:clickable="true"
+                        android1:focusable="true" >
+
+                         <TextView
+                            android1:id="@+id/textView2"
+                            style="@style/Font_Settings"
+                            android1:layout_width="wrap_content"
+                            android1:layout_height="wrap_content"
+                            android1:layout_alignParentLeft="true"
+                            android1:layout_centerVertical="true"
+                            android1:layout_marginLeft="12dp"
+                            android1:gravity="center_vertical"
+                            android1:text="性别" />
+                        <TextView
+                            android1:id="@+id/textView3"
+                            style="@style/Font_Settings"
+                            android1:layout_width="wrap_content"
+                            android1:layout_height="wrap_content" 
+                            android1:layout_alignBaseline="@+id/textView2"
+                            android1:layout_alignParentRight="true"
+                            android1:layout_marginRight="64dp"
+                            android1:gravity="center_vertical"
+                            android1:text="F" />
+
+                       
+                    </RelativeLayout>
+                    
+                </RelativeLayout>
+                
+                <RelativeLayout 
+                    android:layout_width="fill_parent"
+                    android:layout_height="52.0dip"
+                    android:background="@drawable/selector_list_blockbg_middle"
+                    android:clickable="true"
+                    android:focusable="true" >
+
+                    <View
+                        android1:id="@+id/view3"
+                        android:layout_width="fill_parent"
+                        android:layout_height="1.0dip"
+                        android:background="@drawable/list_blockbg_divider" />
+ 
+
+                    <RelativeLayout 
+                        android1:layout_width="fill_parent"
+                        android1:layout_height="50.0dip"
+                        android1:layout_alignParentLeft="true"
+                        android1:layout_below="@+id/view3"
+                        android1:background="@drawable/selector_list_blockbg_middle"
+                        android1:clickable="true"
+                        android1:focusable="true" >
+
+                        <TextView
+                            android:id="@+id/textView4"
+                            style="@style/Font_Settings"
+                            android1:layout_width="wrap_content"
+                            android1:layout_height="wrap_content"
+                            android1:layout_centerVertical="true"
+                            android1:layout_marginLeft="12.0dip"
+                            android1:gravity="center_vertical"
+                            android1:text="邮件" />
+ 
+                         <TextView 
+                            style="@style/Font_Settings"
+                            android1:layout_width="wrap_content"
+                            android1:layout_height="wrap_content" 
+                            android1:layout_alignBaseline="@+id/textView4"
+                            android1:layout_alignParentRight="true"
+                            android1:layout_marginRight="64dp"
+                            android1:gravity="center_vertical"
+                            android1:text="110110110@qq.com" />
+                    </RelativeLayout>
+                    
+                    
+                </RelativeLayout>
+                
+                <RelativeLayout 
+                    android:layout_width="fill_parent"
+                    android:layout_height="52.0dip"
+                    android:background="@drawable/selector_list_blockbg_middle"
+                    android:clickable="true"
+                    android:focusable="true" >
+
+                    <View
+                        android1:id="@+id/view4"
+                        android:layout_width="fill_parent"
+                        android:layout_height="1.0dip"
+                        android:background="@drawable/list_blockbg_divider" />
+ 
+
+                    <RelativeLayout 
+                        android1:layout_width="fill_parent"
+                        android1:layout_height="50.0dip"
+                        android1:layout_alignParentLeft="true"
+                        android1:layout_below="@+id/view4"
+                        android1:background="@drawable/selector_list_blockbg_middle"
+                        android1:clickable="true"
+                        android1:focusable="true" >
+
+                        <TextView
+                            android:id="@+id/textView5"
+                            style="@style/Font_Settings"
+                            android1:layout_width="wrap_content"
+                            android1:layout_height="wrap_content"
+                            android1:layout_centerVertical="true"
+                            android1:layout_marginLeft="12.0dip"
+                            android1:gravity="center_vertical"
+                            android1:text="住址" /> 
+                            <TextView 
+                            style="@style/Font_Settings"
+                            android1:layout_width="wrap_content"
+                            android1:layout_height="wrap_content" 
+                            android1:layout_alignBaseline="@+id/textView5"
+                            android1:layout_alignParentRight="true"
+                            android1:layout_marginRight="64dp"
+                            android1:gravity="center_vertical"
+                            android1:text="浙江杭州" />
+                    </RelativeLayout>
+                    
+                    
+                </RelativeLayout>
+                <!-- 个人信息 END-->
+                
+                <RelativeLayout 
+                    android:layout_width="fill_parent"
+                    android:layout_height="52.0dip"
+                    android:background="@drawable/selector_list_blockbg_middle"
+                    android:clickable="true"
+                    android:focusable="true" >
+
+                    <View
+                        android1:id="@+id/view5"
+                        android:layout_width="fill_parent"
+                        android:layout_height="1.0dip"
+                        android:background="@drawable/list_blockbg_divider" />
+ 
+
+                    <RelativeLayout 
+                        android1:layout_width="fill_parent"
+                        android1:layout_height="50.0dip"
+                        android1:layout_alignParentLeft="true"
+                        android1:layout_below="@+id/view5"
+                        android1:background="@drawable/selector_list_blockbg_middle"
+                        android1:clickable="true"
+                        android1:focusable="true" >
+
+                        <TextView
+                            android:id="@+id/textView6"
+                            style="@style/Font_Settings"
+                            android1:layout_width="wrap_content"
+                            android1:layout_height="wrap_content"
+                            android1:layout_centerVertical="true"
+                            android1:layout_marginLeft="12.0dip"
+                            android1:gravity="center_vertical"
+                            android1:text="电话" />
+ 
+                         <TextView 
+                            style="@style/Font_Settings"
+                            android1:layout_width="wrap_content"
+                            android1:layout_height="wrap_content" 
+                            android1:layout_alignBaseline="@+id/textView6"
+                            android1:layout_alignParentRight="true"
+                            android1:layout_marginRight="64dp"
+                            android1:gravity="center_vertical"
+                            android1:text="111111" />
+                    </RelativeLayout>
+                    
+                    
+                </RelativeLayout>
+                
+                <RelativeLayout 
+                    android:layout_width="fill_parent"
+                    android:layout_height="52.0dip"
+                    android:background="@drawable/selector_list_blockbg_middle"
+                    android:clickable="true"
+                    android:focusable="true" >
+
+                    <View
+                        android1:id="@+id/view6"
+                        android:layout_width="fill_parent"
+                        android:layout_height="1.0dip"
+                        android:background="@drawable/list_blockbg_divider" />
+ 
+
+                    <RelativeLayout 
+                        android1:layout_width="fill_parent"
+                        android1:layout_height="50.0dip"
+                        android1:layout_alignParentLeft="true"
+                        android1:layout_below="@+id/view6"
+                        android1:background="@drawable/selector_list_blockbg_bottom"
+                        android1:clickable="true"
+                        android1:focusable="true" >
+
+                        <TextView
+                            android:id="@+id/textView7"
+                            style="@style/Font_Settings"
+                            android1:layout_width="wrap_content"
+                            android1:layout_height="wrap_content"
+                            android1:layout_centerVertical="true"
+                            android1:layout_marginLeft="12.0dip"
+                            android1:gravity="center_vertical"
+                            android1:text="生日" />
+ 
+                         <TextView 
+                            style="@style/Font_Settings"
+                            android1:layout_width="wrap_content"
+                            android1:layout_height="wrap_content" 
+                            android1:layout_alignBaseline="@+id/textView7"
+                            android1:layout_alignParentRight="true"
+                            android1:layout_marginRight="64dp"
+                            android1:gravity="center_vertical"
+                            android1:text="1月1日" />
+                    </RelativeLayout>
+                    
+                    
+                </RelativeLayout>
+            </LinearLayout>
+           
+    
+		 	
+		    <!-- 登出按钮 -->        
+		    <Button 
+		        android:id="@+id/button_settings_logout" 
+		        android:background="@drawable/selector_deny_bg" 
+		        android:layout_width="fill_parent" 
+		        android:layout_height="46.0dip" 
+		        android:layout_marginLeft="10.0dip" 
+		        android:layout_marginTop="16.0dip" 
+		        android:layout_marginRight="10.0dip" 
+		        android:text="登出" 
+		        style="@style/Font_Settings" />
+        
+    	</LinearLayout>
+    </ScrollView>
+    <!-- 整个settings页面的 滚动布局 END-->
+    
+</LinearLayout>
