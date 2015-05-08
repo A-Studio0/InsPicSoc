@@ -34,7 +34,7 @@
     <color name="search_cancel_text">#ff0e0e0e</color>
     <color name="doodle_bg">#fff2f3f5</color>
     <color name="qq_normal">@color/color_hei</color>
-    <color name="black">@color/color_hei</color>
+    <color name="black">#708090</color>
     <color name="video_bg_color">#ffecf3f9</color>
     <color name="color_divider">#ffc9c9c9</color>
     <color name="color_divider_for_contactlist_lower">#ffc2c8cd</color>
