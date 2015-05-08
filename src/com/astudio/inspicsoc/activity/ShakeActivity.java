@@ -72,9 +72,11 @@ public class ShakeActivity extends Activity implements SensorEventListener {
 			if ((Math.abs(values[0]) > ROCKPOWER || Math.abs(values[1]) > ROCKPOWER || Math.abs(values[2]) > ROCKPOWER)) {
 				mVibrator.vibrate(500);// 设置震动。
 //				Intent intent = new Intent(ShakeActivity.this,PhotoDetail.class);
-				Intent intent = new Intent(ShakeActivity.this,P2PActivity.class);
-				startActivity(intent);
-				ShakeActivity.this.finish();
+//				Intent intent = new Intent(ShakeActivity.this,P2PActivity.class);
+//				startActivity(intent);
+//				ShakeActivity.this.finish();
+				InsApplication ins = (InsApplication) getApplication();
+				ins.sendMessage("Ins: "+Math.random()*100);
 			}
 		}
 	}

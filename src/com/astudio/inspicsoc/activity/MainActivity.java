@@ -69,7 +69,6 @@ public class MainActivity extends InsActivity implements OnClickListener {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		setContentView(R.layout.activity_main);
 		initSlidingMenu();
 		initView();
@@ -172,9 +171,11 @@ public class MainActivity extends InsActivity implements OnClickListener {
 				fragment = new SecondPage();
 				break;
 			case 2:
-				fragment = new MessageFragment();
+				fragment = new MessageFragment(MainActivity.this);
+				break;
 			case 3:
 				fragment = new FindFragment();
+				break;
 			case 4:
 				fragment = new PerCenfragment();
 				break;
