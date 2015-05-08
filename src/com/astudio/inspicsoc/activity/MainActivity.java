@@ -92,6 +92,7 @@ public class MainActivity extends InsActivity implements OnClickListener {
 		viewPager.setOnPageChangeListener(changeListener);
 
 		// 实例化标题栏弹窗
+		
 		titlePopup = new TitlePopup(this, LayoutParams.WRAP_CONTENT,
 				LayoutParams.WRAP_CONTENT);
 		// 实例化标题栏按钮并设置监听
@@ -99,12 +100,12 @@ public class MainActivity extends InsActivity implements OnClickListener {
 		titleBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				titlePopup.show(v);
+				//titlePopup.show(v);
 			}
 		});
 
 		initData();
-
+/*
 		OnItemOnClickListener myListener = new OnItemOnClickListener() {
 			@Override
 			public void onItemClick(ActionItem item, int position) {
@@ -138,8 +139,9 @@ public class MainActivity extends InsActivity implements OnClickListener {
 				}
 			}
 		};
+		
 		titlePopup.setItemOnClickListener(myListener);
-
+*/
 		cameraBtn.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -173,8 +175,10 @@ public class MainActivity extends InsActivity implements OnClickListener {
 				break;
 			case 2:
 				fragment = new MessageFragment();
+				break;
 			case 3:
 				fragment = new FindFragment();
+				break;
 			case 4:
 				fragment = new PerCenfragment();
 				break;
