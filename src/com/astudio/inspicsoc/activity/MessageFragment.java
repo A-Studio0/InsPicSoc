@@ -46,7 +46,7 @@ public class MessageFragment extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				Intent intent = new Intent(activity,PhotoDetail.class);
+				Intent intent = new Intent(activity,PhotoDetailActivity.class);
 				Bundle bundle=new Bundle();
 				Cat item = ins.messageList.get(position);
 				bundle.putSerializable("Name",item.getName());

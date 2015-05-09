@@ -863,7 +863,7 @@ public class InsApplication extends Application implements WebSocketEvents {
 					.setContentText(message)
 					.setTicker("你的好友发来一张图");
 			//点击的意图ACTION是跳转到Intent
-			Intent resultIntent = new Intent(this, PhotoDetail.class);
+			Intent resultIntent = new Intent(this, PhotoDetailActivity.class);
 			resultIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 			PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 			mBuilder.setContentIntent(pendingIntent);

@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="48dip"
+        android:background="@drawable/image_filter_title_bg"
+        android:gravity="center_vertical" >
+
+        <Button
+            android:id="@+id/imagefilter_graffiti_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dip"
+            android:background="@drawable/image_filter_title_text_btn_bg"
+            android:text="取消"
+            android:textColor="#ffffff" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="20dip"
+            android:layout_marginRight="20dip"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:text="涂鸦"
+                android:textColor="#ffffff"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/imagefilter_graffiti_determine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dip"
+            android:background="@drawable/image_filter_title_text_btn_bg"
+            android:text="确定"
+            android:textColor="#ffffff" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/imagefilter_graffiti_display_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:background="@drawable/black_dot_bg"
+        android:padding="20dip">
+        <com.astudio.inspicsoc.view.HandWriteView 
+            android:id="@+id/imagefilter_graffiti_display"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:scaleType="centerInside" />
+    </RelativeLayout>
+
+    <HorizontalScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/image_bottombannerbg"
+        android:scrollbars="none" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="4dip" >
+            
+            <LinearLayout
+                android:layout_width="50dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <ImageButton
+                    android:id="@+id/clear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/image_filter_banner_bg"
+                    android:padding="5dip"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/photoframe1_banner" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:duplicateParentState="true"
+                    android:text="清屏"
+                    android:textColor="#ffffff"
+                    android:textSize="12sp" />
+            </LinearLayout>
+            
+            <LinearLayout
+                android:layout_width="50dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <ImageButton
+                    android:id="@+id/thin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/image_filter_banner_bg"
+                    android:padding="5dip"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/photoframe1_banner" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:duplicateParentState="true"
+                    android:text="很细"
+                    android:textColor="#ffffff"
+                    android:textSize="12sp" />
+            </LinearLayout>
+            
+            <LinearLayout
+                android:layout_width="50dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <ImageButton
+                    android:id="@+id/normal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/image_filter_banner_bg"
+                    android:padding="5dip"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/photoframe1_banner" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:duplicateParentState="true"
+                    android:text="正常"
+                    android:textColor="#ffffff"
+                    android:textSize="12sp" />
+            </LinearLayout>
+            
+            <LinearLayout
+                android:layout_width="50dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <ImageButton
+                    android:id="@+id/wide"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/image_filter_banner_bg"
+                    android:padding="5dip"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/photoframe1_banner" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:duplicateParentState="true"
+                    android:text="很粗"
+                    android:textColor="#ffffff"
+                    android:textSize="12sp" />
+            </LinearLayout>
+            
+            <LinearLayout
+                android:layout_width="50dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <ImageButton
+                    android:id="@+id/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/image_filter_banner_bg"
+                    android:padding="5dip"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/photoframe1_banner" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:duplicateParentState="true"
+                    android:text="白色"
+                    android:textColor="#ffffff"
+                    android:textSize="12sp" />
+            </LinearLayout>
+            
+            <LinearLayout
+                android:layout_width="50dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <ImageButton
+                    android:id="@+id/yellow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/image_filter_banner_bg"
+                    android:padding="5dip"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/photoframe1_banner" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:duplicateParentState="true"
+                    android:text="黄色"
+                    android:textColor="#ffffff"
+                    android:textSize="12sp" />
+            </LinearLayout>
+            
+            <LinearLayout
+                android:layout_width="50dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <ImageButton
+                    android:id="@+id/pink"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/image_filter_banner_bg"
+                    android:padding="5dip"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/photoframe1_banner" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:duplicateParentState="true"
+                    android:text="粉色"
+                    android:textColor="#ffffff"
+                    android:textSize="12sp" />
+            </LinearLayout>
+            
+            <LinearLayout
+                android:layout_width="50dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <ImageButton
+                    android:id="@+id/red"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/image_filter_banner_bg"
+                    android:padding="5dip"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/photoframe1_banner" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:duplicateParentState="true"
+                    android:text="红色"
+                    android:textColor="#ffffff"
+                    android:textSize="12sp" />
+            </LinearLayout>
+            
+            <LinearLayout
+                android:layout_width="50dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <ImageButton
+                    android:id="@+id/silver"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/image_filter_banner_bg"
+                    android:padding="5dip"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/photoframe1_banner" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:duplicateParentState="true"
+                    android:text="银色"
+                    android:textColor="#ffffff"
+                    android:textSize="12sp" />
+            </LinearLayout>
+            
+            <LinearLayout
+                android:layout_width="50dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <ImageButton
+                    android:id="@+id/gray"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/image_filter_banner_bg"
+                    android:padding="5dip"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/photoframe1_banner" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:duplicateParentState="true"
+                    android:text="灰色"
+                    android:textColor="#ffffff"
+                    android:textSize="12sp" />
+            </LinearLayout>
+            
+            <LinearLayout
+                android:layout_width="50dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <ImageButton
+                    android:id="@+id/purple"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/image_filter_banner_bg"
+                    android:padding="5dip"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/photoframe1_banner" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:duplicateParentState="true"
+                    android:text="紫色"
+                    android:textColor="#ffffff"
+                    android:textSize="12sp" />
+            </LinearLayout>
+            
+             <LinearLayout
+                android:layout_width="50dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <ImageButton
+                    android:id="@+id/green"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/image_filter_banner_bg"
+                    android:padding="5dip"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/photoframe1_banner" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:duplicateParentState="true"
+                    android:text="绿色"
+                    android:textColor="#ffffff"
+                    android:textSize="12sp" />
+            </LinearLayout>
+            
+              <LinearLayout
+                android:layout_width="50dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <ImageButton
+                    android:id="@+id/blue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/image_filter_banner_bg"
+                    android:padding="5dip"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/photoframe1_banner" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:duplicateParentState="true"
+                    android:text="蓝色"
+                    android:textColor="#ffffff"
+                    android:textSize="12sp" />
+            </LinearLayout>
+            
+               <LinearLayout
+                android:layout_width="50dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <ImageButton
+                    android:id="@+id/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/image_filter_banner_bg"
+                    android:padding="5dip"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/photoframe1_banner" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:duplicateParentState="true"
+                    android:text="黑色"
+                    android:textColor="#ffffff"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </HorizontalScrollView>
+
+</LinearLayout>

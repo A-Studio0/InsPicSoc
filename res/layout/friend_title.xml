@@ -36,15 +36,15 @@
         android:includeFontPadding="false" />
 
     <ImageButton
-        android:id="@+id/ivTitleBtnRigh"
+        android:id="@+id/invite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:background="@drawable/showright_selector"
-        android:gravity="center"
         android:layout_marginRight="5dip"
+        android:background="@drawable/friends_title_invite1"
+        android:gravity="center"
         android:includeFontPadding="false"
-        android:visibility="invisible" />
+        android:visibility="visible" />
 
 </RelativeLayout>

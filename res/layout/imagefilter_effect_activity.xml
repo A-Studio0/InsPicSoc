@@ -142,84 +142,6 @@
                     android:background="@drawable/image_filter_banner_bg"
                     android:padding="5dip"
                     android:scaleType="centerInside"
-                    android:src="@drawable/kx_effects3" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:duplicateParentState="true"
-                    android:text="印象派"
-                    android:textColor="#ffffff"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="50dip"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dip"
-                android:layout_marginRight="8dip"
-                android:gravity="center"
-                android:orientation="vertical" >
-
-                <ImageButton
-                    android:id="@+id/imagefilter_effect_effect4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/image_filter_banner_bg"
-                    android:padding="5dip"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/kx_effects5" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:duplicateParentState="true"
-                    android:text="优雅"
-                    android:textColor="#ffffff"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="50dip"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dip"
-                android:layout_marginRight="8dip"
-                android:gravity="center"
-                android:orientation="vertical" >
-
-                <ImageButton
-                    android:id="@+id/imagefilter_effect_effect5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/image_filter_banner_bg"
-                    android:padding="5dip"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/kx_effects6" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:duplicateParentState="true"
-                    android:text="小清新"
-                    android:textColor="#ffffff"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="50dip"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dip"
-                android:layout_marginRight="8dip"
-                android:gravity="center"
-                android:orientation="vertical" >
-
-                <ImageButton
-                    android:id="@+id/imagefilter_effect_effect6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/image_filter_banner_bg"
-                    android:padding="5dip"
-                    android:scaleType="centerInside"
                     android:src="@drawable/kx_effects7" />
 
                 <TextView
@@ -240,59 +162,7 @@
                 android:orientation="vertical" >
 
                 <ImageButton
-                    android:id="@+id/imagefilter_effect_effect7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/image_filter_banner_bg"
-                    android:padding="5dip"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/kx_effects8" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:duplicateParentState="true"
-                    android:text="沉静"
-                    android:textColor="#ffffff"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="50dip"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dip"
-                android:layout_marginRight="8dip"
-                android:gravity="center"
-                android:orientation="vertical" >
-
-                <ImageButton
-                    android:id="@+id/imagefilter_effect_effect8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/image_filter_banner_bg"
-                    android:padding="5dip"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/kx_effects10" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:duplicateParentState="true"
-                    android:text="灿烂"
-                    android:textColor="#ffffff"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="50dip"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dip"
-                android:layout_marginRight="8dip"
-                android:gravity="center"
-                android:orientation="vertical" >
-
-                <ImageButton
-                    android:id="@+id/imagefilter_effect_effect9"
+                    android:id="@+id/imagefilter_effect_effect4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/image_filter_banner_bg"
@@ -318,7 +188,7 @@
                 android:orientation="vertical" >
 
                 <ImageButton
-                    android:id="@+id/imagefilter_effect_effect10"
+                    android:id="@+id/imagefilter_effect_effect5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/image_filter_banner_bg"
@@ -331,6 +201,136 @@
                     android:layout_height="wrap_content"
                     android:duplicateParentState="true"
                     android:text="暖意"
+                    android:textColor="#ffffff"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="50dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <ImageButton
+                    android:id="@+id/imagefilter_effect_effect6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/image_filter_banner_bg"
+                    android:padding="5dip"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/kx_effects3" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:duplicateParentState="true"
+                    android:text="印象派"
+                    android:textColor="#ffffff"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="50dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <ImageButton
+                    android:id="@+id/imagefilter_effect_effect7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/image_filter_banner_bg"
+                    android:padding="5dip"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/kx_effects5" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:duplicateParentState="true"
+                    android:text="优雅"
+                    android:textColor="#ffffff"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="50dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <ImageButton
+                    android:id="@+id/imagefilter_effect_effect8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/image_filter_banner_bg"
+                    android:padding="5dip"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/kx_effects6" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:duplicateParentState="true"
+                    android:text="小清新"
+                    android:textColor="#ffffff"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="50dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <ImageButton
+                    android:id="@+id/imagefilter_effect_effect9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/image_filter_banner_bg"
+                    android:padding="5dip"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/kx_effects8" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:duplicateParentState="true"
+                    android:text="沉静"
+                    android:textColor="#ffffff"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="50dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <ImageButton
+                    android:id="@+id/imagefilter_effect_effect10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/image_filter_banner_bg"
+                    android:padding="5dip"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/kx_effects10" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:duplicateParentState="true"
+                    android:text="灿烂"
                     android:textColor="#ffffff"
                     android:textSize="12sp" />
             </LinearLayout>
