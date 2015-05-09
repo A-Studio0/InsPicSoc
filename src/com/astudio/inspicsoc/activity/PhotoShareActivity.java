@@ -27,10 +27,12 @@ import com.astudio.inspicsoc.R;
 import com.astudio.inspicsoc.result.LocationResult;
 import com.astudio.inspicsoc.utils.TextUtil;
 
+import com.astudio.inspicsoc.activity.VoiceActivity;
+
 /**
  * 照片分享类
  * 
- * @author rendongwei
+ *
  * 
  */
 public class PhotoShareActivity extends InsActivity {
@@ -38,6 +40,7 @@ public class PhotoShareActivity extends InsActivity {
 	private Button mUpload;
 	private Gallery mDisplay;
 	private ImageView mDisplaySingle;
+	private ImageView mUgcVoice;
 	// private TextView mLocation;
 	// private Button mDelete;
 	// private TextView mAlbum;
@@ -57,6 +60,9 @@ public class PhotoShareActivity extends InsActivity {
 		findViewById();
 		setListener();
 		init();
+		
+		
+		
 	}
 
 	private void findViewById() {
@@ -64,12 +70,22 @@ public class PhotoShareActivity extends InsActivity {
 		mUpload = (Button) findViewById(R.id.photoshare_upload);
 		mDisplay = (Gallery) findViewById(R.id.photoshare_display);
 		mDisplaySingle = (ImageView) findViewById(R.id.photoshare_display_single);
+		mUgcVoice = (ImageView)findViewById(R.id.ugc_voice);
 		// mLocation = (TextView) findViewById(R.id.photoshare_location);
 		// mDelete = (Button) findViewById(R.id.photoshare_location_delete);
 		// mAlbum = (TextView) findViewById(R.id.photoshare_album);
 	}
 
 	private void setListener() {
+		mUgcVoice.setOnClickListener(new OnClickListener() {
+
+			public void onClick(View v) {
+						PhotoShareActivity.this.finish();
+						startActivity(new Intent(PhotoShareActivity.this,
+								VoiceActivity.class));
+					
+			}
+		});
 		mCancel.setOnClickListener(new OnClickListener() {
 
 			@Override

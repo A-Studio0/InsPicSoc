@@ -43,6 +43,8 @@ public class MainActivity extends InsActivity implements OnClickListener {
 	private Button firstPageBtn;
 	private Button personalPageBtn;
 	private Button cameraBtn;
+	private Button messageBtn;
+	private Button findBtn;
 
 	private TextView ivTitleName;
 
@@ -67,7 +69,6 @@ public class MainActivity extends InsActivity implements OnClickListener {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		setContentView(R.layout.activity_main);
 		initSlidingMenu();
 		initView();
@@ -75,17 +76,22 @@ public class MainActivity extends InsActivity implements OnClickListener {
 		firstPageBtn = (Button) findViewById(R.id.tab_rb_a);
 		cameraBtn = (Button) findViewById(R.id.camera_btn);
 		personalPageBtn = (Button) findViewById(R.id.tab_rb_c);
+		messageBtn=(Button)findViewById(R.id.message);
+		findBtn=(Button)findViewById(R.id.find);
 		ivTitleName = (TextView) findViewById(R.id.ivTitleName);
-		selectList = new int[] { 0, 1, 2 };
+		selectList = new int[] { 0, 1, 2, 3, 4 };
 		viewPager = (ViewPager) findViewById(R.id.viewPager);
 		fm = getSupportFragmentManager();
 		viewPager.setAdapter(adapter);
 		firstPageBtn.setOnClickListener(listener);
 		personalPageBtn.setOnClickListener(listener);
+		messageBtn.setOnClickListener(listener);
+		findBtn.setOnClickListener(listener);
 		ivTitleName.setOnClickListener(listener);
 		viewPager.setOnPageChangeListener(changeListener);
 
 		// 实例化标题栏弹窗
+		
 		titlePopup = new TitlePopup(this, LayoutParams.WRAP_CONTENT,
 				LayoutParams.WRAP_CONTENT);
 		// 实例化标题栏按钮并设置监听
@@ -93,12 +99,12 @@ public class MainActivity extends InsActivity implements OnClickListener {
 		titleBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				titlePopup.show(v);
+				//titlePopup.show(v);
 			}
 		});
 
 		initData();
-
+/*
 		OnItemOnClickListener myListener = new OnItemOnClickListener() {
 			@Override
 			public void onItemClick(ActionItem item, int position) {
@@ -132,8 +138,9 @@ public class MainActivity extends InsActivity implements OnClickListener {
 				}
 			}
 		};
+		
 		titlePopup.setItemOnClickListener(myListener);
-
+*/
 		cameraBtn.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -166,7 +173,16 @@ public class MainActivity extends InsActivity implements OnClickListener {
 				fragment = new SecondPage();
 				break;
 			case 2:
+
+				fragment = new MessageFragment(MainActivity.this);
+				break;
+			case 3:
+				fragment = new FindFragment();
+				break;
+			case 4:
 				fragment = new PerCenfragment();
+				break;
+			
 			}
 			return fragment;
 		}
@@ -184,6 +200,12 @@ public class MainActivity extends InsActivity implements OnClickListener {
 			} else if (viewPager.getCurrentItem() == 2) {
 				fragmentFlag = 2;
 			}
+			else if (viewPager.getCurrentItem() == 3) {
+				fragmentFlag = 3;
+			}
+			else if (viewPager.getCurrentItem() == 4) {
+				fragmentFlag = 4;
+			}
 			setFragment(fragmentFlag);
 		}
 	};
@@ -197,10 +219,20 @@ public class MainActivity extends InsActivity implements OnClickListener {
 				setFragment(fragmentFlag);
 				viewPager.setCurrentItem(0);
 				break;
-			case R.id.tab_rb_c:
+			case R.id.message:
 				fragmentFlag = 2;
 				setFragment(fragmentFlag);
 				viewPager.setCurrentItem(2);
+				break;
+			case R.id.find:
+				fragmentFlag = 3;
+				setFragment(fragmentFlag);
+				viewPager.setCurrentItem(3);
+				break;
+			case R.id.tab_rb_c:
+				fragmentFlag = 4;
+				setFragment(fragmentFlag);
+				viewPager.setCurrentItem(4);
 				break;
 			case R.id.ivTitleName:
 				if (fragmentFlag == 0) {
@@ -240,13 +272,13 @@ public class MainActivity extends InsActivity implements OnClickListener {
 	private void initData() {
 		// 给标题栏弹窗添加子类
 		titlePopup.addAction(new ActionItem(this, "附近的图",
-				R.drawable.mm_title_btn_compose_normal));
+				R.drawable.nearimg));
 		titlePopup.addAction(new ActionItem(this, "拼图", R.drawable.pingtu));
 		titlePopup.addAction(new ActionItem(this, "圈圈", R.drawable.quanquan));
 		titlePopup.addAction(new ActionItem(this, "照片兑换",
-				R.drawable.mm_title_btn_qrcode_normal));
+				R.drawable.changimg));
 		titlePopup.addAction(new ActionItem(this, "摇一摇",
-				R.drawable.mm_title_btn_qrcode_normal));
+				R.drawable.yaoyiyao));
 	}
 
 	private void initView() {
@@ -295,10 +327,16 @@ public class MainActivity extends InsActivity implements OnClickListener {
 			ivTitleName.setPadding(60, 0, 60, 0);
 			ivTitleName.setBackgroundResource(drawable.jingxuan);
 			firstPageBtn.setCompoundDrawablesWithIntrinsicBounds(0,
-					R.drawable.index_pressed, 0, 0);
+					R.drawable.ic_index_pressed, 0, 0);
 			firstPageBtn.setTextColor(0xff4cc0a4);
+			messageBtn.setCompoundDrawablesWithIntrinsicBounds(0,
+					R.drawable.message_normal, 0, 0);
+			messageBtn.setTextColor(0xff767676);
+			findBtn.setCompoundDrawablesWithIntrinsicBounds(0,
+					R.drawable.ic_menu_find_normal, 0, 0);
+			findBtn.setTextColor(0xff767676);
 			personalPageBtn.setCompoundDrawablesWithIntrinsicBounds(0,
-					R.drawable.perinfo_normal, 0, 0);
+					R.drawable.personinfo_normal, 0, 0);
 			personalPageBtn.setTextColor(0xff767676);
 			break;
 		case 1:
@@ -306,20 +344,64 @@ public class MainActivity extends InsActivity implements OnClickListener {
 			ivTitleName.setPadding(60, 0, 60, 0);
 			ivTitleName.setBackgroundResource(drawable.guanzhu);
 			firstPageBtn.setCompoundDrawablesWithIntrinsicBounds(0,
-					R.drawable.index_pressed, 0, 0);
+					R.drawable.ic_index_pressed, 0, 0);
 			firstPageBtn.setTextColor(0xff4cc0a4);
+			messageBtn.setCompoundDrawablesWithIntrinsicBounds(0,
+					R.drawable.message_normal, 0, 0);
+			messageBtn.setTextColor(0xff767676);
+			findBtn.setCompoundDrawablesWithIntrinsicBounds(0,
+					R.drawable.ic_menu_find_normal, 0, 0);
+			findBtn.setTextColor(0xff767676);
 			personalPageBtn.setCompoundDrawablesWithIntrinsicBounds(0,
-					R.drawable.perinfo_normal, 0, 0);
+					R.drawable.personinfo_normal, 0, 0);
 			personalPageBtn.setTextColor(0xff767676);
 			break;
 		case 2:
 			ivTitleName.setBackgroundResource(drawable.text_default);
-			ivTitleName.setText("个人主页");
+			ivTitleName.setText("消息");
 			firstPageBtn.setCompoundDrawablesWithIntrinsicBounds(0,
-					R.drawable.index_normal, 0, 0);
+					R.drawable.ic_index_normal, 0, 0);
 			firstPageBtn.setTextColor(0xff767676);
+			messageBtn.setCompoundDrawablesWithIntrinsicBounds(0,
+					R.drawable.message_pressed, 0, 0);
+			messageBtn.setTextColor(0xff4cc0a4);
+			findBtn.setCompoundDrawablesWithIntrinsicBounds(0,
+					R.drawable.ic_menu_find_normal, 0, 0);
+			findBtn.setTextColor(0xff767676);
 			personalPageBtn.setCompoundDrawablesWithIntrinsicBounds(0,
-					R.drawable.perinfo_pressed, 0, 0);
+					R.drawable.personinfo_normal, 0, 0);
+			personalPageBtn.setTextColor(0xff767676);
+			break;
+		case 3:
+			ivTitleName.setBackgroundResource(drawable.text_default);
+			ivTitleName.setText("发现");
+			firstPageBtn.setCompoundDrawablesWithIntrinsicBounds(0,
+					R.drawable.ic_index_normal, 0, 0);
+			firstPageBtn.setTextColor(0xff767676);
+			messageBtn.setCompoundDrawablesWithIntrinsicBounds(0,
+					R.drawable.message_normal, 0, 0);
+			messageBtn.setTextColor(0xff767676);
+			findBtn.setCompoundDrawablesWithIntrinsicBounds(0,
+					R.drawable.ic_menu_find_pressed, 0, 0);
+			findBtn.setTextColor(0xff4cc0a4);
+			personalPageBtn.setCompoundDrawablesWithIntrinsicBounds(0,
+					R.drawable.personinfo_normal, 0, 0);
+			personalPageBtn.setTextColor(0xff767676);
+			break;
+		case 4:
+			ivTitleName.setBackgroundResource(drawable.text_default);
+			ivTitleName.setText("个人");
+			firstPageBtn.setCompoundDrawablesWithIntrinsicBounds(0,
+					R.drawable.ic_index_normal, 0, 0);
+			firstPageBtn.setTextColor(0xff767676);
+			messageBtn.setCompoundDrawablesWithIntrinsicBounds(0,
+					R.drawable.message_normal, 0, 0);
+			messageBtn.setTextColor(0xff767676);
+			findBtn.setCompoundDrawablesWithIntrinsicBounds(0,
+					R.drawable.ic_menu_find_normal, 0, 0);
+			findBtn.setTextColor(0xff767676);
+			personalPageBtn.setCompoundDrawablesWithIntrinsicBounds(0,
+					R.drawable.personinfo_pressed, 0, 0);
 			personalPageBtn.setTextColor(0xff4cc0a4);
 			break;
 		}

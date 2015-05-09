@@ -3,12 +3,13 @@
     xmlns:arc="http://schemas.android.com/apk/res-auto"
     xmlns:hyman="http://schemas.android.com/apk/res/com.astudio.inspicsoc"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="@color/black" >
 	
 	<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ffffff" 
+        android:background="#ffffffff" 
         android:orientation="vertical" >
         
         <include layout="@layout/main_title" android:focusable="true"/>
@@ -46,15 +47,28 @@
    			android:id="@+id/tab_rb_a"
    			style="@style/main_tab_bottom_left" />
        	
-       
+      
        <Button
+       	    android:layout_marginTop="2.0dip"
+   			android:text="@string/main_message"
+   			android:drawableTop="@drawable/actionbar_message_enable"
+   			android:id="@+id/message"
+   			style="@style/main_tab_bottom_center" />
+       	
+         <Button
        	    android:layout_marginTop="2.0dip"
    			android:text="@string/main_center"
    			android:drawableTop="@drawable/photo_button"
    			android:id="@+id/camera_btn"
    			style="@style/main_tab_bottom_center" />
-       	
-        
+       
+       <Button
+       	    android:layout_marginTop="2.0dip"
+   			android:text="@string/main_find"
+   			android:drawableTop="@drawable/ic_menu_find"
+   			android:id="@+id/find"
+   			style="@style/main_tab_bottom_center" />
+       
        	<Button
             android:layout_marginTop="2.0dip"
    			android:text="@string/main_my_info"

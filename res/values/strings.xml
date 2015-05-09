@@ -20,8 +20,12 @@
     <string name="xlistview_footer_hint_ready">松开载入更多</string>
     <string name="title_activity_fragment">FragmentActivity</string>
     <string name="main_home">首页</string>
-    <string name="main_my_info">个人主页</string>
+    <string name="main_my_info">个人</string>
     <string name="main_center">上传</string>
+     <string name="main_find">发现</string>
+    <string name="main_message">消息</string>
     <string name="title_activity_menu">MenuActivity</string>
  	<string name="upload_photo">上传照片到InsPicSoc</string>
+ 	<string name="tv_hint">#InsPicSoc语音#</string>
+ 	
 </resources>
