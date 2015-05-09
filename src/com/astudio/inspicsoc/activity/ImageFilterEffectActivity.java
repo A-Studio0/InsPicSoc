@@ -112,8 +112,40 @@ public class ImageFilterEffectActivity extends InsActivity {
 				mEffectId = 2;
 			}
 		});
-		// 印象派
+		// 单纯
 		mEffect_3.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				mNewBitmap = PhotoUtil.handleImage(mOldBitmap, 0, 127, 127);
+				mDisplay.setImageBitmap(mNewBitmap);
+				mEffectId = 3;
+			}
+		});
+
+		// 旧时光
+		mEffect_4.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				mNewBitmap = PhotoUtil.oldTimeFilter(mOldBitmap);
+				mDisplay.setImageBitmap(mNewBitmap);
+				mEffectId = 4;
+			}
+		});
+		// 暖意
+		mEffect_5.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				mNewBitmap = PhotoUtil.warmthFilter(mOldBitmap,
+						mOldBitmap.getWidth() / 2, mOldBitmap.getHeight() / 2);
+				mDisplay.setImageBitmap(mNewBitmap);
+				mEffectId = 5;
+			}
+		});
+		// 印象派
+		mEffect_6.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -122,34 +154,6 @@ public class ImageFilterEffectActivity extends InsActivity {
 			}
 		});
 		// 优雅
-		mEffect_4.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				Toast.makeText(ImageFilterEffectActivity.this, "暂时没有找到该效果",
-						Toast.LENGTH_SHORT).show();
-			}
-		});
-		// 小清新
-		mEffect_5.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				Toast.makeText(ImageFilterEffectActivity.this, "暂时没有找到该效果",
-						Toast.LENGTH_SHORT).show();
-			}
-		});
-		// 单纯
-		mEffect_6.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				mNewBitmap = PhotoUtil.handleImage(mOldBitmap, 0, 127, 127);
-				mDisplay.setImageBitmap(mNewBitmap);
-				mEffectId = 6;
-			}
-		});
-		// 沉静
 		mEffect_7.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -158,7 +162,7 @@ public class ImageFilterEffectActivity extends InsActivity {
 						Toast.LENGTH_SHORT).show();
 			}
 		});
-		// 灿烂
+		// 小清新
 		mEffect_8.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -167,25 +171,22 @@ public class ImageFilterEffectActivity extends InsActivity {
 						Toast.LENGTH_SHORT).show();
 			}
 		});
-		// 旧时光
+		// 沉静
 		mEffect_9.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				mNewBitmap = PhotoUtil.oldTimeFilter(mOldBitmap);
-				mDisplay.setImageBitmap(mNewBitmap);
-				mEffectId = 9;
+				Toast.makeText(ImageFilterEffectActivity.this, "暂时没有找到该效果",
+						Toast.LENGTH_SHORT).show();
 			}
 		});
-		// 暖意
+		// 灿烂
 		mEffect_10.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				mNewBitmap = PhotoUtil.warmthFilter(mOldBitmap,
-						mOldBitmap.getWidth() / 2, mOldBitmap.getHeight() / 2);
-				mDisplay.setImageBitmap(mNewBitmap);
-				mEffectId = 10;
+				Toast.makeText(ImageFilterEffectActivity.this, "暂时没有找到该效果",
+						Toast.LENGTH_SHORT).show();
 			}
 		});
 	}

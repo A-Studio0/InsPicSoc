@@ -107,6 +107,10 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
+            android:name=".activity.ImageFilterGraffitiActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name=".activity.PhotoShareActivity"
             android:screenOrientation="portrait" >
         </activity>
