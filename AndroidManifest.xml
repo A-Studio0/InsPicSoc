@@ -43,6 +43,9 @@
 	<uses-permission android:name="android.permission.BROADCAST_STICKY" />  
 	<uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
+	<!-- share to weibo... -->
+	<uses-permission android:name="android.permission.GET_TASKS" /> 
+	
     <application
         android:name=".activity.InsApplication"
         android:allowBackup="true"
@@ -61,11 +64,23 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity> 
+        <activity
+            android:name=".activity.PhotoDetailActivity"            
+            android:theme="@android:style/Theme.Black.NoTitleBar" >          
         </activity>
-         <activity
-            android:name="com.astudio.inspicsoc.activity.PhotoDetail"
-           android:theme="@android:style/Theme.NoTitleBar" >
-        </activity>
+        <activity
+            android:name="cn.sharesdk.framework.ShareSDKUIShell"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name="com.astudio.inspicsoc.activity.FriendActivity"
            android:theme="@android:style/Theme.NoTitleBar" >
@@ -159,6 +174,11 @@
              android:name=".activity.ModifyActivity"
               android:label="@android:style/Theme.Translucent.NoTitleBar" >
             </activity>
+            <activity
+             android:name=".activity.VoiceActivity"
+              android:label="@android:style/Theme.Translucent.NoTitleBar" >
+            </activity>
+             
     </application>
 
 </manifest>

@@ -237,7 +237,7 @@ public class FirstPage extends Fragment implements IXListViewListener {
 			public void onItemClick(PLA_AdapterView<?> parent, View view,
 					int position, long id) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(myActivity, PhotoDetail.class);
+				Intent intent = new Intent(myActivity, PhotoDetailActivity.class);
 				startActivity(intent);
 				// ViewHolder holder = (ViewHolder) view.getTag();
 				// Toast.makeText(myActivity.getApplicationContext(),
