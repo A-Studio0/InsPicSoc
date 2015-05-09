@@ -254,7 +254,7 @@ public class QuanquanActivity extends Activity implements IXListViewListener {
 					int position, long id) {
 				// TODO Auto-generated method stub
 				Intent intent = new Intent(QuanquanActivity.this,
-						PhotoDetail.class);
+						PhotoDetailActivity.class);
 				startActivity(intent);
 			}
 
