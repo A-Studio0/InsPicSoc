@@ -26,4 +26,6 @@
     <string name="main_message">消息</string>
     <string name="title_activity_menu">MenuActivity</string>
  	<string name="upload_photo">上传照片到InsPicSoc</string>
+ 	<string name="tv_hint">#InsPicSoc语音#</string>
+ 	
 </resources>

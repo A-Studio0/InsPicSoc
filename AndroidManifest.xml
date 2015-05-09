@@ -155,6 +155,11 @@
              android:name=".activity.ModifyActivity"
               android:label="@android:style/Theme.Translucent.NoTitleBar" >
             </activity>
+            <activity
+             android:name=".activity.VoiceActivity"
+              android:label="@android:style/Theme.Translucent.NoTitleBar" >
+            </activity>
+             
     </application>
 
 </manifest>
