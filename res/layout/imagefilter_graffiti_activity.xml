@@ -116,7 +116,7 @@
                     android:background="@drawable/image_filter_banner_bg"
                     android:padding="5dip"
                     android:scaleType="centerInside"
-                    android:src="@drawable/photoframe1_banner" />
+                    android:src="@drawable/tuya_slim" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -142,7 +142,7 @@
                     android:background="@drawable/image_filter_banner_bg"
                     android:padding="5dip"
                     android:scaleType="centerInside"
-                    android:src="@drawable/photoframe1_banner" />
+                    android:src="@drawable/tuya_middle" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -168,7 +168,7 @@
                     android:background="@drawable/image_filter_banner_bg"
                     android:padding="5dip"
                     android:scaleType="centerInside"
-                    android:src="@drawable/photoframe1_banner" />
+                    android:src="@drawable/tuya_fat" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -194,7 +194,7 @@
                     android:background="@drawable/image_filter_banner_bg"
                     android:padding="5dip"
                     android:scaleType="centerInside"
-                    android:src="@drawable/photoframe1_banner" />
+                    android:src="@drawable/tuya_white" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -220,7 +220,7 @@
                     android:background="@drawable/image_filter_banner_bg"
                     android:padding="5dip"
                     android:scaleType="centerInside"
-                    android:src="@drawable/photoframe1_banner" />
+                    android:src="@drawable/tuya_yellow" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -246,7 +246,7 @@
                     android:background="@drawable/image_filter_banner_bg"
                     android:padding="5dip"
                     android:scaleType="centerInside"
-                    android:src="@drawable/photoframe1_banner" />
+                    android:src="@drawable/tuya_pink" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -272,7 +272,7 @@
                     android:background="@drawable/image_filter_banner_bg"
                     android:padding="5dip"
                     android:scaleType="centerInside"
-                    android:src="@drawable/photoframe1_banner" />
+                    android:src="@drawable/tuya_red" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -298,7 +298,7 @@
                     android:background="@drawable/image_filter_banner_bg"
                     android:padding="5dip"
                     android:scaleType="centerInside"
-                    android:src="@drawable/photoframe1_banner" />
+                    android:src="@drawable/tuya_silver" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -324,7 +324,7 @@
                     android:background="@drawable/image_filter_banner_bg"
                     android:padding="5dip"
                     android:scaleType="centerInside"
-                    android:src="@drawable/photoframe1_banner" />
+                    android:src="@drawable/tuya_gray" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -350,7 +350,7 @@
                     android:background="@drawable/image_filter_banner_bg"
                     android:padding="5dip"
                     android:scaleType="centerInside"
-                    android:src="@drawable/photoframe1_banner" />
+                    android:src="@drawable/tuya_purple" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -376,7 +376,7 @@
                     android:background="@drawable/image_filter_banner_bg"
                     android:padding="5dip"
                     android:scaleType="centerInside"
-                    android:src="@drawable/photoframe1_banner" />
+                    android:src="@drawable/tuya_green" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -402,7 +402,7 @@
                     android:background="@drawable/image_filter_banner_bg"
                     android:padding="5dip"
                     android:scaleType="centerInside"
-                    android:src="@drawable/photoframe1_banner" />
+                    android:src="@drawable/tuya_blue" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -428,7 +428,7 @@
                     android:background="@drawable/image_filter_banner_bg"
                     android:padding="5dip"
                     android:scaleType="centerInside"
-                    android:src="@drawable/photoframe1_banner" />
+                    android:src="@drawable/tuya_black" />
 
                 <TextView
                     android:layout_width="wrap_content"

@@ -80,7 +80,7 @@ public class PhotoShareActivity extends InsActivity {
 		mUgcVoice.setOnClickListener(new OnClickListener() {
 
 			public void onClick(View v) {
-						PhotoShareActivity.this.finish();
+						//PhotoShareActivity.this.finish();
 						startActivity(new Intent(PhotoShareActivity.this,
 								VoiceActivity.class));
 					
