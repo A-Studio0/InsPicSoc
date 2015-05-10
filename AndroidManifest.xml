@@ -182,6 +182,14 @@
              android:name=".activity.VoiceActivity"
               android:label="@android:style/Theme.Translucent.NoTitleBar" >
             </activity>
+              <activity
+             android:name=".activity.LoginActivity"
+              android:label="@android:style/Theme.Translucent.NoTitleBar" >
+            </activity>
+             <activity
+             android:name=".activity.RegisterActivity"
+              android:label="@android:style/Theme.Translucent.NoTitleBar" >
+            </activity>
              
     </application>
 
