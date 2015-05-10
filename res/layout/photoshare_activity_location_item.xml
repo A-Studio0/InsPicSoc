@@ -24,7 +24,8 @@
             android:layout_height="wrap_content"
             android:textColor="#000000"
             android:textSize="14sp" 
-            android:paddingRight="8dip"/>
+            android:paddingRight="8dip"
+            android:paddingLeft="0dip"/>
 
         <TextView
             android:id="@+id/photoshare_activity_location_item_location"
@@ -33,6 +34,7 @@
             android:textColor="#999999"
             android:textSize="12sp" 
             android:paddingRight="8dip"
+            android:paddingLeft="0dip"
             android:paddingTop="8dip"/>
     </LinearLayout>
 

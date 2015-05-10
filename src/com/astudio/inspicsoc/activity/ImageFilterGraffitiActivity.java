@@ -44,7 +44,6 @@ public class ImageFilterGraffitiActivity extends InsActivity{
 	private boolean mIsMeasured;// 是否已经计算大小
 	public static float mMaxWidth;// 图片最大宽度
 	public static float mMaxHeight;// 图片最大高度
-    private ImageButton clear = null;  
     private ImageButton whiteBtn;
     private ImageButton yellowBtn;
     private ImageButton pinkBtn;
@@ -82,9 +81,6 @@ public class ImageFilterGraffitiActivity extends InsActivity{
 			}
 		});
 		
-          
-        clear = (ImageButton)findViewById(R.id.clear);  
-        clear.setOnClickListener(new clearListener());  
     }
     
     private void findViewById() {
@@ -275,16 +271,6 @@ public class ImageFilterGraffitiActivity extends InsActivity{
 		// 返回对话框
 		backDialog();
 	}
-       
-      
-    private class clearListener implements OnClickListener{  
-  
-        public void onClick(View v)  
-        {  
-        	mDisplay.clear();  
-        }  
-    }
-    
 
 	/**
 	 * 缩放图片
