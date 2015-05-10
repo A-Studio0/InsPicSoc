@@ -31,4 +31,7 @@ public class InsUrl {
 	public static final String GET_HEADPIC = USER_BASE
 			+ "/userheadpic.json?username=@un";
 
+	public static final String UPLOAD_IMAGE_BASE = BASE_URL
+			+ "/image/uploadImage.json";
+
 }

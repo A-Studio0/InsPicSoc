@@ -1,6 +1,10 @@
 package com.astudio.inspicsoc.activity;
 
+import java.io.File;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.json.JSONArray;
@@ -10,6 +14,7 @@ import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,10 +29,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.astudio.inspicsoc.R;
+import com.astudio.inspicsoc.common.InsUrl;
 import com.astudio.inspicsoc.result.LocationResult;
+import com.astudio.inspicsoc.service.UploadUtil;
+import com.astudio.inspicsoc.service.UploadUtil.OnUploadProcessListener;
 import com.astudio.inspicsoc.utils.TextUtil;
-
-import com.astudio.inspicsoc.activity.VoiceActivity;
 
 /**
  * 照片分享类
@@ -35,7 +41,8 @@ import com.astudio.inspicsoc.activity.VoiceActivity;
  *
  * 
  */
-public class PhotoShareActivity extends InsActivity {
+public class PhotoShareActivity extends InsActivity implements
+		OnUploadProcessListener {
 	private Button mCancel;
 	private Button mUpload;
 	private Gallery mDisplay;
@@ -53,6 +60,31 @@ public class PhotoShareActivity extends InsActivity {
 	private String[] mAlbums = new String[] { "手机相册" };// 相册
 	private int mAlbumPosition;// 当前选择的相册在列表的位置
 
+	private List<File> pics = new ArrayList<File>();
+
+	private static final String TAG = "uploadImage";
+
+	/**
+	 * 去上传文件
+	 */
+	protected static final int TO_UPLOAD_FILE = 1;
+	/**
+	 * 上传文件响应
+	 */
+	protected static final int UPLOAD_FILE_DONE = 2; //
+	/**
+	 * 选择文件
+	 */
+	public static final int TO_SELECT_PHOTO = 3;
+	/**
+	 * 上传初始化
+	 */
+	private static final int UPLOAD_INIT_PROCESS = 4;
+	/**
+	 * 上传中
+	 */
+	private static final int UPLOAD_IN_PROCESS = 5;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -60,9 +92,7 @@ public class PhotoShareActivity extends InsActivity {
 		findViewById();
 		setListener();
 		init();
-		
-		
-		
+
 	}
 
 	private void findViewById() {
@@ -70,7 +100,7 @@ public class PhotoShareActivity extends InsActivity {
 		mUpload = (Button) findViewById(R.id.photoshare_upload);
 		mDisplay = (Gallery) findViewById(R.id.photoshare_display);
 		mDisplaySingle = (ImageView) findViewById(R.id.photoshare_display_single);
-		mUgcVoice = (ImageView)findViewById(R.id.ugc_voice);
+		mUgcVoice = (ImageView) findViewById(R.id.ugc_voice);
 		// mLocation = (TextView) findViewById(R.id.photoshare_location);
 		// mDelete = (Button) findViewById(R.id.photoshare_location_delete);
 		// mAlbum = (TextView) findViewById(R.id.photoshare_album);
@@ -79,11 +109,12 @@ public class PhotoShareActivity extends InsActivity {
 	private void setListener() {
 		mUgcVoice.setOnClickListener(new OnClickListener() {
 
+			@Override
 			public void onClick(View v) {
-						PhotoShareActivity.this.finish();
-						startActivity(new Intent(PhotoShareActivity.this,
-								VoiceActivity.class));
-					
+				PhotoShareActivity.this.finish();
+				startActivity(new Intent(PhotoShareActivity.this,
+						VoiceActivity.class));
+
 			}
 		});
 		mCancel.setOnClickListener(new OnClickListener() {
@@ -185,6 +216,24 @@ public class PhotoShareActivity extends InsActivity {
 					"image_path");
 			mDisplaySingle.setImageBitmap(mKXApplication
 					.getPhoneAlbum(mCurrentPath));
+		}
+
+		for (int i = 0; i < mKXApplication.mAlbumList.size(); i++) {
+			Map<String, String> results = mKXApplication.mAlbumList.get(i);
+			File file = new File(results.get("image_path"));
+			pics.add(file);
+		}
+
+		UploadUtil uploadUtil = UploadUtil.getInstance();
+		if (pics.isEmpty()) {
+			Log.e("Empty", "true", null);
+			return;
+		} else {
+			Map<String, String> param = new HashMap<String, String>();
+
+			uploadUtil.setOnUploadProcessListener(this); // 设置监听器监听上传状态
+			param.put("username", "HeyJim");
+			uploadUtil.uploadFiles(pics, InsUrl.UPLOAD_IMAGE_BASE, param);
 		}
 		// 获取地理位置数据
 		getLocation();
@@ -459,5 +508,23 @@ public class PhotoShareActivity extends InsActivity {
 	protected void onDestroy() {
 		super.onDestroy();
 		mKXApplication.mAlbumList.clear();
+	}
+
+	@Override
+	public void onUploadDone(int responseCode, String message) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onUploadProcess(int uploadSize) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void initUpload(int fileSize) {
+		// TODO Auto-generated method stub
+
 	}
 }
