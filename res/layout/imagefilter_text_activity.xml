@@ -11,7 +11,7 @@
         android:gravity="center_vertical" >
 
         <Button
-            android:id="@+id/imagefilter_graffiti_cancel"
+            android:id="@+id/imagefilter_text_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dip"
@@ -32,13 +32,13 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:gravity="center"
-                android:text="涂鸦"
+                android:text="文字"
                 android:textColor="#ffffff"
                 android:textSize="18sp" />
         </LinearLayout>
 
         <Button
-            android:id="@+id/imagefilter_graffiti_determine"
+            android:id="@+id/imagefilter_text_determine"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="8dip"
@@ -48,20 +48,21 @@
     </LinearLayout>
 
     <RelativeLayout
-        android:id="@+id/imagefilter_graffiti_display_layout"
+        android:id="@+id/imagefilter_text_display_layout"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="1"
         android:background="@drawable/black_dot_bg"
-        android:padding="20dip">
-        <com.astudio.inspicsoc.view.HandWriteView 
-            android:id="@+id/imagefilter_graffiti_display"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        android:padding="20dip" >
+
+        <ImageView
+            android:id="@+id/imagefilter_text_display"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
             android:layout_centerInParent="true"
             android:scaleType="centerInside" />
     </RelativeLayout>
-
+    
     <HorizontalScrollView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -84,7 +85,43 @@
                 android:orientation="vertical" >
 
                 <ImageButton
-                    android:id="@+id/thin"
+                    android:id="@+id/okbtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/image_filter_banner_bg"
+                    android:padding="5dip"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/tuya_add" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:duplicateParentState="true"
+                    android:text="添加"
+                    android:textColor="#ffffff"
+                    android:textSize="12sp" />
+            </LinearLayout>
+            
+            <EditText 
+		          android:id="@+id/edittext1"
+		          android:layout_width="wrap_content"
+		          android:layout_weight="1"
+		          android:layout_height="wrap_content"
+		          android:hint="请输入文字"
+		          android:layout_gravity="center_vertical"
+     			  android:singleLine="true"   
+	          />
+            
+            <LinearLayout
+                android:layout_width="50dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <ImageButton
+                    android:id="@+id/small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/image_filter_banner_bg"
@@ -96,7 +133,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:duplicateParentState="true"
-                    android:text="很细"
+                    android:text="很小"
                     android:textColor="#ffffff"
                     android:textSize="12sp" />
             </LinearLayout>
@@ -110,7 +147,7 @@
                 android:orientation="vertical" >
 
                 <ImageButton
-                    android:id="@+id/normal"
+                    android:id="@+id/middle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/image_filter_banner_bg"
@@ -136,7 +173,7 @@
                 android:orientation="vertical" >
 
                 <ImageButton
-                    android:id="@+id/wide"
+                    android:id="@+id/big"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/image_filter_banner_bg"
@@ -148,7 +185,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:duplicateParentState="true"
-                    android:text="很粗"
+                    android:text="很大"
                     android:textColor="#ffffff"
                     android:textSize="12sp" />
             </LinearLayout>
@@ -162,7 +199,7 @@
                 android:orientation="vertical" >
 
                 <ImageButton
-                    android:id="@+id/white"
+                    android:id="@+id/white1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/image_filter_banner_bg"
@@ -188,7 +225,7 @@
                 android:orientation="vertical" >
 
                 <ImageButton
-                    android:id="@+id/yellow"
+                    android:id="@+id/yellow1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/image_filter_banner_bg"
@@ -214,7 +251,7 @@
                 android:orientation="vertical" >
 
                 <ImageButton
-                    android:id="@+id/pink"
+                    android:id="@+id/pink1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/image_filter_banner_bg"
@@ -240,7 +277,7 @@
                 android:orientation="vertical" >
 
                 <ImageButton
-                    android:id="@+id/red"
+                    android:id="@+id/red1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/image_filter_banner_bg"
@@ -266,7 +303,7 @@
                 android:orientation="vertical" >
 
                 <ImageButton
-                    android:id="@+id/silver"
+                    android:id="@+id/silver1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/image_filter_banner_bg"
@@ -292,7 +329,7 @@
                 android:orientation="vertical" >
 
                 <ImageButton
-                    android:id="@+id/gray"
+                    android:id="@+id/gray1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/image_filter_banner_bg"
@@ -318,7 +355,7 @@
                 android:orientation="vertical" >
 
                 <ImageButton
-                    android:id="@+id/purple"
+                    android:id="@+id/purple1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/image_filter_banner_bg"
@@ -344,7 +381,7 @@
                 android:orientation="vertical" >
 
                 <ImageButton
-                    android:id="@+id/green"
+                    android:id="@+id/green1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/image_filter_banner_bg"
@@ -370,7 +407,7 @@
                 android:orientation="vertical" >
 
                 <ImageButton
-                    android:id="@+id/blue"
+                    android:id="@+id/blue1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/image_filter_banner_bg"
@@ -396,7 +433,7 @@
                 android:orientation="vertical" >
 
                 <ImageButton
-                    android:id="@+id/black"
+                    android:id="@+id/black1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/image_filter_banner_bg"
@@ -414,5 +451,4 @@
             </LinearLayout>
         </LinearLayout>
     </HorizontalScrollView>
-
 </LinearLayout>

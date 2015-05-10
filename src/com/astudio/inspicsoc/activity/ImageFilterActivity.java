@@ -32,6 +32,7 @@ public class ImageFilterActivity extends InsActivity {
 	private Button mFace;
 	private Button mFrame;
 	private Button mGraffiti;
+	private Button mText;
 
 	private String mOldPath;// 旧图片地址
 	private Bitmap mOldBitmap;// 旧图片
@@ -62,6 +63,7 @@ public class ImageFilterActivity extends InsActivity {
 		mFace = (Button) findViewById(R.id.imagefilter_face);
 		mFrame = (Button) findViewById(R.id.imagefilter_frame);
 		mGraffiti = (Button) findViewById(R.id.imagefilter_graffiti);
+		mText = (Button) findViewById(R.id.imagefilter_text);
 	}
 
 	private void setListener() {
@@ -211,6 +213,23 @@ public class ImageFilterActivity extends InsActivity {
 				}
 				startActivityForResult(intent,
 						ActivityForResultUtil.REQUESTCODE_IMAGEFILTER_GRAFFITI);
+			}
+		});
+		mText.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// 跳转到边框界面,并传递图片地址
+				Intent intent = new Intent();
+				intent.setClass(ImageFilterActivity.this,
+						ImageFilterTextActivity.class);
+				if (mIsOld) {
+					intent.putExtra("path", mOldPath);
+				} else {
+					intent.putExtra("path", mNewPath);
+				}
+				startActivityForResult(intent,
+						ActivityForResultUtil.REQUESTCODE_IMAGEFILTER_TEXT);
 			}
 		});
 	}
