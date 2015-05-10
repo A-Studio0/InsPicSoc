@@ -44,6 +44,7 @@
         android:background="@drawable/showright_selector"
         android:gravity="center"
         android:layout_marginRight="5dip"
-        android:includeFontPadding="false" />
+        android:includeFontPadding="false"
+        android:visibility="invisible" />
 
 </RelativeLayout>

@@ -1,6 +1,7 @@
 package com.astudio.inspicsoc.activity;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,6 +14,8 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,6 +28,8 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.Gallery;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +38,7 @@ import com.astudio.inspicsoc.common.InsUrl;
 import com.astudio.inspicsoc.result.LocationResult;
 import com.astudio.inspicsoc.service.UploadUtil;
 import com.astudio.inspicsoc.service.UploadUtil.OnUploadProcessListener;
+import com.astudio.inspicsoc.utils.ActivityForResultUtil;
 import com.astudio.inspicsoc.utils.TextUtil;
 
 /**
@@ -48,9 +54,14 @@ public class PhotoShareActivity extends InsActivity implements
 	private Gallery mDisplay;
 	private ImageView mDisplaySingle;
 	private ImageView mUgcVoice;
+	private ImageView mUgcVoiceDelete;
 	// private TextView mLocation;
 	// private Button mDelete;
 	// private TextView mAlbum;
+	private LinearLayout mDisplayVoiceLayout;
+	private ImageView mDisplayVoicePlay;
+	private ProgressBar mDisplayVoiceProgressBar;
+	private TextView mDisplayVoiceTime;
 
 	private GalleryAdapter mAdapter;
 
@@ -61,7 +72,14 @@ public class PhotoShareActivity extends InsActivity implements
 	private int mAlbumPosition;// 当前选择的相册在列表的位置
 
 	private List<File> pics = new ArrayList<File>();
+	
+	private String mCurrentVoicePath;
+	private float mPlayTime;
 
+	private boolean mPlayState; // 播放状态
+	private int mPlayCurrentPosition;// 当前播放的时间
+	private MediaPlayer mMediaPlayer;
+	
 	private static final String TAG = "uploadImage";
 
 	/**
@@ -101,6 +119,11 @@ public class PhotoShareActivity extends InsActivity implements
 		mDisplay = (Gallery) findViewById(R.id.photoshare_display);
 		mDisplaySingle = (ImageView) findViewById(R.id.photoshare_display_single);
 		mUgcVoice = (ImageView) findViewById(R.id.ugc_voice);
+		mUgcVoiceDelete=(ImageView)findViewById(R.id.ugc_voice_delete);
+		mDisplayVoiceLayout = (LinearLayout) findViewById(R.id.voice_display_voice_layout);
+		mDisplayVoicePlay = (ImageView) findViewById(R.id.voice_display_voice_play);
+		mDisplayVoiceProgressBar = (ProgressBar) findViewById(R.id.voice_display_voice_progressbar);
+		mDisplayVoiceTime = (TextView) findViewById(R.id.voice_display_voice_time);
 		// mLocation = (TextView) findViewById(R.id.photoshare_location);
 		// mDelete = (Button) findViewById(R.id.photoshare_location_delete);
 		// mAlbum = (TextView) findViewById(R.id.photoshare_album);
@@ -111,10 +134,10 @@ public class PhotoShareActivity extends InsActivity implements
 
 			@Override
 			public void onClick(View v) {
-				PhotoShareActivity.this.finish();
-				startActivity(new Intent(PhotoShareActivity.this,
-						VoiceActivity.class));
-
+//				PhotoShareActivity.this.finish();
+				Intent i=new Intent();
+				i.setClass(PhotoShareActivity.this,VoiceActivity.class);
+				startActivityForResult(i,0);
 			}
 		});
 		mCancel.setOnClickListener(new OnClickListener() {
@@ -197,6 +220,97 @@ public class PhotoShareActivity extends InsActivity implements
 		// AlbumDialog();
 		// }
 		// });
+		mDisplayVoicePlay.setOnClickListener(new OnClickListener() {
+	
+			public void onClick(View v) {
+				// 播放录音
+				if (!mPlayState) {
+					mMediaPlayer = new MediaPlayer();
+					try {
+						// 添加录音的路径
+						mMediaPlayer.setDataSource(mCurrentVoicePath);
+						// 准备
+						mMediaPlayer.prepare();
+						// 播放
+						mMediaPlayer.start();
+						// 根据时间修改界面
+						new Thread(new Runnable() {
+	
+							public void run() {
+	
+								mDisplayVoiceProgressBar
+										.setMax((int) mPlayTime);
+								mPlayCurrentPosition = 0;
+								while (mMediaPlayer.isPlaying()) {
+									mPlayCurrentPosition = mMediaPlayer
+											.getCurrentPosition() / 1000;
+									mDisplayVoiceProgressBar
+											.setProgress(mPlayCurrentPosition);
+								}
+							}
+						}).start();
+						// 修改播放状态
+						mPlayState = true;
+						// 修改播放图标
+						mDisplayVoicePlay
+								.setImageResource(R.drawable.globle_player_btn_stop);
+	
+						mMediaPlayer.setOnCompletionListener(new OnCompletionListener() {
+									// 播放结束后调用
+									public void onCompletion(MediaPlayer mp) {
+										// 停止播放
+										mMediaPlayer.stop();
+										// 修改播放状态
+										mPlayState = false;
+										// 修改播放图标
+										mDisplayVoicePlay
+												.setImageResource(R.drawable.globle_player_btn_play);
+										// 初始化播放数据
+										mPlayCurrentPosition = 0;
+										mDisplayVoiceProgressBar
+												.setProgress(mPlayCurrentPosition);
+									}
+								});
+	
+					} catch (IllegalArgumentException e) {
+						e.printStackTrace();
+					} catch (IllegalStateException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				} else {
+					if (mMediaPlayer != null) {
+						// 根据播放状态修改显示内容
+						if (mMediaPlayer.isPlaying()) {
+							mPlayState = false;
+							mMediaPlayer.stop();
+							mDisplayVoicePlay
+									.setImageResource(R.drawable.globle_player_btn_play);
+							mPlayCurrentPosition = 0;
+							mDisplayVoiceProgressBar
+									.setProgress(mPlayCurrentPosition);
+						} else {
+							mPlayState = false;
+							mDisplayVoicePlay
+									.setImageResource(R.drawable.globle_player_btn_play);
+							mPlayCurrentPosition = 0;
+							mDisplayVoiceProgressBar
+									.setProgress(mPlayCurrentPosition);
+						}
+					}
+				}
+			}
+		});
+		mUgcVoiceDelete.setOnClickListener(new OnClickListener() {
+	
+			public void onClick(View v) {
+				mCurrentVoicePath=null;
+				mPlayTime=0;
+				mDisplayVoiceLayout.setVisibility(View.GONE);
+    			mUgcVoiceDelete.setVisibility(View.GONE);
+			}
+		});
 	}
 
 	private void init() {
@@ -344,7 +458,24 @@ public class PhotoShareActivity extends InsActivity implements
 				mDisplaySingle.setImageBitmap(mKXApplication
 						.getPhoneAlbum(mCurrentPath));
 			}
-
+		}
+		else if(requestCode==0&&resultCode == ActivityForResultUtil.REQUESTCODE_VOICE){
+			Bundle bundle = data.getExtras();
+            mCurrentVoicePath=bundle.getString("voicePath");
+            mPlayTime=Float.valueOf(bundle.getString("recordTime"));
+            if(mCurrentVoicePath==null){
+    			mDisplayVoiceLayout.setVisibility(View.GONE);
+    		}
+    		else{
+    			mDisplayVoiceLayout.setVisibility(View.VISIBLE);
+    			mUgcVoiceDelete.setVisibility(View.VISIBLE);
+//    			voiceGallery.setVisibility(View.VISIBLE);
+    			mDisplayVoicePlay
+    					.setImageResource(R.drawable.globle_player_btn_play);
+    			mDisplayVoiceProgressBar.setMax((int) mPlayTime);
+    			mDisplayVoiceProgressBar.setProgress(0);
+    			mDisplayVoiceTime.setText((int) mPlayTime + "″");
+    		}
 		}
 	}
 
@@ -527,4 +658,5 @@ public class PhotoShareActivity extends InsActivity implements
 		// TODO Auto-generated method stub
 
 	}
+	
 }

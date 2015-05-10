@@ -58,17 +58,18 @@ import android.widget.Toast;
  */
 public class VoiceActivity extends Activity {
 	private LinearLayout mParent;
-	private EditText mContent;
-	private LinearLayout mDisplayVoiceLayout;
-	private ImageView mDisplayVoicePlay;
-	private ProgressBar mDisplayVoiceProgressBar;
-	private TextView mDisplayVoiceTime;
-	private Button send;
-	private Button mUpload;
+//	private EditText mContent;
+//	private LinearLayout mDisplayVoiceLayout;
+//	private ImageView mDisplayVoicePlay;
+//	private ProgressBar mDisplayVoiceProgressBar;
+//	private TextView mDisplayVoiceTime;
+//	private Button send;
+//	private Button mUpload;
 	
-	private Gallery voiceGallery;
-	private TextView title;
-	private EditText inputTitle;
+//	private Gallery voiceGallery;
+//	private TextView title;
+//	private EditText inputTitle;
+	private Button mCancel;
 	
 	private Button mRecord;
 	private RelativeLayout mRecordLayout;
@@ -83,7 +84,7 @@ public class VoiceActivity extends Activity {
 	private Animation mRecordLight_2_Animation;
 	private Animation mRecordLight_3_Animation;
 
-	private MediaPlayer mMediaPlayer;
+//	private MediaPlayer mMediaPlayer;
 	private RecordUtil mRecordUtil;
 	private static final int MAX_TIME = 60;// 最长录音时间
 	private static final int MIN_TIME = 2;// 最短录音时间
@@ -94,9 +95,9 @@ public class VoiceActivity extends Activity {
 	private int mRecord_State = 0; // 录音的状态
 	private float mRecord_Time;// 录音的时间
 	private double mRecord_Volume;// 麦克风获取的音量值
-	private boolean mPlayState; // 播放状态
-	private int mPlayCurrentPosition;// 当前播放的时间
-	private static final String PATH = "/sdcard/KaiXin/Record/";// 录音存储路径
+//	private boolean mPlayState; // 播放状态
+//	private int mPlayCurrentPosition;// 当前播放的时间
+	private static final String PATH = "/sdcard/InsPicSoc/Record/";// 录音存储路径
 	private String mRecordPath;// 录音的存储名称
 	private int mMAXVolume;// 最大音量高度
 	private int mMINVolume;// 最小音量高度
@@ -113,11 +114,11 @@ public class VoiceActivity extends Activity {
 
 	private void findViewById() {
 		mParent = (LinearLayout) findViewById(R.id.voice_parent);
-		mContent = (EditText) findViewById(R.id.voice_content);
-		mDisplayVoiceLayout = (LinearLayout) findViewById(R.id.voice_display_voice_layout);
-		mDisplayVoicePlay = (ImageView) findViewById(R.id.voice_display_voice_play);
-		mDisplayVoiceProgressBar = (ProgressBar) findViewById(R.id.voice_display_voice_progressbar);
-		mDisplayVoiceTime = (TextView) findViewById(R.id.voice_display_voice_time);
+//		mContent = (EditText) findViewById(R.id.voice_content);
+//		mDisplayVoiceLayout = (LinearLayout) findViewById(R.id.voice_display_voice_layout);
+//		mDisplayVoicePlay = (ImageView) findViewById(R.id.voice_display_voice_play);
+//		mDisplayVoiceProgressBar = (ProgressBar) findViewById(R.id.voice_display_voice_progressbar);
+//		mDisplayVoiceTime = (TextView) findViewById(R.id.voice_display_voice_time);
 		mRecord = (Button) findViewById(R.id.voice_record_btn);
 		mRecordLayout = (RelativeLayout) findViewById(R.id.voice_record_layout);
 		mRecordVolume = (ImageView) findViewById(R.id.voice_recording_volume);
@@ -126,10 +127,11 @@ public class VoiceActivity extends Activity {
 		mRecordLight_3 = (ImageView) findViewById(R.id.voice_recordinglight_3);
 		mRecordTime = (TextView) findViewById(R.id.voice_record_time);
 		mRecordProgressBar = (ProgressBar) findViewById(R.id.voice_record_progressbar);
-		send=(Button) findViewById(R.id.voice_send);
+		mCancel = (Button) findViewById(R.id.photovoice_cancel);
+//		send=(Button) findViewById(R.id.voice_send);
 		
-		mUpload = (Button) findViewById(R.id.photoshare_upload);
-		voiceGallery=(Gallery)findViewById(R.id.photoshare_display);
+//		mUpload = (Button) findViewById(R.id.photoshare_upload);
+//		voiceGallery=(Gallery)findViewById(R.id.photoshare_display);
 		//title=(TextView)findViewById(R.id.photoshare_display);
 		//inputTitle=(EditText)findViewById(R.id.photoshare_display);
 	}
@@ -138,25 +140,33 @@ public class VoiceActivity extends Activity {
 	 * 监听事件
 	 */
 	private void setListener() {
-		mUpload.setOnClickListener(new OnClickListener() {
+//		mUpload.setOnClickListener(new OnClickListener() {
+//
+//			@Override
+//			public void onClick(View v) {
+//				// 判断手机相册界面是否关闭,如果没关闭则关闭
+//				try {
+//					if (!PhoneAlbumActivity.mInstance.isFinishing()) {
+//						PhoneAlbumActivity.mInstance.finish();
+//					}
+//
+//				} catch (Exception e) {
+//
+//				}
+//
+//				// 显示提示信息并关闭当前界面
+//				Toast.makeText(VoiceActivity.this.getApplicationContext(),
+//						"上传图片成功", Toast.LENGTH_SHORT).show();
+//				VoiceActivity.this.finish();
+//				
+//			}
+//		});
+		mCancel.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				// 判断手机相册界面是否关闭,如果没关闭则关闭
-				try {
-					if (!PhoneAlbumActivity.mInstance.isFinishing()) {
-						PhoneAlbumActivity.mInstance.finish();
-					}
-
-				} catch (Exception e) {
-
-				}
-
-				// 显示提示信息并关闭当前界面
-				Toast.makeText(VoiceActivity.this.getApplicationContext(),
-						"上传图片成功", Toast.LENGTH_SHORT).show();
-				VoiceActivity.this.finish();
-				
+				// 关闭当前界面
+				finish();
 			}
 		});
 		mRecord.setOnTouchListener(new OnTouchListener() {
@@ -244,16 +254,26 @@ public class VoiceActivity extends Activity {
 							mRecordVolume.setLayoutParams(params);
 						} else {
 							// 录音成功,则显示录音成功后的界面
-							mRecordLayout.setVisibility(View.GONE);
-							mRecord.setVisibility(View.GONE);
-							mDisplayVoiceLayout.setVisibility(View.VISIBLE);
-							voiceGallery.setVisibility(View.VISIBLE);
-							mDisplayVoicePlay
-									.setImageResource(R.drawable.globle_player_btn_play);
-							mDisplayVoiceProgressBar.setMax((int) mRecord_Time);
-							mDisplayVoiceProgressBar.setProgress(0);
-							mDisplayVoiceTime.setText((int) mRecord_Time + "″");
-							send.setVisibility(View.VISIBLE);
+							if(mRecordPath!=null){
+								Intent i=new Intent();
+								i.setClass(VoiceActivity.this,PhotoShareActivity.class);
+								Bundle bundle=new Bundle();
+								bundle.putString("voicePath",mRecordPath);
+								bundle.putString("recordTime",String.valueOf(mRecord_Time));
+								i.putExtras(bundle); 
+								setResult(ActivityForResultUtil.REQUESTCODE_VOICE,i);
+								finish();
+							}
+//							mRecordLayout.setVisibility(View.GONE);
+//							mRecord.setVisibility(View.GONE);
+//							mDisplayVoiceLayout.setVisibility(View.VISIBLE);
+//							voiceGallery.setVisibility(View.VISIBLE);
+//							mDisplayVoicePlay
+//									.setImageResource(R.drawable.globle_player_btn_play);
+//							mDisplayVoiceProgressBar.setMax((int) mRecord_Time);
+//							mDisplayVoiceProgressBar.setProgress(0);
+//							mDisplayVoiceTime.setText((int) mRecord_Time + "″");
+//							send.setVisibility(View.VISIBLE);
 						}
 					}
 					break;
@@ -261,89 +281,89 @@ public class VoiceActivity extends Activity {
 				return false;
 			}
 		});
-		mDisplayVoicePlay.setOnClickListener(new OnClickListener() {
-
-			public void onClick(View v) {
-				// 播放录音
-				if (!mPlayState) {
-					mMediaPlayer = new MediaPlayer();
-					try {
-						// 添加录音的路径
-						mMediaPlayer.setDataSource(mRecordPath);
-						// 准备
-						mMediaPlayer.prepare();
-						// 播放
-						mMediaPlayer.start();
-						// 根据时间修改界面
-						new Thread(new Runnable() {
-
-							public void run() {
-
-								mDisplayVoiceProgressBar
-										.setMax((int) mRecord_Time);
-								mPlayCurrentPosition = 0;
-								while (mMediaPlayer.isPlaying()) {
-									mPlayCurrentPosition = mMediaPlayer
-											.getCurrentPosition() / 1000;
-									mDisplayVoiceProgressBar
-											.setProgress(mPlayCurrentPosition);
-								}
-							}
-						}).start();
-						// 修改播放状态
-						mPlayState = true;
-						// 修改播放图标
-						mDisplayVoicePlay
-								.setImageResource(R.drawable.globle_player_btn_stop);
-
-						mMediaPlayer
-								.setOnCompletionListener(new OnCompletionListener() {
-									// 播放结束后调用
-									public void onCompletion(MediaPlayer mp) {
-										// 停止播放
-										mMediaPlayer.stop();
-										// 修改播放状态
-										mPlayState = false;
-										// 修改播放图标
-										mDisplayVoicePlay
-												.setImageResource(R.drawable.globle_player_btn_play);
-										// 初始化播放数据
-										mPlayCurrentPosition = 0;
-										mDisplayVoiceProgressBar
-												.setProgress(mPlayCurrentPosition);
-									}
-								});
-
-					} catch (IllegalArgumentException e) {
-						e.printStackTrace();
-					} catch (IllegalStateException e) {
-						e.printStackTrace();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				} else {
-					if (mMediaPlayer != null) {
-						// 根据播放状态修改显示内容
-						if (mMediaPlayer.isPlaying()) {
-							mPlayState = false;
-							mMediaPlayer.stop();
-							mDisplayVoicePlay
-									.setImageResource(R.drawable.globle_player_btn_play);
-							mPlayCurrentPosition = 0;
-							mDisplayVoiceProgressBar
-									.setProgress(mPlayCurrentPosition);
-						} else {
-							mPlayState = false;
-							mDisplayVoicePlay
-									.setImageResource(R.drawable.globle_player_btn_play);
-							mPlayCurrentPosition = 0;
-							mDisplayVoiceProgressBar
-									.setProgress(mPlayCurrentPosition);
-						}
-					}
-				}
-			}
-		});
+//		mDisplayVoicePlay.setOnClickListener(new OnClickListener() {
+//
+//			public void onClick(View v) {
+//				// 播放录音
+//				if (!mPlayState) {
+//					mMediaPlayer = new MediaPlayer();
+//					try {
+//						// 添加录音的路径
+//						mMediaPlayer.setDataSource(mRecordPath);
+//						// 准备
+//						mMediaPlayer.prepare();
+//						// 播放
+//						mMediaPlayer.start();
+//						// 根据时间修改界面
+//						new Thread(new Runnable() {
+//
+//							public void run() {
+//
+//								mDisplayVoiceProgressBar
+//										.setMax((int) mRecord_Time);
+//								mPlayCurrentPosition = 0;
+//								while (mMediaPlayer.isPlaying()) {
+//									mPlayCurrentPosition = mMediaPlayer
+//											.getCurrentPosition() / 1000;
+//									mDisplayVoiceProgressBar
+//											.setProgress(mPlayCurrentPosition);
+//								}
+//							}
+//						}).start();
+//						// 修改播放状态
+//						mPlayState = true;
+//						// 修改播放图标
+//						mDisplayVoicePlay
+//								.setImageResource(R.drawable.globle_player_btn_stop);
+//
+//						mMediaPlayer
+//								.setOnCompletionListener(new OnCompletionListener() {
+//									// 播放结束后调用
+//									public void onCompletion(MediaPlayer mp) {
+//										// 停止播放
+//										mMediaPlayer.stop();
+//										// 修改播放状态
+//										mPlayState = false;
+//										// 修改播放图标
+//										mDisplayVoicePlay
+//												.setImageResource(R.drawable.globle_player_btn_play);
+//										// 初始化播放数据
+//										mPlayCurrentPosition = 0;
+//										mDisplayVoiceProgressBar
+//												.setProgress(mPlayCurrentPosition);
+//									}
+//								});
+//
+//					} catch (IllegalArgumentException e) {
+//						e.printStackTrace();
+//					} catch (IllegalStateException e) {
+//						e.printStackTrace();
+//					} catch (IOException e) {
+//						e.printStackTrace();
+//					}
+//				} else {
+//					if (mMediaPlayer != null) {
+//						// 根据播放状态修改显示内容
+//						if (mMediaPlayer.isPlaying()) {
+//							mPlayState = false;
+//							mMediaPlayer.stop();
+//							mDisplayVoicePlay
+//									.setImageResource(R.drawable.globle_player_btn_play);
+//							mPlayCurrentPosition = 0;
+//							mDisplayVoiceProgressBar
+//									.setProgress(mPlayCurrentPosition);
+//						} else {
+//							mPlayState = false;
+//							mDisplayVoicePlay
+//									.setImageResource(R.drawable.globle_player_btn_play);
+//							mPlayCurrentPosition = 0;
+//							mDisplayVoiceProgressBar
+//									.setProgress(mPlayCurrentPosition);
+//						}
+//					}
+//				}
+//			}
+//		});
 	}
 
 	private void init() {
@@ -437,14 +457,14 @@ public class VoiceActivity extends Activity {
 						e.printStackTrace();
 					}
 					// 根据录音修改界面显示内容
-					mRecordLayout.setVisibility(View.GONE);
-					mRecord.setVisibility(View.GONE);
-					mDisplayVoiceLayout.setVisibility(View.VISIBLE);
-					mDisplayVoicePlay
-							.setImageResource(R.drawable.globle_player_btn_play);
-					mDisplayVoiceProgressBar.setMax((int) mRecord_Time);
-					mDisplayVoiceProgressBar.setProgress(0);
-					mDisplayVoiceTime.setText((int) mRecord_Time + "″");
+//					mRecordLayout.setVisibility(View.GONE);
+//					mRecord.setVisibility(View.GONE);
+//					mDisplayVoiceLayout.setVisibility(View.VISIBLE);
+//					mDisplayVoicePlay
+//							.setImageResource(R.drawable.globle_player_btn_play);
+//					mDisplayVoiceProgressBar.setMax((int) mRecord_Time);
+//					mDisplayVoiceProgressBar.setProgress(0);
+//					mDisplayVoiceTime.setText((int) mRecord_Time + "″");
 				}
 				break;
 
