@@ -111,9 +111,16 @@ public class PhotoShareActivity extends InsActivity implements
 
 			@Override
 			public void onClick(View v) {
+						//PhotoShareActivity.this.finish();
+						startActivity(new Intent(PhotoShareActivity.this,
+								VoiceActivity.class));
+					
+
+/*
 				PhotoShareActivity.this.finish();
 				startActivity(new Intent(PhotoShareActivity.this,
 						VoiceActivity.class));
+*/
 
 			}
 		});

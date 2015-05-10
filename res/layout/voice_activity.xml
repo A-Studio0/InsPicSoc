@@ -93,7 +93,7 @@
                     android:layout_height="236dip"
                     android:padding="8dip"
                     android:spacing="20dip"
-                     android:visibility="gone" />
+                    android:visibility="invisible" />
 
                 <ImageView
                     android:id="@+id/photoshare_display_single"

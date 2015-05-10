@@ -27,4 +27,5 @@ public class ActivityForResultUtil {
 	public static final int REQUESTCODE_WRITERECORD_CHANGE_PHOTO = 18;
 	public static final int REQUESTCODE_WRITERECORD_DELETE_PHOTO = 19;
 	public static final int REQUESTCODE_IMAGEFILTER_GRAFFITI = 20;
+	public static final int REQUESTCODE_IMAGEFILTER_TEXT = 21;
 }

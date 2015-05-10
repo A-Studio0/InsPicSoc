@@ -3,13 +3,23 @@ package com.astudio.inspicsoc.activity;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Map;
 import java.util.UUID;
 
 import org.json.JSONArray;
 
+
+
+/*import com.astudio.inspicsoc.activity.VoiceActivity.AlbumAdapter;
+import com.astudio.inspicsoc.activity.VoiceActivity.GalleryAdapter;
+import com.astudio.inspicsoc.activity.VoiceActivity.LocationAdapter;
+import com.astudio.inspicsoc.activity.VoiceActivity.AlbumAdapter.ViewHolder;*/
+import com.astudio.inspicsoc.result.LocationResult;
 import com.astudio.inspicsoc.utils.ActivityForResultUtil;
 import com.astudio.inspicsoc.utils.RecordUtil;
+import com.astudio.inspicsoc.utils.TextUtil;
 import com.astudio.inspicsoc.R;
+import com.astudio.inspicsoc.activity.*;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -56,7 +66,7 @@ import android.widget.Toast;
  * 录音类
  * 
  */
-public class VoiceActivity extends Activity {
+public class VoiceActivity extends InsActivity {
 	private LinearLayout mParent;
 	private EditText mContent;
 	private LinearLayout mDisplayVoiceLayout;
@@ -65,6 +75,19 @@ public class VoiceActivity extends Activity {
 	private TextView mDisplayVoiceTime;
 	private Button send;
 	private Button mUpload;
+	private Button mCancel;
+	
+	private Gallery mDisplay;
+	private ImageView mDisplaySingle;
+
+	private GalleryAdapter mAdapter;
+
+	private int mCurrentPosition;// 当前图片的编号
+	private String mCurrentPath;// 当前图片的地址
+	private int mLocationPosition;// 当前选择的地理位置在列表的位置
+	private String[] mAlbums = new String[] { "手机相册" };// 相册
+	private int mAlbumPosition;// 当前选择的相册在列表的位置
+	
 	
 	private Gallery voiceGallery;
 	private TextView title;
@@ -101,7 +124,8 @@ public class VoiceActivity extends Activity {
 	private int mMAXVolume;// 最大音量高度
 	private int mMINVolume;// 最小音量高度
 
-	protected void onCreate(Bundle savedInstanceState) {
+
+	public void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.voice_activity);
@@ -112,6 +136,7 @@ public class VoiceActivity extends Activity {
 	}
 
 	private void findViewById() {
+		mCancel = (Button) findViewById(R.id.photoshare_cannel);
 		mParent = (LinearLayout) findViewById(R.id.voice_parent);
 		mContent = (EditText) findViewById(R.id.voice_content);
 		mDisplayVoiceLayout = (LinearLayout) findViewById(R.id.voice_display_voice_layout);
@@ -130,6 +155,9 @@ public class VoiceActivity extends Activity {
 		
 		mUpload = (Button) findViewById(R.id.photoshare_upload);
 		voiceGallery=(Gallery)findViewById(R.id.photoshare_display);
+		
+		mDisplay = (Gallery) findViewById(R.id.photoshare_display);
+		mDisplaySingle = (ImageView) findViewById(R.id.photoshare_display_single);
 		//title=(TextView)findViewById(R.id.photoshare_display);
 		//inputTitle=(EditText)findViewById(R.id.photoshare_display);
 	}
@@ -138,6 +166,44 @@ public class VoiceActivity extends Activity {
 	 * 监听事件
 	 */
 	private void setListener() {
+		mDisplay.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				// 获取当前的照片编号以及照片地址传递到照片编辑类
+				mCurrentPosition = arg2;
+				mCurrentPath = mKXApplication.mAlbumList.get(mCurrentPosition)
+						.get("image_path");
+				Intent intent = new Intent();
+				intent.setClass(VoiceActivity.this,
+						ImageFilterActivity.class);
+				intent.putExtra("path", mCurrentPath);
+				intent.putExtra("isSetResult", true);
+				startActivityForResult(intent, 0);
+			}
+		});
+		mDisplaySingle.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// 将照片地址传递到照片编辑类
+				Intent intent = new Intent();
+				intent.setClass(VoiceActivity.this,
+						ImageFilterActivity.class);
+				intent.putExtra("path", mCurrentPath);
+				intent.putExtra("isSetResult", true);
+				startActivityForResult(intent, 0);
+			}
+		});
+		mCancel.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// 关闭当前界面
+				finish();
+			}
+		});
 		mUpload.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -354,6 +420,26 @@ public class VoiceActivity extends Activity {
 		mMAXVolume = (int) TypedValue.applyDimension(
 				TypedValue.COMPLEX_UNIT_DIP, 65f, getResources()
 						.getDisplayMetrics());
+		
+		// 判断照片的数量,根据数量选择控件显示,1张图片用ImageView显示,多张用Gallery显示
+				if (mKXApplication.mAlbumList.size() > 1) {
+					mDisplaySingle.setVisibility(View.GONE);
+					mDisplay.setVisibility(View.VISIBLE);
+					mCurrentPosition = 0;
+					mAdapter = new GalleryAdapter();
+					mDisplay.setAdapter(mAdapter);
+					mDisplay.setSelection(mCurrentPosition);
+				} else if (mKXApplication.mAlbumList.size() == 1) {
+					mDisplaySingle.setVisibility(View.VISIBLE);
+					mDisplay.setVisibility(View.GONE);
+					mCurrentPosition = 0;
+					mCurrentPath = mKXApplication.mAlbumList.get(mCurrentPosition).get(
+							"image_path");
+					mDisplaySingle.setImageBitmap(mKXApplication
+							.getPhoneAlbum(mCurrentPath));
+				}
+				// 获取地理位置数据
+				getLocation();
 	}
 
 	/**
@@ -505,5 +591,270 @@ public class VoiceActivity extends Activity {
 	 */
 	private void stopRecordLightAnimation() {
 		mRecordLightHandler.sendEmptyMessage(3);
+	}
+	
+	/**
+	 * 获取地理位置数据
+	 */
+	private void getLocation() {
+		if (mKXApplication.mMyLocationResults.isEmpty()) {
+			InputStream inputStream;
+			try {
+				inputStream = getAssets().open("data/my_location.KX");
+				String json = new TextUtil(mKXApplication)
+						.readTextFile(inputStream);
+				JSONArray array = new JSONArray(json);
+				LocationResult result = null;
+				for (int i = 0; i < array.length(); i++) {
+					result = new LocationResult();
+					result.setName(array.getJSONObject(i).getString("name"));
+					result.setLocation(array.getJSONObject(i).getString(
+							"location"));
+					mKXApplication.mMyLocationResults.add(result);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	/**
+	 * 地理位置对话框
+	 */
+	private void locationDialog() {
+		AlertDialog.Builder builder = new Builder(VoiceActivity.this);
+		builder.setTitle("选择当前位置");
+		builder.setAdapter(new LocationAdapter(),
+				new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						mLocationPosition = which;
+						// mLocation.setText(mKXApplication.mMyLocationResults
+						// .get(which).getName());
+						dialog.dismiss();
+					}
+				});
+		builder.setPositiveButton("刷新", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+		});
+		builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.cancel();
+			}
+		}).create().show();
+	}
+
+	/**
+	 * 相册对话框
+	 */
+	private void AlbumDialog() {
+		AlertDialog.Builder builder = new Builder(VoiceActivity.this);
+		builder.setTitle("请选择相册");
+		builder.setAdapter(new AlbumAdapter(),
+				new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						mAlbumPosition = which;
+						// mAlbum.setText(mAlbums[which]);
+						dialog.dismiss();
+					}
+				});
+		builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.cancel();
+			}
+		}).create().show();
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode == RESULT_OK) {
+			// 获取新的照片地址
+			mCurrentPath = data.getStringExtra("path");
+			Map<String, String> map = mKXApplication.mAlbumList
+					.get(mCurrentPosition);
+			map.put("image_path", mCurrentPath);
+			// 更新界面显示
+			if (mKXApplication.mAlbumList.size() > 1) {
+				mAdapter.notifyDataSetChanged();
+			} else if (mKXApplication.mAlbumList.size() == 1) {
+				mDisplaySingle.setImageBitmap(mKXApplication
+						.getPhoneAlbum(mCurrentPath));
+			}
+
+		}
+	}
+
+	private class LocationAdapter extends BaseAdapter {
+
+		@Override
+		public int getCount() {
+			return mKXApplication.mMyLocationResults.size();
+		}
+
+		@Override
+		public Object getItem(int position) {
+			return mKXApplication.mMyLocationResults.get(position);
+		}
+
+		@Override
+		public long getItemId(int position) {
+			return position;
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			ViewHolder holder = null;
+			if (convertView == null) {
+				convertView = LayoutInflater.from(VoiceActivity.this)
+						.inflate(R.layout.photoshare_activity_location_item,
+								null);
+				holder = new ViewHolder();
+				holder.icon = (ImageView) convertView
+						.findViewById(R.id.photoshare_activity_location_item_icon);
+				holder.name = (TextView) convertView
+						.findViewById(R.id.photoshare_activity_location_item_name);
+				holder.location = (TextView) convertView
+						.findViewById(R.id.photoshare_activity_location_item_location);
+				convertView.setTag(holder);
+			} else {
+				holder = (ViewHolder) convertView.getTag();
+			}
+			LocationResult result = mKXApplication.mMyLocationResults
+					.get(position);
+			if (mLocationPosition == position) {
+				holder.icon.setVisibility(View.VISIBLE);
+			} else {
+				holder.icon.setVisibility(View.INVISIBLE);
+			}
+			holder.name.setText(result.getName());
+			holder.location.setText(result.getLocation());
+			return convertView;
+		}
+
+		class ViewHolder {
+			ImageView icon;
+			TextView name;
+			TextView location;
+		}
+	}
+
+	private class AlbumAdapter extends BaseAdapter {
+
+		@Override
+		public int getCount() {
+			return mAlbums.length;
+		}
+
+		@Override
+		public Object getItem(int position) {
+			return mAlbums[position];
+		}
+
+		@Override
+		public long getItemId(int position) {
+			return position;
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			ViewHolder holder = null;
+			if (convertView == null) {
+				convertView = LayoutInflater.from(VoiceActivity.this)
+						.inflate(R.layout.photoshare_activity_album_item, null);
+				holder = new ViewHolder();
+				holder.icon = (ImageView) convertView
+						.findViewById(R.id.photoshare_activity_album_item_icon);
+				holder.name = (TextView) convertView
+						.findViewById(R.id.photoshare_activity_album_item_name);
+				convertView.setTag(holder);
+			} else {
+				holder = (ViewHolder) convertView.getTag();
+			}
+			holder.icon.setVisibility(View.VISIBLE);
+			holder.name.setText(mAlbums[position]);
+			return convertView;
+		}
+
+		class ViewHolder {
+			ImageView icon;
+			TextView name;
+		}
+	}
+
+	private class GalleryAdapter extends BaseAdapter {
+
+		@Override
+		public int getCount() {
+			return mKXApplication.mAlbumList.size();
+		}
+
+		@Override
+		public Object getItem(int position) {
+			return mKXApplication.mAlbumList.get(position);
+		}
+
+		@Override
+		public long getItemId(int position) {
+			return position;
+		}
+
+		@Override
+		public View getView(final int position, View convertView,
+				ViewGroup parent) {
+			ViewHolder holder = null;
+			if (convertView == null) {
+				convertView = LayoutInflater.from(VoiceActivity.this)
+						.inflate(R.layout.photoshare_activity_item, null);
+				holder = new ViewHolder();
+				holder.image = (ImageView) convertView
+						.findViewById(R.id.photoshare_item_image);
+				holder.delete = (Button) convertView
+						.findViewById(R.id.photoshare_item_delete);
+				convertView.setTag(holder);
+			} else {
+				holder = (ViewHolder) convertView.getTag();
+			}
+			Map<String, String> results = mKXApplication.mAlbumList
+					.get(position);
+			holder.image.setImageBitmap(mKXApplication.getPhoneAlbum(results
+					.get("image_path")));
+			if (mKXApplication.mAlbumList.size() > 1) {
+				holder.delete.setVisibility(View.VISIBLE);
+			} else if (mKXApplication.mAlbumList.size() == 1) {
+				holder.delete.setVisibility(View.GONE);
+			}
+			holder.delete.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					mKXApplication.mAlbumList.remove(position);
+					notifyDataSetChanged();
+				}
+			});
+			return convertView;
+		}
+
+		class ViewHolder {
+			ImageView image;
+			Button delete;
+		}
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		mKXApplication.mAlbumList.clear();
 	}
 }
