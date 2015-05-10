@@ -51,12 +51,15 @@
             android:layout_width="fill_parent" 
             android:layout_height="1.0px" />
         <TextView  
-            android:layout_gravity="bottom|right" 
+            
             android:id="@+id/notification_indicator" 
             android:background="@drawable/tool_box_fragment_settings_icon" 
             android:layout_width="wrap_content" 
             android:layout_height="wrap_content" 
             android:layout_marginRight="20.0dip"  
-            android:layout_marginTop="100.0dip" />
+            android:layout_marginTop="100.0dip" 
+            android:gravity="bottom"
+            android:layout_gravity="bottom|right"/>
     </LinearLayout>
+    
 </ScrollView>
