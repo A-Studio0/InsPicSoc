@@ -31,7 +31,9 @@ import com.astudio.android.bitmapfun.util.ImageFetcher;
 import com.astudio.dodowaterfall.Helper;
 import com.astudio.dodowaterfall.widget.ScaleImageView;
 import com.astudio.inspicsoc.R;
-import com.astudio.inspicsoc.model.DuitangInfo;
+import com.astudio.inspicsoc.common.InsUrl;
+import com.astudio.inspicsoc.model.BriefMsg;
+import com.astudio.inspicsoc.view.RoundedImageView;
 import com.astudio.inspicsoc.view.XListView;
 import com.astudio.inspicsoc.view.XListView.IXListViewListener;
 import com.astudio.internal.PLA_AdapterView;
@@ -51,7 +53,7 @@ public class FirstPage extends Fragment implements IXListViewListener {
 	public static Activity myActivity;
 
 	private class ContentTask extends
-			AsyncTask<String, Integer, List<DuitangInfo>> {
+			AsyncTask<String, Integer, List<BriefMsg>> {
 
 		private Context mContext;
 		private int mType = 1;
@@ -63,7 +65,7 @@ public class FirstPage extends Fragment implements IXListViewListener {
 		}
 
 		@Override
-		protected List<DuitangInfo> doInBackground(String... params) {
+		protected List<BriefMsg> doInBackground(String... params) {
 			try {
 				return parseNewsJSON(params[0]);
 			} catch (IOException e) {
@@ -73,7 +75,7 @@ public class FirstPage extends Fragment implements IXListViewListener {
 		}
 
 		@Override
-		protected void onPostExecute(List<DuitangInfo> result) {
+		protected void onPostExecute(List<BriefMsg> result) {
 			if (mType == 1) {
 
 				mAdapter.addItemTop(result);
@@ -92,17 +94,18 @@ public class FirstPage extends Fragment implements IXListViewListener {
 		protected void onPreExecute() {
 		}
 
-		public List<DuitangInfo> parseNewsJSON(String url) throws IOException {
-			List<DuitangInfo> duitangs = new ArrayList<DuitangInfo>();
+		public List<BriefMsg> parseNewsJSON(String url) throws IOException {
+			List<BriefMsg> Msgs = new ArrayList<BriefMsg>();
 			String json = "";
 			if (Helper.checkConnection(mContext)) {
 				try {
 					json = Helper.getStringFromUrl(url);
 
+					System.out.println("====json====" + json);
 				} catch (IOException e) {
 					Log.e("IOException is : ", e.toString());
 					e.printStackTrace();
-					return duitangs;
+					return Msgs;
 				}
 			}
 			Log.d("MainActiivty", "json:" + json);
@@ -110,36 +113,43 @@ public class FirstPage extends Fragment implements IXListViewListener {
 			try {
 				if (null != json) {
 					JSONObject newsObject = new JSONObject(json);
-					JSONObject jsonObject = newsObject.getJSONObject("data");
-					JSONArray blogsJson = jsonObject.getJSONArray("blogs");
+					// JSONObject jsonObject = newsObject.getJSONObject("data");
+					JSONArray blogsJson = newsObject.getJSONArray("pics");
 
 					for (int i = 0; i < blogsJson.length(); i++) {
-						JSONObject newsInfoLeftObject = blogsJson
-								.getJSONObject(i);
-						DuitangInfo newsInfo1 = new DuitangInfo();
-						newsInfo1
-								.setAlbid(newsInfoLeftObject.isNull("albid") ? ""
-										: newsInfoLeftObject.getString("albid"));
-						newsInfo1
-								.setIsrc(newsInfoLeftObject.isNull("isrc") ? ""
-										: newsInfoLeftObject.getString("isrc"));
-						newsInfo1.setMsg(newsInfoLeftObject.isNull("msg") ? ""
-								: newsInfoLeftObject.getString("msg"));
-						newsInfo1.setHeight(200);
-						duitangs.add(newsInfo1);
+						JSONObject newObject = blogsJson.getJSONObject(i);
+						BriefMsg newsInfo1 = new BriefMsg();
+						newsInfo1.setMsgId((newObject.isNull("msgid") ? ""
+								: newObject.getString("msgid")));
+						newsInfo1.setSmallfirstPic(newObject
+								.isNull("smallfirstPic") ? "" : newObject
+								.getString("smallfirstPic"));
+						newsInfo1.setHeadPic(newObject.isNull("headPic") ? ""
+								: newObject.getString("headPic"));
+						newsInfo1.setText(newObject.isNull("text") ? ""
+								: newObject.getString("text"));
+						newsInfo1.setCommentNum(newObject.getInt("commentNum"));
+						newsInfo1.setUserNickName(newObject
+								.isNull("userNickName") ? "" : newObject
+								.getString("userNickName"));
+						// newsInfo1.setHeight((int) computePicHeight(Float
+						// .parseFloat(newsInfoLeftObject
+						// .getString("width")), Float
+						// .parseFloat(newsInfoLeftObject
+						// .getString("height"))));
+						Msgs.add(newsInfo1);
 					}
 				}
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
-			return duitangs;
+			return Msgs;
 		}
 	}
 
 	private void AddItemToContainer(int pageindex, int type) {
 		if (task.getStatus() != Status.RUNNING) {
-			String url = "http://www.duitang.com/album/1733789/masn/p/"
-					+ pageindex + "/24/";
+			String url = InsUrl.GET_FIRSTPAGE_MSG;
 			Log.d("MainActivity", "current url:" + url);
 			ContentTask task = new ContentTask(this.getActivity(), type);
 			task.execute(url);
@@ -147,14 +157,20 @@ public class FirstPage extends Fragment implements IXListViewListener {
 		}
 	}
 
+	public float computePicHeight(float width, float height) {
+		float h = height;
+		h = height * (200 / width);
+		return h;
+	}
+
 	public class StaggeredAdapter extends BaseAdapter {
 		private Context mContext;
-		private LinkedList<DuitangInfo> mInfos;
+		private LinkedList<BriefMsg> mInfos;
 		private XListView mListView;
 
 		public StaggeredAdapter(Context context, XListView xListView) {
 			mContext = context;
-			mInfos = new LinkedList<DuitangInfo>();
+			mInfos = new LinkedList<BriefMsg>();
 			mListView = xListView;
 		}
 
@@ -162,7 +178,7 @@ public class FirstPage extends Fragment implements IXListViewListener {
 		public View getView(int position, View convertView, ViewGroup parent) {
 
 			ViewHolder holder;
-			DuitangInfo DuitangInfo = mInfos.get(position);
+			BriefMsg BriefMsg = mInfos.get(position);
 
 			if (convertView == null) {
 				LayoutInflater layoutInflator = LayoutInflater.from(parent
@@ -173,14 +189,24 @@ public class FirstPage extends Fragment implements IXListViewListener {
 						.findViewById(R.id.news_pic);
 				holder.contentView = (TextView) convertView
 						.findViewById(R.id.news_title);
+				holder.headPic = (RoundedImageView) convertView
+						.findViewById(R.id.avator);
+				holder.nickName = (TextView) convertView
+						.findViewById(R.id.nickNameTextView);
+				holder.numView = (TextView) convertView
+						.findViewById(R.id.comment_num);
 				convertView.setTag(holder);
 			}
 
 			holder = (ViewHolder) convertView.getTag();
-			holder.imageView.setImageWidth(DuitangInfo.getWidth());
-			holder.imageView.setImageHeight(DuitangInfo.getHeight());
-			holder.contentView.setText(DuitangInfo.getMsg());
-			mImageFetcher.loadImage(DuitangInfo.getIsrc(), holder.imageView);
+			// holder.imageView.setImageWidth(BriefMsg.getWidth());
+			// holder.imageView.setImageHeight(BriefMsg.getHeight());
+			// holder.contentView.setText(BriefMsg.getMsg());
+			mImageFetcher.loadImage(BriefMsg.getHeadPic(), holder.headPic);
+			holder.nickName.setText(BriefMsg.getUserNickName());
+			holder.numView.setText(BriefMsg.getCommentNum());
+			mImageFetcher.loadImage(BriefMsg.getSmallfirstPic(),
+					holder.imageView);
 			return convertView;
 		}
 
@@ -199,12 +225,12 @@ public class FirstPage extends Fragment implements IXListViewListener {
 			return 0;
 		}
 
-		public void addItemLast(List<DuitangInfo> datas) {
+		public void addItemLast(List<BriefMsg> datas) {
 			mInfos.addAll(datas);
 		}
 
-		public void addItemTop(List<DuitangInfo> datas) {
-			for (DuitangInfo info : datas) {
+		public void addItemTop(List<BriefMsg> datas) {
+			for (BriefMsg info : datas) {
 				mInfos.addFirst(info);
 			}
 		}
@@ -214,6 +240,9 @@ public class FirstPage extends Fragment implements IXListViewListener {
 		ScaleImageView imageView;
 		TextView contentView;
 		TextView timeView;
+		RoundedImageView headPic;
+		TextView nickName;
+		TextView numView;
 	}
 
 	@Override
@@ -237,7 +266,8 @@ public class FirstPage extends Fragment implements IXListViewListener {
 			public void onItemClick(PLA_AdapterView<?> parent, View view,
 					int position, long id) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(myActivity, PhotoDetailActivity.class);
+				Intent intent = new Intent(myActivity,
+						PhotoDetailActivity.class);
 				startActivity(intent);
 				// ViewHolder holder = (ViewHolder) view.getTag();
 				// Toast.makeText(myActivity.getApplicationContext(),

@@ -3,9 +3,9 @@ package com.astudio.inspicsoc.model;
 import java.util.List;
 
 public class Infos {
-	private String			newsLast	= "0";
-	private int				type		= 0;
-	private List<DuitangInfo>	newsInfos;
+	private String newsLast = "0";
+	private int type = 0;
+	private List<MsgInfo> newsInfos;
 
 	public String getNewsLast() {
 		return newsLast;
@@ -23,11 +23,11 @@ public class Infos {
 		this.type = type;
 	}
 
-	public List<DuitangInfo> getNewsInfos() {
+	public List<MsgInfo> getNewsInfos() {
 		return newsInfos;
 	}
 
-	public void setNewsInfos(List<DuitangInfo> newsInfos) {
+	public void setNewsInfos(List<MsgInfo> newsInfos) {
 		this.newsInfos = newsInfos;
 	}
 
