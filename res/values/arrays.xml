@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+
+    <string-array name="date">
+        <item>cjh</item>
+        <item>gjc</item>
+        <item>wx</item>
+        <item>ylf</item>
+        <item>ylx</item>
+        <item>张3</item>
+        <item>李4</item>
+        <item>小飞飞</item>
+        <item>小灰灰</item>
+        <item>小露露</item>
+        <item>miao</item>
+        <item>wxtongxue</item>
+        <item>Jobs</item>
+        <item>inspicsoc</item>
+        <item>astudio</item>
+        <item>#</item>
+        <item>$797835344$</item>
+        <item>Jack</item>
+        <item>~miao先生</item>
+    </string-array>
+
+</resources>
