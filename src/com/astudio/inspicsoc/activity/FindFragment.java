@@ -248,8 +248,6 @@ public class FindFragment extends Fragment {
                 }
             });
             return convertView;
-        }
-      
-         
-    }
+        }         
+	}
 }

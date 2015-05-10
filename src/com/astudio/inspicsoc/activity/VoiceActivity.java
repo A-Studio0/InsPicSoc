@@ -3,23 +3,13 @@ package com.astudio.inspicsoc.activity;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Map;
 import java.util.UUID;
 
 import org.json.JSONArray;
 
-
-
-/*import com.astudio.inspicsoc.activity.VoiceActivity.AlbumAdapter;
-import com.astudio.inspicsoc.activity.VoiceActivity.GalleryAdapter;
-import com.astudio.inspicsoc.activity.VoiceActivity.LocationAdapter;
-import com.astudio.inspicsoc.activity.VoiceActivity.AlbumAdapter.ViewHolder;*/
-import com.astudio.inspicsoc.result.LocationResult;
 import com.astudio.inspicsoc.utils.ActivityForResultUtil;
 import com.astudio.inspicsoc.utils.RecordUtil;
-import com.astudio.inspicsoc.utils.TextUtil;
 import com.astudio.inspicsoc.R;
-import com.astudio.inspicsoc.activity.*;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -66,32 +56,20 @@ import android.widget.Toast;
  * 录音类
  * 
  */
-public class VoiceActivity extends InsActivity {
+public class VoiceActivity extends Activity {
 	private LinearLayout mParent;
-	private EditText mContent;
-	private LinearLayout mDisplayVoiceLayout;
-	private ImageView mDisplayVoicePlay;
-	private ProgressBar mDisplayVoiceProgressBar;
-	private TextView mDisplayVoiceTime;
-	private Button send;
-	private Button mUpload;
+//	private EditText mContent;
+//	private LinearLayout mDisplayVoiceLayout;
+//	private ImageView mDisplayVoicePlay;
+//	private ProgressBar mDisplayVoiceProgressBar;
+//	private TextView mDisplayVoiceTime;
+//	private Button send;
+//	private Button mUpload;
+	
+//	private Gallery voiceGallery;
+//	private TextView title;
+//	private EditText inputTitle;
 	private Button mCancel;
-	
-	private Gallery mDisplay;
-	private ImageView mDisplaySingle;
-
-	private GalleryAdapter mAdapter;
-
-	private int mCurrentPosition;// 当前图片的编号
-	private String mCurrentPath;// 当前图片的地址
-	private int mLocationPosition;// 当前选择的地理位置在列表的位置
-	private String[] mAlbums = new String[] { "手机相册" };// 相册
-	private int mAlbumPosition;// 当前选择的相册在列表的位置
-	
-	
-	private Gallery voiceGallery;
-	private TextView title;
-	private EditText inputTitle;
 	
 	private Button mRecord;
 	private RelativeLayout mRecordLayout;
@@ -106,7 +84,7 @@ public class VoiceActivity extends InsActivity {
 	private Animation mRecordLight_2_Animation;
 	private Animation mRecordLight_3_Animation;
 
-	private MediaPlayer mMediaPlayer;
+//	private MediaPlayer mMediaPlayer;
 	private RecordUtil mRecordUtil;
 	private static final int MAX_TIME = 60;// 最长录音时间
 	private static final int MIN_TIME = 2;// 最短录音时间
@@ -117,15 +95,14 @@ public class VoiceActivity extends InsActivity {
 	private int mRecord_State = 0; // 录音的状态
 	private float mRecord_Time;// 录音的时间
 	private double mRecord_Volume;// 麦克风获取的音量值
-	private boolean mPlayState; // 播放状态
-	private int mPlayCurrentPosition;// 当前播放的时间
-	private static final String PATH = "/sdcard/KaiXin/Record/";// 录音存储路径
+//	private boolean mPlayState; // 播放状态
+//	private int mPlayCurrentPosition;// 当前播放的时间
+	private static final String PATH = "/sdcard/InsPicSoc/Record/";// 录音存储路径
 	private String mRecordPath;// 录音的存储名称
 	private int mMAXVolume;// 最大音量高度
 	private int mMINVolume;// 最小音量高度
 
-
-	public void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.voice_activity);
@@ -136,13 +113,12 @@ public class VoiceActivity extends InsActivity {
 	}
 
 	private void findViewById() {
-		mCancel = (Button) findViewById(R.id.photoshare_cannel);
 		mParent = (LinearLayout) findViewById(R.id.voice_parent);
-		mContent = (EditText) findViewById(R.id.voice_content);
-		mDisplayVoiceLayout = (LinearLayout) findViewById(R.id.voice_display_voice_layout);
-		mDisplayVoicePlay = (ImageView) findViewById(R.id.voice_display_voice_play);
-		mDisplayVoiceProgressBar = (ProgressBar) findViewById(R.id.voice_display_voice_progressbar);
-		mDisplayVoiceTime = (TextView) findViewById(R.id.voice_display_voice_time);
+//		mContent = (EditText) findViewById(R.id.voice_content);
+//		mDisplayVoiceLayout = (LinearLayout) findViewById(R.id.voice_display_voice_layout);
+//		mDisplayVoicePlay = (ImageView) findViewById(R.id.voice_display_voice_play);
+//		mDisplayVoiceProgressBar = (ProgressBar) findViewById(R.id.voice_display_voice_progressbar);
+//		mDisplayVoiceTime = (TextView) findViewById(R.id.voice_display_voice_time);
 		mRecord = (Button) findViewById(R.id.voice_record_btn);
 		mRecordLayout = (RelativeLayout) findViewById(R.id.voice_record_layout);
 		mRecordVolume = (ImageView) findViewById(R.id.voice_recording_volume);
@@ -151,13 +127,11 @@ public class VoiceActivity extends InsActivity {
 		mRecordLight_3 = (ImageView) findViewById(R.id.voice_recordinglight_3);
 		mRecordTime = (TextView) findViewById(R.id.voice_record_time);
 		mRecordProgressBar = (ProgressBar) findViewById(R.id.voice_record_progressbar);
-		send=(Button) findViewById(R.id.voice_send);
+		mCancel = (Button) findViewById(R.id.photovoice_cancel);
+//		send=(Button) findViewById(R.id.voice_send);
 		
-		mUpload = (Button) findViewById(R.id.photoshare_upload);
-		voiceGallery=(Gallery)findViewById(R.id.photoshare_display);
-		
-		mDisplay = (Gallery) findViewById(R.id.photoshare_display);
-		mDisplaySingle = (ImageView) findViewById(R.id.photoshare_display_single);
+//		mUpload = (Button) findViewById(R.id.photoshare_upload);
+//		voiceGallery=(Gallery)findViewById(R.id.photoshare_display);
 		//title=(TextView)findViewById(R.id.photoshare_display);
 		//inputTitle=(EditText)findViewById(R.id.photoshare_display);
 	}
@@ -166,63 +140,33 @@ public class VoiceActivity extends InsActivity {
 	 * 监听事件
 	 */
 	private void setListener() {
-		mDisplay.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
-				// 获取当前的照片编号以及照片地址传递到照片编辑类
-				mCurrentPosition = arg2;
-				mCurrentPath = mKXApplication.mAlbumList.get(mCurrentPosition)
-						.get("image_path");
-				Intent intent = new Intent();
-				intent.setClass(VoiceActivity.this,
-						ImageFilterActivity.class);
-				intent.putExtra("path", mCurrentPath);
-				intent.putExtra("isSetResult", true);
-				startActivityForResult(intent, 0);
-			}
-		});
-		mDisplaySingle.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// 将照片地址传递到照片编辑类
-				Intent intent = new Intent();
-				intent.setClass(VoiceActivity.this,
-						ImageFilterActivity.class);
-				intent.putExtra("path", mCurrentPath);
-				intent.putExtra("isSetResult", true);
-				startActivityForResult(intent, 0);
-			}
-		});
+//		mUpload.setOnClickListener(new OnClickListener() {
+//
+//			@Override
+//			public void onClick(View v) {
+//				// 判断手机相册界面是否关闭,如果没关闭则关闭
+//				try {
+//					if (!PhoneAlbumActivity.mInstance.isFinishing()) {
+//						PhoneAlbumActivity.mInstance.finish();
+//					}
+//
+//				} catch (Exception e) {
+//
+//				}
+//
+//				// 显示提示信息并关闭当前界面
+//				Toast.makeText(VoiceActivity.this.getApplicationContext(),
+//						"上传图片成功", Toast.LENGTH_SHORT).show();
+//				VoiceActivity.this.finish();
+//				
+//			}
+//		});
 		mCancel.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				// 关闭当前界面
 				finish();
-			}
-		});
-		mUpload.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// 判断手机相册界面是否关闭,如果没关闭则关闭
-				try {
-					if (!PhoneAlbumActivity.mInstance.isFinishing()) {
-						PhoneAlbumActivity.mInstance.finish();
-					}
-
-				} catch (Exception e) {
-
-				}
-
-				// 显示提示信息并关闭当前界面
-				Toast.makeText(VoiceActivity.this.getApplicationContext(),
-						"上传图片成功", Toast.LENGTH_SHORT).show();
-				VoiceActivity.this.finish();
-				
 			}
 		});
 		mRecord.setOnTouchListener(new OnTouchListener() {
@@ -310,16 +254,26 @@ public class VoiceActivity extends InsActivity {
 							mRecordVolume.setLayoutParams(params);
 						} else {
 							// 录音成功,则显示录音成功后的界面
-							mRecordLayout.setVisibility(View.GONE);
-							mRecord.setVisibility(View.GONE);
-							mDisplayVoiceLayout.setVisibility(View.VISIBLE);
-							voiceGallery.setVisibility(View.VISIBLE);
-							mDisplayVoicePlay
-									.setImageResource(R.drawable.globle_player_btn_play);
-							mDisplayVoiceProgressBar.setMax((int) mRecord_Time);
-							mDisplayVoiceProgressBar.setProgress(0);
-							mDisplayVoiceTime.setText((int) mRecord_Time + "″");
-							send.setVisibility(View.VISIBLE);
+							if(mRecordPath!=null){
+								Intent i=new Intent();
+								i.setClass(VoiceActivity.this,PhotoShareActivity.class);
+								Bundle bundle=new Bundle();
+								bundle.putString("voicePath",mRecordPath);
+								bundle.putString("recordTime",String.valueOf(mRecord_Time));
+								i.putExtras(bundle); 
+								setResult(ActivityForResultUtil.REQUESTCODE_VOICE,i);
+								finish();
+							}
+//							mRecordLayout.setVisibility(View.GONE);
+//							mRecord.setVisibility(View.GONE);
+//							mDisplayVoiceLayout.setVisibility(View.VISIBLE);
+//							voiceGallery.setVisibility(View.VISIBLE);
+//							mDisplayVoicePlay
+//									.setImageResource(R.drawable.globle_player_btn_play);
+//							mDisplayVoiceProgressBar.setMax((int) mRecord_Time);
+//							mDisplayVoiceProgressBar.setProgress(0);
+//							mDisplayVoiceTime.setText((int) mRecord_Time + "″");
+//							send.setVisibility(View.VISIBLE);
 						}
 					}
 					break;
@@ -327,89 +281,89 @@ public class VoiceActivity extends InsActivity {
 				return false;
 			}
 		});
-		mDisplayVoicePlay.setOnClickListener(new OnClickListener() {
-
-			public void onClick(View v) {
-				// 播放录音
-				if (!mPlayState) {
-					mMediaPlayer = new MediaPlayer();
-					try {
-						// 添加录音的路径
-						mMediaPlayer.setDataSource(mRecordPath);
-						// 准备
-						mMediaPlayer.prepare();
-						// 播放
-						mMediaPlayer.start();
-						// 根据时间修改界面
-						new Thread(new Runnable() {
-
-							public void run() {
-
-								mDisplayVoiceProgressBar
-										.setMax((int) mRecord_Time);
-								mPlayCurrentPosition = 0;
-								while (mMediaPlayer.isPlaying()) {
-									mPlayCurrentPosition = mMediaPlayer
-											.getCurrentPosition() / 1000;
-									mDisplayVoiceProgressBar
-											.setProgress(mPlayCurrentPosition);
-								}
-							}
-						}).start();
-						// 修改播放状态
-						mPlayState = true;
-						// 修改播放图标
-						mDisplayVoicePlay
-								.setImageResource(R.drawable.globle_player_btn_stop);
-
-						mMediaPlayer
-								.setOnCompletionListener(new OnCompletionListener() {
-									// 播放结束后调用
-									public void onCompletion(MediaPlayer mp) {
-										// 停止播放
-										mMediaPlayer.stop();
-										// 修改播放状态
-										mPlayState = false;
-										// 修改播放图标
-										mDisplayVoicePlay
-												.setImageResource(R.drawable.globle_player_btn_play);
-										// 初始化播放数据
-										mPlayCurrentPosition = 0;
-										mDisplayVoiceProgressBar
-												.setProgress(mPlayCurrentPosition);
-									}
-								});
-
-					} catch (IllegalArgumentException e) {
-						e.printStackTrace();
-					} catch (IllegalStateException e) {
-						e.printStackTrace();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				} else {
-					if (mMediaPlayer != null) {
-						// 根据播放状态修改显示内容
-						if (mMediaPlayer.isPlaying()) {
-							mPlayState = false;
-							mMediaPlayer.stop();
-							mDisplayVoicePlay
-									.setImageResource(R.drawable.globle_player_btn_play);
-							mPlayCurrentPosition = 0;
-							mDisplayVoiceProgressBar
-									.setProgress(mPlayCurrentPosition);
-						} else {
-							mPlayState = false;
-							mDisplayVoicePlay
-									.setImageResource(R.drawable.globle_player_btn_play);
-							mPlayCurrentPosition = 0;
-							mDisplayVoiceProgressBar
-									.setProgress(mPlayCurrentPosition);
-						}
-					}
-				}
-			}
-		});
+//		mDisplayVoicePlay.setOnClickListener(new OnClickListener() {
+//
+//			public void onClick(View v) {
+//				// 播放录音
+//				if (!mPlayState) {
+//					mMediaPlayer = new MediaPlayer();
+//					try {
+//						// 添加录音的路径
+//						mMediaPlayer.setDataSource(mRecordPath);
+//						// 准备
+//						mMediaPlayer.prepare();
+//						// 播放
+//						mMediaPlayer.start();
+//						// 根据时间修改界面
+//						new Thread(new Runnable() {
+//
+//							public void run() {
+//
+//								mDisplayVoiceProgressBar
+//										.setMax((int) mRecord_Time);
+//								mPlayCurrentPosition = 0;
+//								while (mMediaPlayer.isPlaying()) {
+//									mPlayCurrentPosition = mMediaPlayer
+//											.getCurrentPosition() / 1000;
+//									mDisplayVoiceProgressBar
+//											.setProgress(mPlayCurrentPosition);
+//								}
+//							}
+//						}).start();
+//						// 修改播放状态
+//						mPlayState = true;
+//						// 修改播放图标
+//						mDisplayVoicePlay
+//								.setImageResource(R.drawable.globle_player_btn_stop);
+//
+//						mMediaPlayer
+//								.setOnCompletionListener(new OnCompletionListener() {
+//									// 播放结束后调用
+//									public void onCompletion(MediaPlayer mp) {
+//										// 停止播放
+//										mMediaPlayer.stop();
+//										// 修改播放状态
+//										mPlayState = false;
+//										// 修改播放图标
+//										mDisplayVoicePlay
+//												.setImageResource(R.drawable.globle_player_btn_play);
+//										// 初始化播放数据
+//										mPlayCurrentPosition = 0;
+//										mDisplayVoiceProgressBar
+//												.setProgress(mPlayCurrentPosition);
+//									}
+//								});
+//
+//					} catch (IllegalArgumentException e) {
+//						e.printStackTrace();
+//					} catch (IllegalStateException e) {
+//						e.printStackTrace();
+//					} catch (IOException e) {
+//						e.printStackTrace();
+//					}
+//				} else {
+//					if (mMediaPlayer != null) {
+//						// 根据播放状态修改显示内容
+//						if (mMediaPlayer.isPlaying()) {
+//							mPlayState = false;
+//							mMediaPlayer.stop();
+//							mDisplayVoicePlay
+//									.setImageResource(R.drawable.globle_player_btn_play);
+//							mPlayCurrentPosition = 0;
+//							mDisplayVoiceProgressBar
+//									.setProgress(mPlayCurrentPosition);
+//						} else {
+//							mPlayState = false;
+//							mDisplayVoicePlay
+//									.setImageResource(R.drawable.globle_player_btn_play);
+//							mPlayCurrentPosition = 0;
+//							mDisplayVoiceProgressBar
+//									.setProgress(mPlayCurrentPosition);
+//						}
+//					}
+//				}
+//			}
+//		});
 	}
 
 	private void init() {
@@ -420,26 +374,6 @@ public class VoiceActivity extends InsActivity {
 		mMAXVolume = (int) TypedValue.applyDimension(
 				TypedValue.COMPLEX_UNIT_DIP, 65f, getResources()
 						.getDisplayMetrics());
-		
-		// 判断照片的数量,根据数量选择控件显示,1张图片用ImageView显示,多张用Gallery显示
-				if (mKXApplication.mAlbumList.size() > 1) {
-					mDisplaySingle.setVisibility(View.GONE);
-					mDisplay.setVisibility(View.VISIBLE);
-					mCurrentPosition = 0;
-					mAdapter = new GalleryAdapter();
-					mDisplay.setAdapter(mAdapter);
-					mDisplay.setSelection(mCurrentPosition);
-				} else if (mKXApplication.mAlbumList.size() == 1) {
-					mDisplaySingle.setVisibility(View.VISIBLE);
-					mDisplay.setVisibility(View.GONE);
-					mCurrentPosition = 0;
-					mCurrentPath = mKXApplication.mAlbumList.get(mCurrentPosition).get(
-							"image_path");
-					mDisplaySingle.setImageBitmap(mKXApplication
-							.getPhoneAlbum(mCurrentPath));
-				}
-				// 获取地理位置数据
-				getLocation();
 	}
 
 	/**
@@ -523,14 +457,14 @@ public class VoiceActivity extends InsActivity {
 						e.printStackTrace();
 					}
 					// 根据录音修改界面显示内容
-					mRecordLayout.setVisibility(View.GONE);
-					mRecord.setVisibility(View.GONE);
-					mDisplayVoiceLayout.setVisibility(View.VISIBLE);
-					mDisplayVoicePlay
-							.setImageResource(R.drawable.globle_player_btn_play);
-					mDisplayVoiceProgressBar.setMax((int) mRecord_Time);
-					mDisplayVoiceProgressBar.setProgress(0);
-					mDisplayVoiceTime.setText((int) mRecord_Time + "″");
+//					mRecordLayout.setVisibility(View.GONE);
+//					mRecord.setVisibility(View.GONE);
+//					mDisplayVoiceLayout.setVisibility(View.VISIBLE);
+//					mDisplayVoicePlay
+//							.setImageResource(R.drawable.globle_player_btn_play);
+//					mDisplayVoiceProgressBar.setMax((int) mRecord_Time);
+//					mDisplayVoiceProgressBar.setProgress(0);
+//					mDisplayVoiceTime.setText((int) mRecord_Time + "″");
 				}
 				break;
 
@@ -591,270 +525,5 @@ public class VoiceActivity extends InsActivity {
 	 */
 	private void stopRecordLightAnimation() {
 		mRecordLightHandler.sendEmptyMessage(3);
-	}
-	
-	/**
-	 * 获取地理位置数据
-	 */
-	private void getLocation() {
-		if (mKXApplication.mMyLocationResults.isEmpty()) {
-			InputStream inputStream;
-			try {
-				inputStream = getAssets().open("data/my_location.KX");
-				String json = new TextUtil(mKXApplication)
-						.readTextFile(inputStream);
-				JSONArray array = new JSONArray(json);
-				LocationResult result = null;
-				for (int i = 0; i < array.length(); i++) {
-					result = new LocationResult();
-					result.setName(array.getJSONObject(i).getString("name"));
-					result.setLocation(array.getJSONObject(i).getString(
-							"location"));
-					mKXApplication.mMyLocationResults.add(result);
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	/**
-	 * 地理位置对话框
-	 */
-	private void locationDialog() {
-		AlertDialog.Builder builder = new Builder(VoiceActivity.this);
-		builder.setTitle("选择当前位置");
-		builder.setAdapter(new LocationAdapter(),
-				new DialogInterface.OnClickListener() {
-
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						mLocationPosition = which;
-						// mLocation.setText(mKXApplication.mMyLocationResults
-						// .get(which).getName());
-						dialog.dismiss();
-					}
-				});
-		builder.setPositiveButton("刷新", new DialogInterface.OnClickListener() {
-
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.dismiss();
-			}
-		});
-		builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.cancel();
-			}
-		}).create().show();
-	}
-
-	/**
-	 * 相册对话框
-	 */
-	private void AlbumDialog() {
-		AlertDialog.Builder builder = new Builder(VoiceActivity.this);
-		builder.setTitle("请选择相册");
-		builder.setAdapter(new AlbumAdapter(),
-				new DialogInterface.OnClickListener() {
-
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						mAlbumPosition = which;
-						// mAlbum.setText(mAlbums[which]);
-						dialog.dismiss();
-					}
-				});
-		builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.cancel();
-			}
-		}).create().show();
-	}
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		if (resultCode == RESULT_OK) {
-			// 获取新的照片地址
-			mCurrentPath = data.getStringExtra("path");
-			Map<String, String> map = mKXApplication.mAlbumList
-					.get(mCurrentPosition);
-			map.put("image_path", mCurrentPath);
-			// 更新界面显示
-			if (mKXApplication.mAlbumList.size() > 1) {
-				mAdapter.notifyDataSetChanged();
-			} else if (mKXApplication.mAlbumList.size() == 1) {
-				mDisplaySingle.setImageBitmap(mKXApplication
-						.getPhoneAlbum(mCurrentPath));
-			}
-
-		}
-	}
-
-	private class LocationAdapter extends BaseAdapter {
-
-		@Override
-		public int getCount() {
-			return mKXApplication.mMyLocationResults.size();
-		}
-
-		@Override
-		public Object getItem(int position) {
-			return mKXApplication.mMyLocationResults.get(position);
-		}
-
-		@Override
-		public long getItemId(int position) {
-			return position;
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			ViewHolder holder = null;
-			if (convertView == null) {
-				convertView = LayoutInflater.from(VoiceActivity.this)
-						.inflate(R.layout.photoshare_activity_location_item,
-								null);
-				holder = new ViewHolder();
-				holder.icon = (ImageView) convertView
-						.findViewById(R.id.photoshare_activity_location_item_icon);
-				holder.name = (TextView) convertView
-						.findViewById(R.id.photoshare_activity_location_item_name);
-				holder.location = (TextView) convertView
-						.findViewById(R.id.photoshare_activity_location_item_location);
-				convertView.setTag(holder);
-			} else {
-				holder = (ViewHolder) convertView.getTag();
-			}
-			LocationResult result = mKXApplication.mMyLocationResults
-					.get(position);
-			if (mLocationPosition == position) {
-				holder.icon.setVisibility(View.VISIBLE);
-			} else {
-				holder.icon.setVisibility(View.INVISIBLE);
-			}
-			holder.name.setText(result.getName());
-			holder.location.setText(result.getLocation());
-			return convertView;
-		}
-
-		class ViewHolder {
-			ImageView icon;
-			TextView name;
-			TextView location;
-		}
-	}
-
-	private class AlbumAdapter extends BaseAdapter {
-
-		@Override
-		public int getCount() {
-			return mAlbums.length;
-		}
-
-		@Override
-		public Object getItem(int position) {
-			return mAlbums[position];
-		}
-
-		@Override
-		public long getItemId(int position) {
-			return position;
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			ViewHolder holder = null;
-			if (convertView == null) {
-				convertView = LayoutInflater.from(VoiceActivity.this)
-						.inflate(R.layout.photoshare_activity_album_item, null);
-				holder = new ViewHolder();
-				holder.icon = (ImageView) convertView
-						.findViewById(R.id.photoshare_activity_album_item_icon);
-				holder.name = (TextView) convertView
-						.findViewById(R.id.photoshare_activity_album_item_name);
-				convertView.setTag(holder);
-			} else {
-				holder = (ViewHolder) convertView.getTag();
-			}
-			holder.icon.setVisibility(View.VISIBLE);
-			holder.name.setText(mAlbums[position]);
-			return convertView;
-		}
-
-		class ViewHolder {
-			ImageView icon;
-			TextView name;
-		}
-	}
-
-	private class GalleryAdapter extends BaseAdapter {
-
-		@Override
-		public int getCount() {
-			return mKXApplication.mAlbumList.size();
-		}
-
-		@Override
-		public Object getItem(int position) {
-			return mKXApplication.mAlbumList.get(position);
-		}
-
-		@Override
-		public long getItemId(int position) {
-			return position;
-		}
-
-		@Override
-		public View getView(final int position, View convertView,
-				ViewGroup parent) {
-			ViewHolder holder = null;
-			if (convertView == null) {
-				convertView = LayoutInflater.from(VoiceActivity.this)
-						.inflate(R.layout.photoshare_activity_item, null);
-				holder = new ViewHolder();
-				holder.image = (ImageView) convertView
-						.findViewById(R.id.photoshare_item_image);
-				holder.delete = (Button) convertView
-						.findViewById(R.id.photoshare_item_delete);
-				convertView.setTag(holder);
-			} else {
-				holder = (ViewHolder) convertView.getTag();
-			}
-			Map<String, String> results = mKXApplication.mAlbumList
-					.get(position);
-			holder.image.setImageBitmap(mKXApplication.getPhoneAlbum(results
-					.get("image_path")));
-			if (mKXApplication.mAlbumList.size() > 1) {
-				holder.delete.setVisibility(View.VISIBLE);
-			} else if (mKXApplication.mAlbumList.size() == 1) {
-				holder.delete.setVisibility(View.GONE);
-			}
-			holder.delete.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					mKXApplication.mAlbumList.remove(position);
-					notifyDataSetChanged();
-				}
-			});
-			return convertView;
-		}
-
-		class ViewHolder {
-			ImageView image;
-			Button delete;
-		}
-	}
-
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		mKXApplication.mAlbumList.clear();
 	}
 }

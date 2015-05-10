@@ -26,6 +26,7 @@
         android:paddingTop="10dip"
         android:paddingBottom="10dip"
         android:paddingLeft="10dip"
+        android:paddingRight="0dip"
         android:layout_toRightOf="@id/img" />
    <!-- 
     <Button android:id="@+id/view_btn"
