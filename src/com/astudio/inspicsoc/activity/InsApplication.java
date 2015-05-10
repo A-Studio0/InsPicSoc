@@ -47,7 +47,7 @@ public class InsApplication extends Application implements WebSocketEvents {
 	private WebSocketClient websocketclient = null;
 	private Toast logToast;
 	private LooperExecutor executor = null;
-	
+
 	/**
 	 * Notification
 	 */
@@ -60,7 +60,8 @@ public class InsApplication extends Application implements WebSocketEvents {
 	 * 消息列表
 	 */
 	public List<Cat> messageList = new ArrayList<Cat>();
-	
+
+	public String userName;
 	/**
 	 * 默认壁纸
 	 */
@@ -214,7 +215,7 @@ public class InsApplication extends Application implements WebSocketEvents {
 	/**
 	 * 当期用户首页数据
 	 */
-	//public List<HomeResult> mMyHomeResults = new ArrayList<HomeResult>();
+	// public List<HomeResult> mMyHomeResults = new ArrayList<HomeResult>();
 	/**
 	 * 当前用户的资料数据
 	 */
@@ -235,15 +236,17 @@ public class InsApplication extends Application implements WebSocketEvents {
 	/**
 	 * 当前用户的日记数据
 	 */
-	//public List<DiaryResult> mMyDiaryResults = new ArrayList<DiaryResult>();
+	// public List<DiaryResult> mMyDiaryResults = new ArrayList<DiaryResult>();
 	/**
 	 * 当前用户的好友数据
 	 */
-	//public List<FriendsResult> mMyFriendsResults = new ArrayList<FriendsResult>();
+	// public List<FriendsResult> mMyFriendsResults = new
+	// ArrayList<FriendsResult>();
 	/**
 	 * 当前用户的好友根据姓名首字母分组
 	 */
-	//public Map<String, List<FriendsResult>> mMyFriendsGroupByFirstName = new HashMap<String, List<FriendsResult>>();
+	// public Map<String, List<FriendsResult>> mMyFriendsGroupByFirstName = new
+	// HashMap<String, List<FriendsResult>>();
 	/**
 	 * 当前用户的好友的姓名首字母在列表中的位置
 	 */
@@ -260,45 +263,54 @@ public class InsApplication extends Application implements WebSocketEvents {
 	/**
 	 * 当前用户的公共主页数据
 	 */
-	//public List<PublicPageResult> mMyPublicPageResults = new ArrayList<PublicPageResult>();
+	// public List<PublicPageResult> mMyPublicPageResults = new
+	// ArrayList<PublicPageResult>();
 	/**
 	 * 当前用户的公共主页根据姓名首字母分组
 	 */
-	//public Map<String, List<PublicPageResult>> mMyPublicPageGroupByFirstName = new HashMap<String, List<PublicPageResult>>();
+	// public Map<String, List<PublicPageResult>> mMyPublicPageGroupByFirstName
+	// = new HashMap<String, List<PublicPageResult>>();
 
 	/**
 	 * 当前用户的好友转帖数据
 	 */
-	//public List<ViewedResult> mMyViewedResults = new ArrayList<ViewedResult>();
+	// public List<ViewedResult> mMyViewedResults = new
+	// ArrayList<ViewedResult>();
 
 	/**
 	 * 当前用户的热门转帖数据
 	 */
-	//public List<ViewedResult> mViewedHotResults = new ArrayList<ViewedResult>();
+	// public List<ViewedResult> mViewedHotResults = new
+	// ArrayList<ViewedResult>();
 
 	/**
 	 * 当前用户的最近过生日好友数据
 	 */
-	//public List<FriendsBirthdayResult> mMyFriendsBirthdayResults = new ArrayList<FriendsBirthdayResult>();
+	// public List<FriendsBirthdayResult> mMyFriendsBirthdayResults = new
+	// ArrayList<FriendsBirthdayResult>();
 
 	/**
 	 * 当前用户的推荐官方模块数据
 	 */
-	//public List<RecommendResult> mMyRecommendOfficialResults = new ArrayList<RecommendResult>();
+	// public List<RecommendResult> mMyRecommendOfficialResults = new
+	// ArrayList<RecommendResult>();
 	/**
 	 * 当前用户的推荐应用下载数据
 	 */
-	//public List<RecommendResult> mMyRecommendAppDownLoadResults = new ArrayList<RecommendResult>();
+	// public List<RecommendResult> mMyRecommendAppDownLoadResults = new
+	// ArrayList<RecommendResult>();
 
 	/**
 	 * 当前用户的附近的人数据
 	 */
-	//public List<NearbyPeopleResult> mMyNearByPeopleResults = new ArrayList<NearbyPeopleResult>();
+	// public List<NearbyPeopleResult> mMyNearByPeopleResults = new
+	// ArrayList<NearbyPeopleResult>();
 
 	/**
 	 * 当前用户的附近的照片数据
 	 */
-	//public List<NearbyPhotoResult> mMyNearbyPhotoResults = new ArrayList<NearbyPhotoResult>();
+	// public List<NearbyPhotoResult> mMyNearbyPhotoResults = new
+	// ArrayList<NearbyPhotoResult>();
 
 	/**
 	 * 当前用户的地理位置数据
@@ -328,17 +340,19 @@ public class InsApplication extends Application implements WebSocketEvents {
 	/**
 	 * 所有好友的日记数据 (Key对应该好友的uid)
 	 */
-	//public Map<String, List<DiaryResult>> mFriendDiaryResults = new HashMap<String, List<DiaryResult>>();
+	// public Map<String, List<DiaryResult>> mFriendDiaryResults = new
+	// HashMap<String, List<DiaryResult>>();
 
 	/**
 	 * 所有好友的好友数据 (Key对应该好友的uid)
 	 */
-	//public Map<String, List<FriendsResult>> mFriendFriendsResults = new HashMap<String, List<FriendsResult>>();
+	// public Map<String, List<FriendsResult>> mFriendFriendsResults = new
+	// HashMap<String, List<FriendsResult>>();
 
 	/**
 	 * 存放聊天记录
 	 */
-	//public List<ChatResult> mChatResults = new ArrayList<ChatResult>();
+	// public List<ChatResult> mChatResults = new ArrayList<ChatResult>();
 
 	/**
 	 * 存放赠送礼物的好友
@@ -354,7 +368,7 @@ public class InsApplication extends Application implements WebSocketEvents {
 	/**
 	 * 存放礼物的具体信息
 	 */
-	//public List<GiftResult> mGiftResults = new ArrayList<GiftResult>();
+	// public List<GiftResult> mGiftResults = new ArrayList<GiftResult>();
 
 	/**
 	 * 存放存为草稿的日记标题
@@ -374,15 +388,17 @@ public class InsApplication extends Application implements WebSocketEvents {
 	 */
 	public List<Map<String, String>> mAlbumList = new ArrayList<Map<String, String>>();
 
+	@Override
 	public void onCreate() {
 		super.onCreate();
 		/**
 		 * 初始化默认数据
 		 */
-//		mDefault_Wallpager = BitmapFactory.decodeResource(getResources(),
-//				R.drawable.cover);
-//		mDefault_TitleWallpager = BitmapFactory.decodeResource(getResources(),
-//				R.drawable.cover_title);
+		// mDefault_Wallpager = BitmapFactory.decodeResource(getResources(),
+		// R.drawable.cover);
+		// mDefault_TitleWallpager =
+		// BitmapFactory.decodeResource(getResources(),
+		// R.drawable.cover_title);
 		mDefault_Photo = BitmapFactory.decodeResource(getResources(),
 				R.drawable.photo);
 		mDefault_Avatar = PhotoUtil.toRoundCorner(
@@ -410,33 +426,35 @@ public class InsApplication extends Application implements WebSocketEvents {
 		for (int i = 0; i < mFaces.length; i++) {
 			mFacesText.add("[face_" + i + "]");
 		}
-		
+
 		/**
 		 * 初始化Push
 		 */
 		executor = new LooperExecutor();
-	    executor.requestStart();
-	    websocketclient = new WebSocketClient(this);
-	    try {
+		executor.requestStart();
+		websocketclient = new WebSocketClient(this);
+		try {
 			websocketclient.connect(PUSHSERVER);
-	    } catch (Exception e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-	    }
-	    mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-	    mBuilder = new NotificationCompat.Builder(this);
+		}
+		mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+		mBuilder = new NotificationCompat.Builder(this);
 		mBuilder.setContentTitle("测试标题")
-		.setContentText("测试内容")
-		.setContentIntent(getDefalutIntent(Notification.FLAG_AUTO_CANCEL))
-//		.setNumber(number)//显示数量
-		.setTicker("测试通知来啦")//通知首次出现在通知栏，带上升动画效果的
-		.setWhen(System.currentTimeMillis())//通知产生的时间，会在通知信息里显示
-		.setPriority(Notification.PRIORITY_DEFAULT)//设置该通知优先级
-//		.setAutoCancel(true)//设置这个标志当用户单击面板就可以让通知将自动取消  
-		.setOngoing(false)//ture，设置他为一个正在进行的通知。他们通常是用来表示一个后台任务,用户积极参与(如播放音乐)或以某种方式正在等待,因此占用设备(如一个文件下载,同步操作,主动网络连接)
-		.setDefaults(Notification.DEFAULT_VIBRATE)//向通知添加声音、闪灯和振动效果的最简单、最一致的方式是使用当前的用户默认设置，使用defaults属性，可以组合：
-//		Notification.DEFAULT_ALL  Notification.DEFAULT_SOUND 添加声音 // requires VIBRATE permission
-		.setSmallIcon(R.drawable.ic_launcher);
+				.setContentText("测试内容")
+				.setContentIntent(
+						getDefalutIntent(Notification.FLAG_AUTO_CANCEL))
+				// .setNumber(number)//显示数量
+				.setTicker("测试通知来啦")// 通知首次出现在通知栏，带上升动画效果的
+				.setWhen(System.currentTimeMillis())// 通知产生的时间，会在通知信息里显示
+				.setPriority(Notification.PRIORITY_DEFAULT)// 设置该通知优先级
+				// .setAutoCancel(true)//设置这个标志当用户单击面板就可以让通知将自动取消
+				.setOngoing(false)// ture，设置他为一个正在进行的通知。他们通常是用来表示一个后台任务,用户积极参与(如播放音乐)或以某种方式正在等待,因此占用设备(如一个文件下载,同步操作,主动网络连接)
+				.setDefaults(Notification.DEFAULT_VIBRATE)// 向通知添加声音、闪灯和振动效果的最简单、最一致的方式是使用当前的用户默认设置，使用defaults属性，可以组合：
+				// Notification.DEFAULT_ALL Notification.DEFAULT_SOUND 添加声音 //
+				// requires VIBRATE permission
+				.setSmallIcon(R.drawable.ic_launcher);
 	}
 
 	/**
@@ -493,26 +511,26 @@ public class InsApplication extends Application implements WebSocketEvents {
 	/**
 	 * 根据图片名称获取主页图片
 	 */
-//	public Bitmap getHome(String photo) {
-//		try {
-//			String homeName = photo + ".jpg";
-//			Bitmap bitmap = null;
-//			if (mHomeCache.containsKey(homeName)) {
-//				SoftReference<Bitmap> reference = mHomeCache.get(homeName);
-//				bitmap = reference.get();
-//				if (bitmap != null) {
-//					return bitmap;
-//				}
-//			}
-//			bitmap = BitmapFactory.decodeStream(getAssets().open(
-//					"home/" + homeName));
-//			mHomeCache.put(homeName, new SoftReference<Bitmap>(bitmap));
-//			return bitmap;
-//		} catch (Exception e) {
-//			return BitmapFactory.decodeResource(getResources(),
-//					R.drawable.picture_default_fg);
-//		}
-//	}
+	// public Bitmap getHome(String photo) {
+	// try {
+	// String homeName = photo + ".jpg";
+	// Bitmap bitmap = null;
+	// if (mHomeCache.containsKey(homeName)) {
+	// SoftReference<Bitmap> reference = mHomeCache.get(homeName);
+	// bitmap = reference.get();
+	// if (bitmap != null) {
+	// return bitmap;
+	// }
+	// }
+	// bitmap = BitmapFactory.decodeStream(getAssets().open(
+	// "home/" + homeName));
+	// mHomeCache.put(homeName, new SoftReference<Bitmap>(bitmap));
+	// return bitmap;
+	// } catch (Exception e) {
+	// return BitmapFactory.decodeResource(getResources(),
+	// R.drawable.picture_default_fg);
+	// }
+	// }
 
 	/**
 	 * 根据编号获取用户圆形头像
@@ -541,54 +559,54 @@ public class InsApplication extends Application implements WebSocketEvents {
 	/**
 	 * 根据编号获取用户默认头像
 	 */
-//	public Bitmap getDefaultAvatar(int position) {
-//		try {
-//			String avatarName = mAvatars[position];
-//			Bitmap bitmap = null;
-//			if (mDefaultAvatarCache.containsKey(avatarName)) {
-//				SoftReference<Bitmap> reference = mDefaultAvatarCache
-//						.get(avatarName);
-//				bitmap = reference.get();
-//				if (bitmap != null) {
-//					return bitmap;
-//				}
-//			}
-//			bitmap = BitmapFactory.decodeStream(getAssets().open(
-//					"avatar/" + avatarName));
-//			mDefaultAvatarCache.put(avatarName, new SoftReference<Bitmap>(
-//					bitmap));
-//			return bitmap;
-//		} catch (Exception e) {
-//			return BitmapFactory
-//					.decodeResource(getResources(), R.drawable.head);
-//		}
-//	}
+	// public Bitmap getDefaultAvatar(int position) {
+	// try {
+	// String avatarName = mAvatars[position];
+	// Bitmap bitmap = null;
+	// if (mDefaultAvatarCache.containsKey(avatarName)) {
+	// SoftReference<Bitmap> reference = mDefaultAvatarCache
+	// .get(avatarName);
+	// bitmap = reference.get();
+	// if (bitmap != null) {
+	// return bitmap;
+	// }
+	// }
+	// bitmap = BitmapFactory.decodeStream(getAssets().open(
+	// "avatar/" + avatarName));
+	// mDefaultAvatarCache.put(avatarName, new SoftReference<Bitmap>(
+	// bitmap));
+	// return bitmap;
+	// } catch (Exception e) {
+	// return BitmapFactory
+	// .decodeResource(getResources(), R.drawable.head);
+	// }
+	// }
 
 	/**
 	 * 根据编号获取公共主页头像
 	 */
-//	public Bitmap getPublicPageAvatar(int position) {
-//		try {
-//			String avatarName = mPublicPageAvatars[position];
-//			Bitmap bitmap = null;
-//			if (mPublicPageAvatarCache.containsKey(avatarName)) {
-//				SoftReference<Bitmap> reference = mPublicPageAvatarCache
-//						.get(avatarName);
-//				bitmap = reference.get();
-//				if (bitmap != null) {
-//					return bitmap;
-//				}
-//			}
-//			bitmap = PhotoUtil.toRoundCorner(
-//					BitmapFactory.decodeStream(getAssets().open(
-//							"publicpage_avatar/" + avatarName)), 15);
-//			mPublicPageAvatarCache.put(avatarName, new SoftReference<Bitmap>(
-//					bitmap));
-//			return bitmap;
-//		} catch (Exception e) {
-//			return mDefault_Avatar;
-//		}
-//	}
+	// public Bitmap getPublicPageAvatar(int position) {
+	// try {
+	// String avatarName = mPublicPageAvatars[position];
+	// Bitmap bitmap = null;
+	// if (mPublicPageAvatarCache.containsKey(avatarName)) {
+	// SoftReference<Bitmap> reference = mPublicPageAvatarCache
+	// .get(avatarName);
+	// bitmap = reference.get();
+	// if (bitmap != null) {
+	// return bitmap;
+	// }
+	// }
+	// bitmap = PhotoUtil.toRoundCorner(
+	// BitmapFactory.decodeStream(getAssets().open(
+	// "publicpage_avatar/" + avatarName)), 15);
+	// mPublicPageAvatarCache.put(avatarName, new SoftReference<Bitmap>(
+	// bitmap));
+	// return bitmap;
+	// } catch (Exception e) {
+	// return mDefault_Avatar;
+	// }
+	// }
 
 	/**
 	 * 根据编号获取照片
@@ -616,103 +634,103 @@ public class InsApplication extends Application implements WebSocketEvents {
 	/**
 	 * 根据编号获取转帖图片
 	 */
-//	public Bitmap getViewed(int position) {
-//		try {
-//			String viewedName = mViewedName[position];
-//			Bitmap bitmap = null;
-//			if (mViewedCache.containsKey(viewedName)) {
-//				SoftReference<Bitmap> reference = mViewedCache.get(viewedName);
-//				bitmap = reference.get();
-//				if (bitmap != null) {
-//					return bitmap;
-//				}
-//			}
-//			bitmap = BitmapFactory.decodeStream(getAssets().open(
-//					"viewed/" + viewedName));
-//			mViewedCache.put(viewedName, new SoftReference<Bitmap>(bitmap));
-//			return bitmap;
-//		} catch (Exception e) {
-//			return BitmapFactory.decodeResource(getResources(),
-//					R.drawable.picture_default_fg);
-//		}
-//	}
+	// public Bitmap getViewed(int position) {
+	// try {
+	// String viewedName = mViewedName[position];
+	// Bitmap bitmap = null;
+	// if (mViewedCache.containsKey(viewedName)) {
+	// SoftReference<Bitmap> reference = mViewedCache.get(viewedName);
+	// bitmap = reference.get();
+	// if (bitmap != null) {
+	// return bitmap;
+	// }
+	// }
+	// bitmap = BitmapFactory.decodeStream(getAssets().open(
+	// "viewed/" + viewedName));
+	// mViewedCache.put(viewedName, new SoftReference<Bitmap>(bitmap));
+	// return bitmap;
+	// } catch (Exception e) {
+	// return BitmapFactory.decodeResource(getResources(),
+	// R.drawable.picture_default_fg);
+	// }
+	// }
 
 	/**
 	 * 根据编号获取热门转帖图片
 	 */
-//	public Bitmap getViewedHot(int position) {
-//		try {
-//			String viewedHotName = mViewedHotName[position];
-//			Bitmap bitmap = null;
-//			if (mViewedHotCache.containsKey(viewedHotName)) {
-//				SoftReference<Bitmap> reference = mViewedHotCache
-//						.get(viewedHotName);
-//				bitmap = reference.get();
-//				if (bitmap != null) {
-//					return bitmap;
-//				}
-//			}
-//			bitmap = BitmapFactory.decodeStream(getAssets().open(
-//					"viewed_hot/" + viewedHotName));
-//			mViewedHotCache.put(viewedHotName,
-//					new SoftReference<Bitmap>(bitmap));
-//			return bitmap;
-//		} catch (Exception e) {
-//			return BitmapFactory.decodeResource(getResources(),
-//					R.drawable.picture_default_fg);
-//		}
-//	}
+	// public Bitmap getViewedHot(int position) {
+	// try {
+	// String viewedHotName = mViewedHotName[position];
+	// Bitmap bitmap = null;
+	// if (mViewedHotCache.containsKey(viewedHotName)) {
+	// SoftReference<Bitmap> reference = mViewedHotCache
+	// .get(viewedHotName);
+	// bitmap = reference.get();
+	// if (bitmap != null) {
+	// return bitmap;
+	// }
+	// }
+	// bitmap = BitmapFactory.decodeStream(getAssets().open(
+	// "viewed_hot/" + viewedHotName));
+	// mViewedHotCache.put(viewedHotName,
+	// new SoftReference<Bitmap>(bitmap));
+	// return bitmap;
+	// } catch (Exception e) {
+	// return BitmapFactory.decodeResource(getResources(),
+	// R.drawable.picture_default_fg);
+	// }
+	// }
 
 	/**
 	 * 根据编号名称获取游戏图片
 	 */
-//	public Bitmap getRecommend(String position) {
-//		try {
-//			String recommendName = "icon_" + position + ".jpg";
-//			Bitmap bitmap = null;
-//			if (mRecommendCache.containsKey(recommendName)) {
-//				SoftReference<Bitmap> reference = mRecommendCache
-//						.get(recommendName);
-//				bitmap = reference.get();
-//				if (bitmap != null) {
-//					return bitmap;
-//				}
-//			}
-//			bitmap = BitmapFactory.decodeStream(getAssets().open(
-//					"recommend/" + recommendName));
-//			mRecommendCache.put(recommendName,
-//					new SoftReference<Bitmap>(bitmap));
-//			return bitmap;
-//		} catch (Exception e) {
-//			return null;
-//		}
-//	}
+	// public Bitmap getRecommend(String position) {
+	// try {
+	// String recommendName = "icon_" + position + ".jpg";
+	// Bitmap bitmap = null;
+	// if (mRecommendCache.containsKey(recommendName)) {
+	// SoftReference<Bitmap> reference = mRecommendCache
+	// .get(recommendName);
+	// bitmap = reference.get();
+	// if (bitmap != null) {
+	// return bitmap;
+	// }
+	// }
+	// bitmap = BitmapFactory.decodeStream(getAssets().open(
+	// "recommend/" + recommendName));
+	// mRecommendCache.put(recommendName,
+	// new SoftReference<Bitmap>(bitmap));
+	// return bitmap;
+	// } catch (Exception e) {
+	// return null;
+	// }
+	// }
 
 	/**
 	 * 根据图片名称获取附近照片的图片
 	 */
-//	public Bitmap getNearbyPhoto(String position) {
-//		try {
-//			String nearbyPhotoName = position + ".jpg";
-//			Bitmap bitmap = null;
-//			if (mNearbyPhoto.containsKey(nearbyPhotoName)) {
-//				SoftReference<Bitmap> reference = mNearbyPhoto
-//						.get(nearbyPhotoName);
-//				bitmap = reference.get();
-//				if (bitmap != null) {
-//					return bitmap;
-//				}
-//			}
-//			bitmap = BitmapFactory.decodeStream(getAssets().open(
-//					"nearby_photo/" + nearbyPhotoName));
-//			mNearbyPhoto
-//					.put(nearbyPhotoName, new SoftReference<Bitmap>(bitmap));
-//			return bitmap;
-//		} catch (Exception e) {
-//			return BitmapFactory.decodeResource(getResources(),
-//					R.drawable.lbs_checkin_photo_icon);
-//		}
-//	}
+	// public Bitmap getNearbyPhoto(String position) {
+	// try {
+	// String nearbyPhotoName = position + ".jpg";
+	// Bitmap bitmap = null;
+	// if (mNearbyPhoto.containsKey(nearbyPhotoName)) {
+	// SoftReference<Bitmap> reference = mNearbyPhoto
+	// .get(nearbyPhotoName);
+	// bitmap = reference.get();
+	// if (bitmap != null) {
+	// return bitmap;
+	// }
+	// }
+	// bitmap = BitmapFactory.decodeStream(getAssets().open(
+	// "nearby_photo/" + nearbyPhotoName));
+	// mNearbyPhoto
+	// .put(nearbyPhotoName, new SoftReference<Bitmap>(bitmap));
+	// return bitmap;
+	// } catch (Exception e) {
+	// return BitmapFactory.decodeResource(getResources(),
+	// R.drawable.lbs_checkin_photo_icon);
+	// }
+	// }
 
 	/**
 	 * 根据编号获取表情图片
@@ -740,25 +758,25 @@ public class InsApplication extends Application implements WebSocketEvents {
 	/**
 	 * 根据礼物编号获取礼物图片
 	 */
-//	public Bitmap getGift(String gid) {
-//		try {
-//			Bitmap bitmap = null;
-//			if (mGiftsCache.containsKey(gid)) {
-//				SoftReference<Bitmap> reference = mGiftsCache.get(gid);
-//				bitmap = reference.get();
-//				if (bitmap != null) {
-//					return bitmap;
-//				}
-//			}
-//			bitmap = BitmapFactory.decodeStream(getAssets()
-//					.open("gifts/" + gid));
-//			mGiftsCache.put(gid, new SoftReference<Bitmap>(bitmap));
-//			return bitmap;
-//		} catch (Exception e) {
-//			return BitmapFactory.decodeResource(getResources(),
-//					R.drawable.gifts_default_01);
-//		}
-//	}
+	// public Bitmap getGift(String gid) {
+	// try {
+	// Bitmap bitmap = null;
+	// if (mGiftsCache.containsKey(gid)) {
+	// SoftReference<Bitmap> reference = mGiftsCache.get(gid);
+	// bitmap = reference.get();
+	// if (bitmap != null) {
+	// return bitmap;
+	// }
+	// }
+	// bitmap = BitmapFactory.decodeStream(getAssets()
+	// .open("gifts/" + gid));
+	// mGiftsCache.put(gid, new SoftReference<Bitmap>(bitmap));
+	// return bitmap;
+	// } catch (Exception e) {
+	// return BitmapFactory.decodeResource(getResources(),
+	// R.drawable.gifts_default_01);
+	// }
+	// }
 
 	/**
 	 * 根据地址获取手机SD卡图片
@@ -776,13 +794,14 @@ public class InsApplication extends Application implements WebSocketEvents {
 		mPhoneAlbumCache.put(path, new SoftReference<Bitmap>(bitmap));
 		return bitmap;
 	}
-	
+
 	/*
-	 * (non-Javadoc)
-	 * 推送服务器接口
-	 * @see com.astudio.inspicsoc.websocket.WebSocketClient.WebSocketEvents#onWebSocketOpen()
+	 * (non-Javadoc) 推送服务器接口
+	 * 
+	 * @see com.astudio.inspicsoc.websocket.WebSocketClient.WebSocketEvents#
+	 * onWebSocketOpen()
 	 */
-	
+
 	@Override
 	public void onWebSocketOpen() {
 		// TODO Auto-generated method stub
@@ -810,67 +829,74 @@ public class InsApplication extends Application implements WebSocketEvents {
 		disconnectAndExit();
 		logAndToast("ERROR");
 	}
-	
-	private void logAndToast(String msg){
-	    if (logToast != null) {
-	      logToast.cancel();
-	    }
-	    logToast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
-	    logToast.show();
-	  }
-	  
-	  public synchronized void sendMessage(String msg) {
-		  logAndToast(msg);
-		  websocketclient.send(msg);
-//		    synchronized (sendQueue) {
-//		      sendQueue.add(msg);
-//		    }
-//		    requestQueueDrainInBackground();
+
+	private void logAndToast(String msg) {
+		if (logToast != null) {
+			logToast.cancel();
+		}
+		logToast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
+		logToast.show();
 	}
 
-	  private void requestQueueDrainInBackground() {
-		    (new AsyncTask<Void, Void, Void>() {
-		      public Void doInBackground(Void... unused) {
-		        maybeDrainQueue();
-		        return null;
-		      }
-		    }).execute();
-		  }
+	public synchronized void sendMessage(String msg) {
+		logAndToast(msg);
+		websocketclient.send(msg);
+		// synchronized (sendQueue) {
+		// sendQueue.add(msg);
+		// }
+		// requestQueueDrainInBackground();
+	}
 
-		  // Send all queued messages if connected to the room.
-		  private void maybeDrainQueue() {
-		    synchronized (sendQueue) {
-		      for (String msg : sendQueue) {
-			  	websocketclient.send(msg);
-		      }
-		      sendQueue.clear();
-		    }
-		  }
-	  private void disconnectAndExit() {
-		  executor.requestStop();
-		    if (websocketclient != null) {
-		    	websocketclient.disconnect(true);
-		    	websocketclient = null;
-		    }
-	  }
-	  
-		/** 显示通知栏点击跳转到指定Activity */
-		public void showIntentActivityNotify(String message){
-			// Notification.FLAG_ONGOING_EVENT --设置常驻 Flag;Notification.FLAG_AUTO_CANCEL 通知栏上点击此通知后自动清除此通知
-//			notification.flags = Notification.FLAG_AUTO_CANCEL; //在通知栏上点击此通知后自动清除此通知
-			mBuilder.setAutoCancel(true)//点击后让通知将消失  
-					.setContentTitle("InsPicSoc")
-					.setContentText(message)
-					.setTicker("你的好友发来一张图");
-			//点击的意图ACTION是跳转到Intent
-			Intent resultIntent = new Intent(this, PhotoDetailActivity.class);
-			resultIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-			PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-			mBuilder.setContentIntent(pendingIntent);
-			mNotificationManager.notify(notifyId, mBuilder.build());
+	private void requestQueueDrainInBackground() {
+		(new AsyncTask<Void, Void, Void>() {
+			@Override
+			public Void doInBackground(Void... unused) {
+				maybeDrainQueue();
+				return null;
+			}
+		}).execute();
+	}
+
+	// Send all queued messages if connected to the room.
+	private void maybeDrainQueue() {
+		synchronized (sendQueue) {
+			for (String msg : sendQueue) {
+				websocketclient.send(msg);
+			}
+			sendQueue.clear();
 		}
-		public PendingIntent getDefalutIntent(int flags){
-			PendingIntent pendingIntent= PendingIntent.getActivity(this, 1, new Intent(), flags);
-			return pendingIntent;
+	}
+
+	private void disconnectAndExit() {
+		executor.requestStop();
+		if (websocketclient != null) {
+			websocketclient.disconnect(true);
+			websocketclient = null;
 		}
+	}
+
+	/** 显示通知栏点击跳转到指定Activity */
+	public void showIntentActivityNotify(String message) {
+		// Notification.FLAG_ONGOING_EVENT --设置常驻
+		// Flag;Notification.FLAG_AUTO_CANCEL 通知栏上点击此通知后自动清除此通知
+		// notification.flags = Notification.FLAG_AUTO_CANCEL;
+		// //在通知栏上点击此通知后自动清除此通知
+		mBuilder.setAutoCancel(true)
+				// 点击后让通知将消失
+				.setContentTitle("InsPicSoc").setContentText(message)
+				.setTicker("你的好友发来一张图");
+		// 点击的意图ACTION是跳转到Intent
+		Intent resultIntent = new Intent(this, PhotoDetailActivity.class);
+		resultIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
+				resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+		mBuilder.setContentIntent(pendingIntent);
+		mNotificationManager.notify(notifyId, mBuilder.build());
+	}
+
+	public PendingIntent getDefalutIntent(int flags) {
+		PendingIntent pendingIntent = PendingIntent.getActivity(this, 1,
+				new Intent(), flags);
+		return pendingIntent;
+	}
 }

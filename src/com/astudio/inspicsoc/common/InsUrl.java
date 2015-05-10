@@ -17,6 +17,12 @@ public class InsUrl {
 
 	public static final String USER_BASE = BASE_URL + "/user";
 
+	public static final String USER_LOGIN = USER_BASE
+			+ "/login.json?username=@un&password=@ps";
+
+	public static final String USER_REGISTER = USER_BASE
+			+ "/adduser.json?username=@un&password=@ps";
+
 	public static final String GET_MSG_BASE = BASE_URL + "/msg";
 
 	public static final String GET_FIRSTPAGE_MSG = GET_MSG_BASE
