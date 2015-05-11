@@ -105,7 +105,7 @@
             	/>
 				<LinearLayout
 	                android:id="@+id/voice_display_voice_layout"
-	                android:layout_width="205dip"
+	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_alignParentBottom="true"
 	                android:layout_marginLeft="10dip"

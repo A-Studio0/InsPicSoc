@@ -33,13 +33,6 @@ public class InsActivity extends SlidingFragmentActivity {
 	 */
 	protected int mScreenWidth;
 	protected int mScreenHeight;
-	/**
-	 * 表情控件
-	 */
-	private PopupWindow mFacePop;
-	private View mFaceView;
-	protected ImageView mFaceClose;
-	protected GridView mFaceGridView;
 
 	protected SlidingMenu mSlidingMenu;
 
@@ -61,98 +54,5 @@ public class InsActivity extends SlidingFragmentActivity {
 		mSlidingMenu = getSlidingMenu();
 		mSlidingMenu.setMode(SlidingMenu.LEFT);// 设置是左滑还是右滑，还是左右都可以滑，我这里只做了左滑
 		mSlidingMenu.setBehindOffset(mScreenWidth);// 设置菜单宽度
-
-		initFace();
 	}
-
-	/**
-	 * 初始化表情控件
-	 */
-	private void initFace() {
-		mFaceView = LayoutInflater.from(this).inflate(R.layout.face, null);
-		mFaceClose = (ImageView) mFaceView.findViewById(R.id.face_close);
-		mFaceGridView = (GridView) mFaceView.findViewById(R.id.face_gridview);
-		FaceAdapter mAdapter = new FaceAdapter(this);
-		mFaceGridView.setAdapter(mAdapter);
-		mFacePop = new PopupWindow(mFaceView, mScreenWidth - 60, mScreenWidth,
-				true);
-		mFacePop.setBackgroundDrawable(new BitmapDrawable());
-	}
-
-	/**
-	 * 显示表情控件
-	 * 
-	 * @param parent
-	 *            显示位置的根布局
-	 */
-	protected void showFace(View parent) {
-		if (!mFacePop.isShowing()) {
-			((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
-					.hideSoftInputFromWindow(InsActivity.this.getCurrentFocus()
-							.getWindowToken(),
-							InputMethodManager.HIDE_NOT_ALWAYS);
-			mFacePop.showAtLocation(parent, Gravity.CENTER, 0, 0);
-		}
-	}
-
-	/**
-	 * 隐藏表情控件
-	 */
-	protected void dismissFace() {
-		if (mFacePop != null && mFacePop.isShowing()) {
-			mFacePop.dismiss();
-		}
-	}
-
-	/**
-	 * 表情适配器
-	 * 
-	 * @author rendongwei
-	 * 
-	 */
-	private class FaceAdapter extends BaseAdapter {
-
-		private Context mContext;
-
-		public FaceAdapter(Context context) {
-			mContext = context;
-		}
-
-		@Override
-		public int getCount() {
-			return mKXApplication.mFaces.length;
-		}
-
-		@Override
-		public Object getItem(int position) {
-			return mKXApplication.getFaceBitmap(position);
-		}
-
-		@Override
-		public long getItemId(int position) {
-			return position;
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			ImageView face = null;
-			if (convertView == null) {
-				face = new ImageView(mContext);
-				LayoutParams params = new LayoutParams(
-						LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-				int widthAndHeight = (int) TypedValue.applyDimension(
-						TypedValue.COMPLEX_UNIT_DIP, 30, mContext
-								.getResources().getDisplayMetrics());
-				params.width = widthAndHeight;
-				params.height = widthAndHeight;
-				face.setLayoutParams(params);
-				face.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-			} else {
-				face = (ImageView) convertView;
-			}
-			face.setImageBitmap(mKXApplication.getFaceBitmap(position));
-			return face;
-		}
-	}
-
 }

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -83,8 +84,10 @@ public class MenuActivity extends InsActivity implements OnClickListener {
 					ActivityForResultUtil.REQUESTCODE_UPLOADPHOTO_CAMERA);
 			break;
 		case R.id.photo_b:
-			this.startActivity(new Intent(MenuActivity.this,
-					PhoneAlbumActivity.class));
+			intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+			this.startActivityForResult(intent,ActivityForResultUtil.REQUESTCODE_UPLOADPHOTO_ALBUM);
+//			this.startActivity(new Intent(MenuActivity.this,
+//					PhoneAlbumActivity.class));
 			break;
 		default:
 			break;
@@ -103,7 +106,7 @@ public class MenuActivity extends InsActivity implements OnClickListener {
 			if (resultCode == RESULT_OK) {
 				if (!Environment.getExternalStorageState().equals(
 						Environment.MEDIA_MOUNTED)) {
-					Toast.makeText(this, "SD不可用", Toast.LENGTH_SHORT).show();
+					Toast.makeText(this, "SD不可用", Toast.LENGTH_SHORT).show                      ();
 					return;
 				}
 				Intent intent = new Intent();
@@ -117,6 +120,28 @@ public class MenuActivity extends InsActivity implements OnClickListener {
 				Toast.makeText(this, "取消上传", Toast.LENGTH_SHORT).show();
 			}
 			break;
+		case ActivityForResultUtil.REQUESTCODE_UPLOADPHOTO_ALBUM:
+			if(resultCode == RESULT_OK && null!=data) {
+				Uri selectedImage = data.getData();
+			    String[] filePathColumns={MediaStore.Images.Media.DATA};
+			    Cursor c = this.getContentResolver().query(selectedImage, filePathColumns, null,null, null);
+			    c.moveToFirst();
+			    int columnIndex = c.getColumnIndex(filePathColumns[0]);
+			    String picturePath = c.getString(columnIndex);
+			    c.close();
+			    
+			    Intent intent = new Intent();
+			
+				intent.setClass(MenuActivity.this, ImageFilterActivity.class);
+				String path = PhotoUtil.saveToLocal(PhotoUtil.createBitmap(
+						picturePath, mScreenWidth,
+						mScreenHeight));
+				intent.putExtra("path", path);
+				// 开始跳转界面
+				startActivity(intent);
+			} else {
+				Toast.makeText(this, "取消上传", Toast.LENGTH_SHORT).show();
+			}
 		}
 	}
 }

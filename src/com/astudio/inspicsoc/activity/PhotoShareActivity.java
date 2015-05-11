@@ -18,6 +18,7 @@ import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -128,6 +129,21 @@ public class PhotoShareActivity extends InsActivity implements
 		// mDelete = (Button) findViewById(R.id.photoshare_location_delete);
 		// mAlbum = (TextView) findViewById(R.id.photoshare_album);
 	}
+	
+	public void showToast(){
+		Toast.makeText(this, "取消上传", Toast.LENGTH_SHORT).show();
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+			// Do something.
+			showToast();
+			this.finish();// 直接调用杀死当前activity方法.
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
+	}
 
 	private void setListener() {
 		mUgcVoice.setOnClickListener(new OnClickListener() {
@@ -145,6 +161,7 @@ public class PhotoShareActivity extends InsActivity implements
 			@Override
 			public void onClick(View v) {
 				// 关闭当前界面
+				showToast();
 				finish();
 			}
 		});

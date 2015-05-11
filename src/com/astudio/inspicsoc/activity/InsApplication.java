@@ -60,7 +60,10 @@ public class InsApplication extends Application implements WebSocketEvents {
 	 * 消息列表
 	 */
 	public List<Cat> messageList = new ArrayList<Cat>();
-	
+	/**
+	 * 用户头像
+	 */
+	public Bitmap mHeadBitmap;
 	/**
 	 * 默认壁纸
 	 */
@@ -117,55 +120,6 @@ public class InsApplication extends Application implements WebSocketEvents {
 	 * 公共主页头像名称
 	 */
 	public String[] mPublicPageAvatars;
-	/**
-	 * 表情
-	 */
-	public int[] mFaces = { R.drawable.face_0, R.drawable.face_1,
-			R.drawable.face_2, R.drawable.face_3, R.drawable.face_4,
-			R.drawable.face_5, R.drawable.face_6, R.drawable.face_7,
-			R.drawable.face_8, R.drawable.face_9, R.drawable.face_10,
-			R.drawable.face_11, R.drawable.face_12, R.drawable.face_13,
-			R.drawable.face_14, R.drawable.face_15, R.drawable.face_16,
-			R.drawable.face_17, R.drawable.face_18, R.drawable.face_19,
-			R.drawable.face_20, R.drawable.face_21, R.drawable.face_22,
-			R.drawable.face_23, R.drawable.face_24, R.drawable.face_25,
-			R.drawable.face_26, R.drawable.face_27, R.drawable.face_28,
-			R.drawable.face_29, R.drawable.face_30, R.drawable.face_31,
-			R.drawable.face_32, R.drawable.face_33, R.drawable.face_34,
-			R.drawable.face_35, R.drawable.face_36, R.drawable.face_37,
-			R.drawable.face_38, R.drawable.face_39, R.drawable.face_40,
-			R.drawable.face_41, R.drawable.face_42, R.drawable.face_43,
-			R.drawable.face_44, R.drawable.face_45, R.drawable.face_46,
-			R.drawable.face_47, R.drawable.face_48, R.drawable.face_49,
-			R.drawable.face_50, R.drawable.face_51, R.drawable.face_52,
-			R.drawable.face_53, R.drawable.face_54, R.drawable.face_55,
-			R.drawable.face_56, R.drawable.face_57, R.drawable.face_58,
-			R.drawable.face_59, R.drawable.face_60, R.drawable.face_61,
-			R.drawable.face_62, R.drawable.face_63, R.drawable.face_64,
-			R.drawable.face_65, R.drawable.face_66, R.drawable.face_67,
-			R.drawable.face_68, R.drawable.face_69, R.drawable.face_70,
-			R.drawable.face_71, R.drawable.face_72, R.drawable.face_73,
-			R.drawable.face_74, R.drawable.face_75, R.drawable.face_76,
-			R.drawable.face_77, R.drawable.face_78, R.drawable.face_79,
-			R.drawable.face_80, R.drawable.face_81, R.drawable.face_82,
-			R.drawable.face_83, R.drawable.face_84, R.drawable.face_85,
-			R.drawable.face_86, R.drawable.face_87, R.drawable.face_88,
-			R.drawable.face_89, R.drawable.face_90, R.drawable.face_91,
-			R.drawable.face_92, R.drawable.face_93, R.drawable.face_94,
-			R.drawable.face_95, R.drawable.face_96, R.drawable.face_97,
-			R.drawable.face_98, R.drawable.face_99, R.drawable.face_100,
-			R.drawable.face_101, R.drawable.face_102, R.drawable.face_103,
-			R.drawable.face_104, R.drawable.face_105, R.drawable.face_106,
-			R.drawable.face_107, R.drawable.face_108, R.drawable.face_109,
-			R.drawable.face_110 };
-	/**
-	 * 表情名称
-	 */
-	public List<String> mFacesText = new ArrayList<String>();
-	/**
-	 * 表情缓存
-	 */
-	public HashMap<String, SoftReference<Bitmap>> mFaceCache = new HashMap<String, SoftReference<Bitmap>>();
 	/**
 	 * 照片缓存
 	 */
@@ -383,12 +337,15 @@ public class InsApplication extends Application implements WebSocketEvents {
 //				R.drawable.cover);
 //		mDefault_TitleWallpager = BitmapFactory.decodeResource(getResources(),
 //				R.drawable.cover_title);
-		mDefault_Photo = BitmapFactory.decodeResource(getResources(),
-				R.drawable.photo);
-		mDefault_Avatar = PhotoUtil.toRoundCorner(
-				BitmapFactory.decodeResource(getResources(), R.drawable.head),
+//		mDefault_Photo = BitmapFactory.decodeResource(getResources(),
+//				R.drawable.photo);
+//		mDefault_Avatar = PhotoUtil.toRoundCorner(
+//				BitmapFactory.decodeResource(getResources(), R.drawable.head),
+//				15);
+//		mWallpagerPosition = (int) (Math.random() * 12);
+		mHeadBitmap=PhotoUtil.toRoundCorner(
+				BitmapFactory.decodeResource(getResources(), R.drawable.img_test_face),
 				15);
-		mWallpagerPosition = (int) (Math.random() * 12);
 		/**
 		 * 初始化所有的数据信息
 		 */
@@ -403,12 +360,6 @@ public class InsApplication extends Application implements WebSocketEvents {
 			mGiftsName = getAssets().list("gifts");
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-		/**
-		 * 初始化表情名称
-		 */
-		for (int i = 0; i < mFaces.length; i++) {
-			mFacesText.add("[face_" + i + "]");
 		}
 		
 		/**
@@ -564,31 +515,6 @@ public class InsApplication extends Application implements WebSocketEvents {
 //		}
 //	}
 
-	/**
-	 * 根据编号获取公共主页头像
-	 */
-//	public Bitmap getPublicPageAvatar(int position) {
-//		try {
-//			String avatarName = mPublicPageAvatars[position];
-//			Bitmap bitmap = null;
-//			if (mPublicPageAvatarCache.containsKey(avatarName)) {
-//				SoftReference<Bitmap> reference = mPublicPageAvatarCache
-//						.get(avatarName);
-//				bitmap = reference.get();
-//				if (bitmap != null) {
-//					return bitmap;
-//				}
-//			}
-//			bitmap = PhotoUtil.toRoundCorner(
-//					BitmapFactory.decodeStream(getAssets().open(
-//							"publicpage_avatar/" + avatarName)), 15);
-//			mPublicPageAvatarCache.put(avatarName, new SoftReference<Bitmap>(
-//					bitmap));
-//			return bitmap;
-//		} catch (Exception e) {
-//			return mDefault_Avatar;
-//		}
-//	}
 
 	/**
 	 * 根据编号获取照片
@@ -612,82 +538,7 @@ public class InsApplication extends Application implements WebSocketEvents {
 			return mDefault_Photo;
 		}
 	}
-
-	/**
-	 * 根据编号获取转帖图片
-	 */
-//	public Bitmap getViewed(int position) {
-//		try {
-//			String viewedName = mViewedName[position];
-//			Bitmap bitmap = null;
-//			if (mViewedCache.containsKey(viewedName)) {
-//				SoftReference<Bitmap> reference = mViewedCache.get(viewedName);
-//				bitmap = reference.get();
-//				if (bitmap != null) {
-//					return bitmap;
-//				}
-//			}
-//			bitmap = BitmapFactory.decodeStream(getAssets().open(
-//					"viewed/" + viewedName));
-//			mViewedCache.put(viewedName, new SoftReference<Bitmap>(bitmap));
-//			return bitmap;
-//		} catch (Exception e) {
-//			return BitmapFactory.decodeResource(getResources(),
-//					R.drawable.picture_default_fg);
-//		}
-//	}
-
-	/**
-	 * 根据编号获取热门转帖图片
-	 */
-//	public Bitmap getViewedHot(int position) {
-//		try {
-//			String viewedHotName = mViewedHotName[position];
-//			Bitmap bitmap = null;
-//			if (mViewedHotCache.containsKey(viewedHotName)) {
-//				SoftReference<Bitmap> reference = mViewedHotCache
-//						.get(viewedHotName);
-//				bitmap = reference.get();
-//				if (bitmap != null) {
-//					return bitmap;
-//				}
-//			}
-//			bitmap = BitmapFactory.decodeStream(getAssets().open(
-//					"viewed_hot/" + viewedHotName));
-//			mViewedHotCache.put(viewedHotName,
-//					new SoftReference<Bitmap>(bitmap));
-//			return bitmap;
-//		} catch (Exception e) {
-//			return BitmapFactory.decodeResource(getResources(),
-//					R.drawable.picture_default_fg);
-//		}
-//	}
-
-	/**
-	 * 根据编号名称获取游戏图片
-	 */
-//	public Bitmap getRecommend(String position) {
-//		try {
-//			String recommendName = "icon_" + position + ".jpg";
-//			Bitmap bitmap = null;
-//			if (mRecommendCache.containsKey(recommendName)) {
-//				SoftReference<Bitmap> reference = mRecommendCache
-//						.get(recommendName);
-//				bitmap = reference.get();
-//				if (bitmap != null) {
-//					return bitmap;
-//				}
-//			}
-//			bitmap = BitmapFactory.decodeStream(getAssets().open(
-//					"recommend/" + recommendName));
-//			mRecommendCache.put(recommendName,
-//					new SoftReference<Bitmap>(bitmap));
-//			return bitmap;
-//		} catch (Exception e) {
-//			return null;
-//		}
-//	}
-
+	
 	/**
 	 * 根据图片名称获取附近照片的图片
 	 */
@@ -714,52 +565,8 @@ public class InsApplication extends Application implements WebSocketEvents {
 //		}
 //	}
 
-	/**
-	 * 根据编号获取表情图片
-	 */
-	public Bitmap getFaceBitmap(int position) {
-		try {
-			String faceName = mFacesText.get(position);
-			Bitmap bitmap = null;
-			if (mFaceCache.containsKey(faceName)) {
-				SoftReference<Bitmap> reference = mFaceCache.get(faceName);
-				bitmap = reference.get();
-				if (bitmap != null) {
-					return bitmap;
-				}
-			}
-			bitmap = BitmapFactory.decodeResource(getResources(),
-					mFaces[position]);
-			mFaceCache.put(faceName, new SoftReference<Bitmap>(bitmap));
-			return bitmap;
-		} catch (Exception e) {
-			return null;
-		}
-	}
-
-	/**
-	 * 根据礼物编号获取礼物图片
-	 */
-//	public Bitmap getGift(String gid) {
-//		try {
-//			Bitmap bitmap = null;
-//			if (mGiftsCache.containsKey(gid)) {
-//				SoftReference<Bitmap> reference = mGiftsCache.get(gid);
-//				bitmap = reference.get();
-//				if (bitmap != null) {
-//					return bitmap;
-//				}
-//			}
-//			bitmap = BitmapFactory.decodeStream(getAssets()
-//					.open("gifts/" + gid));
-//			mGiftsCache.put(gid, new SoftReference<Bitmap>(bitmap));
-//			return bitmap;
-//		} catch (Exception e) {
-//			return BitmapFactory.decodeResource(getResources(),
-//					R.drawable.gifts_default_01);
-//		}
-//	}
-
+	
+	
 	/**
 	 * 根据地址获取手机SD卡图片
 	 */

@@ -6,11 +6,13 @@ import java.util.Map;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.astudio.inspicsoc.R;
 import com.astudio.inspicsoc.utils.ActivityForResultUtil;
@@ -65,12 +67,28 @@ public class ImageFilterActivity extends InsActivity {
 		mGraffiti = (Button) findViewById(R.id.imagefilter_graffiti);
 		mText = (Button) findViewById(R.id.imagefilter_text);
 	}
+	
+	public void showToast(){
+		Toast.makeText(this, "取消上传", Toast.LENGTH_SHORT).show();
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+			// Do something.
+			showToast();
+			this.finish();// 直接调用杀死当前activity方法.
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
+	}
 
 	private void setListener() {
 		mCancel.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
+				showToast();
 				// 关闭当前界面
 				finish();
 			}
