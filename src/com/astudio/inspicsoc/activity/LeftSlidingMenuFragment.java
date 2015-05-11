@@ -11,29 +11,48 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.astudio.android.bitmapfun.util.ImageFetcher;
+import com.astudio.dodowaterfall.Helper;
 import com.astudio.inspicsoc.R;
 import com.astudio.inspicsoc.utils.ActivityForResultUtil;
+import com.astudio.inspicsoc.common.InsUrl;
+import com.astudio.inspicsoc.view.RoundedImageView;
 
 @SuppressLint("ValidFragment")
 public class LeftSlidingMenuFragment extends Fragment implements
 		OnClickListener {
+	protected InsApplication mKXApplication;
 	private View miaoBtnLayout;
 	private View circleBtnLayout;
 	private View settingBtnLayout;
 	public static View view;
 	private MainActivity mActivity;
-	private ImageView mHead;
 	private Context mContext;
-	private InsApplication mKXApplication;
+	// private View inviteFriendBtnLayout;
+	private ImageFetcher mImageFetcher;
+	private TextView nickName;
+	private String userName;
+
+	private RoundedImageView headImageView;
+	ContentTask task = new ContentTask(this.getActivity(), 2);
+
+	// private ;
 
 	public LeftSlidingMenuFragment(MainActivity activity,Context context,InsApplication mKXApplication) {
 		this.mActivity = activity;
@@ -45,6 +64,7 @@ public class LeftSlidingMenuFragment extends Fragment implements
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		mKXApplication = (InsApplication) this.getActivity().getApplication();
 	}
 
 	@Override
@@ -57,10 +77,95 @@ public class LeftSlidingMenuFragment extends Fragment implements
 		circleBtnLayout.setOnClickListener(this);
 		settingBtnLayout = view.findViewById(R.id.settingBtnLayout);
 		settingBtnLayout.setOnClickListener(this);
-		mHead=(ImageView) view.findViewById(R.id.headImageView);
-		mHead.setOnClickListener(this);
-		
+
+		nickName = (TextView) view.findViewById(R.id.nickNameTextView);
+
+		headImageView = (RoundedImageView) view
+				.findViewById(R.id.headImageView);
+		headImageView.setOnClickListener(this);
+
+		mImageFetcher = new ImageFetcher(headImageView.getContext(), 240);
+
+		task = new ContentTask(this.getActivity(), 2);
+		userName = mKXApplication.userName;
+//		task.execute(userName);
+
+		// settingBtnLayout = view.findViewById(R.id.inviteFriendBtnLayout);
+		// settingBtnLayout.setOnClickListener(this);
+
+		System.out.println();
 		return view;
+	}
+
+	private class ContentTask extends AsyncTask<String, Integer, File> {
+
+		private Context mContext;
+		private int mType = 1;
+
+		public ContentTask(Context context, int type) {
+			super();
+			mContext = context;
+			mType = type;
+		}
+
+		@Override
+		protected File doInBackground(String... params) {
+			String path = loadHeadPic(params[0]);
+			File data = mImageFetcher.downloadBitmap(
+					mActivity.getApplicationContext(), path);
+			if (null != data)
+				return data;
+			else
+				return null;
+		}
+
+		@Override
+		protected void onPostExecute(File result) {
+			if (mType == 1) {
+
+				// mImageFetcher.loadImage(result, headImageView);
+				if (null != result) {
+					headImageView.setImageBitmap(mImageFetcher
+							.decodeSampledBitmapFromFile(result.toString(), 80,
+									80));
+					nickName.setText(userName);
+				}
+			} else if (mType == 2) {
+				if (null != result) {
+					headImageView.setImageBitmap(mImageFetcher
+							.decodeSampledBitmapFromFile(result.toString(), 80,
+									80));
+					nickName.setText(userName);
+				}
+			}
+
+		}
+
+		@Override
+		protected void onPreExecute() {
+		}
+
+		public String loadHeadPic(String username) {
+
+			String userheapPicpath = InsUrl.GET_HEADPIC
+					.replace("@un", username);
+
+			String json = "";
+			if (Helper.checkConnection(mContext)) {
+				try {
+					json = Helper.getStringFromUrl(userheapPicpath);
+
+					System.out.println("====json====" + json);
+				} catch (IOException e) {
+					Log.e("IOException is : ", e.toString());
+					e.printStackTrace();
+					return userheapPicpath;
+				}
+			}
+			Log.d("MainActiivty", "json:" + json);
+			return json;
+
+		}
 	}
 
 	@Override
@@ -156,6 +261,6 @@ public class LeftSlidingMenuFragment extends Fragment implements
 	}
 	
 	public void setHeadBitmap(Bitmap bitmap){
-		mHead.setImageBitmap(bitmap);
+		headImageView.setImageBitmap(bitmap);
 	}
 }

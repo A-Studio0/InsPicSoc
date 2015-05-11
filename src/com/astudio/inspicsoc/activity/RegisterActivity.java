@@ -1,79 +1,119 @@
 package com.astudio.inspicsoc.activity;
 
-
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
-import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 
+import com.ab.http.AbHttpUtil;
+import com.ab.http.AbStringHttpResponseListener;
+import com.ab.util.AbToastUtil;
 import com.astudio.inspicsoc.R;
+import com.astudio.inspicsoc.common.InsUrl;
+import com.astudio.inspicsoc.common.StringUtils;
+
 /**
- * 此类  是对布局main.xml上 控件的操作
+ * 此类 是对布局main.xml上 控件的操作
+ * 
  * @author dl
  *
  */
-public class RegisterActivity extends Activity implements OnClickListener{
-	private Button registBtn,rebackBtn;
+public class RegisterActivity extends Activity implements OnClickListener {
+	private Button registBtn, rebackBtn;
 	private Activity mActivity = this;
-	private EditText userEdit,passwdEdit;
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.register);
-        registBtn = (Button)findViewById(R.id.main_regist_btn);
-        registBtn.setOnClickListener(this);
-        
-        passwdEdit = (EditText)findViewById(R.id.login_passwd_edit);
-        userEdit = (EditText)findViewById(R.id.login_user_edit);
-        rebackBtn = (Button)findViewById(R.id.login_reback_btn);
-        rebackBtn.setOnClickListener(this);//注册监听器  
-    }
+	private EditText userEdit, passwdEdit, assurepasswdEdit;
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		setContentView(R.layout.register);
+		registBtn = (Button) findViewById(R.id.main_regist_btn);
+		registBtn.setOnClickListener(this);
+
+		passwdEdit = (EditText) findViewById(R.id.login_passwd_edit);
+		userEdit = (EditText) findViewById(R.id.login_user_edit);
+		rebackBtn = (Button) findViewById(R.id.login_reback_btn);
+		assurepasswdEdit = (EditText) findViewById(R.id.login_assurepasswd_edit);
+		rebackBtn.setOnClickListener(this);// 注册监听器
+	}
 
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		int viewId = v.getId();
 		switch (viewId) {
-			case R.id.login_reback_btn://返回按钮
-				RegisterActivity.this.finish();//关闭这个Activity  返回上一个Activity
+		case R.id.login_reback_btn:// 返回按钮
+			RegisterActivity.this.finish();// 关闭这个Activity 返回上一个Activity
+			break;
+
+		case R.id.main_regist_btn:// 注册按钮
+			String userEditStr = userEdit.getText().toString().trim();
+			String passwdEditStr = passwdEdit.getText().toString().trim();
+			String assPass = assurepasswdEdit.getText().toString().trim();
+			if (StringUtils.isEmpty(userEditStr)) {// 只要用户名和密码有一个为空
+				AbToastUtil.showToast(this, "用户名不能为空");
 				break;
-		
-			case R.id.main_regist_btn://注册按钮
-				String userEditStr = userEdit.getText().toString().trim();
-				String passwdEditStr = passwdEdit.getText().toString().trim();
-				if(("".equals(userEditStr) || null == userEditStr) || 
-						("".equals(passwdEditStr) || null == passwdEditStr)){//只要用户名和密码有一个为空
-					new AlertDialog.Builder(RegisterActivity.this)
-					.setIcon(getResources().getDrawable(R.drawable.login_error_icon))
-					.setTitle("注册失败")
-					.setMessage("账号或密码不能为空，请输入账号或密码")
-					.create().show();
-				}
-				else{
-					new AlertDialog.Builder(RegisterActivity.this)
-					.setIcon(getResources().getDrawable(R.drawable.login_error_icon))
-					.setTitle("注册成功")
-					.setMessage("register success~,登录成功")
-					.create().show();
-					Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-					mActivity.startActivity(intent);
-				}
+			} else if (StringUtils.isEmpty(passwdEditStr)) {
+				AbToastUtil.showToast(this, "密码不能为空");
 				break;
+			} else if (StringUtils.isEmpty(assPass)) {
+				AbToastUtil.showToast(this, "请确认密码");
+				break;
+			} else if (StringUtils.isEquals(passwdEditStr, assPass)) {
+
+				AbHttpUtil httpUtil = AbHttpUtil.getInstance(getApplication());
+
+				String loginUrl = InsUrl.USER_REGISTER.replace("@un",
+						userEditStr).replace("@ps", passwdEditStr);
+
+				httpUtil.get(loginUrl, new AbStringHttpResponseListener() {
+					@Override
+					public void onSuccess(int i, String s) {
+
+						if ("fail".equals(s)) {
+							AbToastUtil.showToast(getApplicationContext(),
+									"注册失败");
+							return;
+						}
+
+						AbToastUtil.showToast(getApplicationContext(), "注册成功");
+						try {
+							Intent intent = new Intent(getApplication(),
+									LoginActivity.class);
+							intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+							finish();
+							getApplication().startActivity(intent);
+
+						} catch (Exception e) {
+							Log.e("start new ac :", e.getMessage());
+						}
+					}
+
+					@Override
+					public void onStart() {
+						Log.d(getClass().getName(), "调用了OnStart.");
+					}
+
+					@Override
+					public void onFinish() {
+
+					}
+
+					@Override
+					public void onFailure(int i, String s, Throwable throwable) {
+						AbToastUtil.showToast(getApplicationContext(),
+								"抱歉，出错了！异常:" + "用户已存在");
+					}
+				});
+			}
+			break;
 		}
-		
+
 	}
 }

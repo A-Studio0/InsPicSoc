@@ -172,6 +172,7 @@
                             android1:text="邮件" />
  
                          <TextView 
+                             android:id="@+id/email" 
                             style="@style/Font_Settings"
                             android1:layout_width="wrap_content"
                             android1:layout_height="wrap_content" 
@@ -218,6 +219,7 @@
                             android1:gravity="center_vertical"
                             android1:text="住址" /> 
                             <TextView 
+                                android:id="@+id/address" 
                             style="@style/Font_Settings"
                             android1:layout_width="wrap_content"
                             android1:layout_height="wrap_content" 
@@ -266,6 +268,7 @@
                             android1:text="电话" />
  
                          <TextView 
+                             android:id="@+id/phone" 
                             style="@style/Font_Settings"
                             android1:layout_width="wrap_content"
                             android1:layout_height="wrap_content" 
@@ -313,6 +316,7 @@
                             android1:text="生日" />
  
                          <TextView 
+                             android:id="@+id/birthday" 
                             style="@style/Font_Settings"
                             android1:layout_width="wrap_content"
                             android1:layout_height="wrap_content" 

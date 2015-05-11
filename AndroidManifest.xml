@@ -27,47 +27,53 @@
 
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
-    
-    <!-- baiduMap -->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />  
-	<uses-permission android:name="android.permission.USE_CREDENTIALS" />  
-	<uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />  
-	<uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />  
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />  
-	<uses-permission android:name="android.permission.INTERNET" />  
-	<uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />  
-	<uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />  
-	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />  
-	<uses-permission android:name="android.permission.READ_PHONE_STATE" />  
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />  
-	<uses-permission android:name="android.permission.BROADCAST_STICKY" />  
-	<uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
-	<!-- share to weibo... -->
-	<uses-permission android:name="android.permission.GET_TASKS" /> 
-	
+    <!-- baiduMap -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
+    <!-- share to weibo... -->
+    <uses-permission android:name="android.permission.GET_TASKS" />
+
     <application
         android:name=".activity.InsApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+
         <!-- 这里设置你的百度key -->
-        <meta-data 
+        <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="Cr9TW9QcEvPkzj1c23op4MIC"/> 
+            android:value="Cr9TW9QcEvPkzj1c23op4MIC" />
+
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".activity.LoginActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> 
+        </activity>
         <activity
-            android:name=".activity.PhotoDetailActivity"            
-            android:theme="@android:style/Theme.Black.NoTitleBar" >          
+            android:name=".activity.MainActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name=".activity.PhotoDetailActivity"
+            android:theme="@android:style/Theme.Black.NoTitleBar" >
         </activity>
         <activity
             android:name="cn.sharesdk.framework.ShareSDKUIShell"
@@ -83,11 +89,11 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name="com.astudio.inspicsoc.activity.FriendActivity"
-           android:theme="@android:style/Theme.NoTitleBar" >
-        </activity> 
-         <activity
+            android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
+        <activity
             android:name="com.astudio.inspicsoc.activity.MessageCenterActivity"
-           android:theme="@android:style/Theme.NoTitleBar" >
+            android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
         <activity
             android:name="com.astudio.inspicsoc.activity.MyInfoActivity"
@@ -142,7 +148,7 @@
             android:name=".activity.BaiduMapActivity"
             android:label="@string/title_activity_menu" >
         </activity>
-         <activity
+        <activity
             android:name=".activity.PhotoVSActivity"
             android:label="@android:style/Theme.Translucent.NoTitleBar" >
         </activity>
@@ -172,25 +178,20 @@
         </activity>
         <activity
             android:name=".activity.Photo_exchange"
-             android:label="@android:style/Theme.Translucent.NoTitleBar" >
-            </activity>
-         <activity
-             android:name=".activity.ModifyActivity"
-              android:label="@android:style/Theme.Translucent.NoTitleBar" >
-            </activity>
-            <activity
-             android:name=".activity.VoiceActivity"
-              android:label="@android:style/Theme.Translucent.NoTitleBar" >
-            </activity>
-              <activity
-             android:name=".activity.LoginActivity"
-              android:label="@android:style/Theme.Translucent.NoTitleBar" >
-            </activity>
-             <activity
-             android:name=".activity.RegisterActivity"
-              android:label="@android:style/Theme.Translucent.NoTitleBar" >
-            </activity>
-             
+            android:label="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
+        <activity
+            android:name=".activity.ModifyActivity"
+            android:label="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
+        <activity
+            android:name=".activity.VoiceActivity"
+            android:label="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
+        <activity
+            android:name=".activity.RegisterActivity"
+            android:label="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
     </application>
 
 </manifest>
