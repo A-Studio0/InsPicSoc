@@ -95,7 +95,6 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dip"
                 android:orientation="horizontal"
-                android:padding="8dip"
                 android:gravity="center" >
 				<ImageView
 		            android:id="@+id/ugc_voice"
@@ -153,8 +152,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dip"
                 android:background="@drawable/circle_list_single"
-                android:orientation="horizontal"
-                android:padding="8dip" >
+                android:orientation="horizontal" >
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -162,17 +160,61 @@
                     android:layout_marginRight="8dip"
                     android:text="描述"
                     android:textColor="#000000"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:visibility="gone" />
 
                 <EditText
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="60dp"
                     android:background="#00000000"
-                    android:gravity="center_vertical"
-                    android:hint="输入图片描述"
-                    android:singleLine="true"
+                    android:gravity="top"
+                    android:hint="有什么想告诉大家……"
+                    android:singleLine="false"
                     android:textColor="#000000"
                     android:textSize="14sp" />
+            </LinearLayout>
+            
+             <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dip"
+                android:orientation="horizontal" >
+            
+		            <ImageView
+				            android:id="@+id/dinwei"
+				            android:layout_width="44dip"
+				            android:layout_height="44dip"
+				            android:src="@drawable/ugc_icon_type_dinwei"
+				            android:layout_gravity="center_vertical"
+		            	/>
+		            
+		            <ImageView
+				            android:id="@+id/dinwei_delete"
+				            android:layout_width="44dip"
+				            android:layout_height="44dip"
+				            android:src="@drawable/ugc_icon_type_voice_delete"
+				            android:layout_gravity="center_vertical"
+				            android:visibility="gone"
+		            	/>
+		            
+		            <LinearLayout
+		                android:id="@+id/location"
+		                android:layout_width="fill_parent"
+		                android:layout_height="wrap_content"
+		                android:layout_margin="8dip"
+		                android:background="@drawable/circle_list_single"
+		                android:orientation="horizontal"
+		                android:visibility="gone" >
+		
+		                <TextView
+		                    android:id="@+id/address"
+		                    android:layout_width="wrap_content"
+		                    android:layout_height="wrap_content"
+		                    android:layout_marginRight="8dip"
+		                    android:text=""
+		                    android:textColor="#000000"
+		                    android:textSize="14sp" />
+		            </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

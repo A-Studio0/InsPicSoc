@@ -41,6 +41,11 @@ import com.astudio.inspicsoc.service.UploadUtil;
 import com.astudio.inspicsoc.service.UploadUtil.OnUploadProcessListener;
 import com.astudio.inspicsoc.utils.ActivityForResultUtil;
 import com.astudio.inspicsoc.utils.TextUtil;
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
+import com.baidu.location.LocationClientOption.LocationMode;
 
 /**
  * 照片分享类
@@ -82,6 +87,19 @@ public class PhotoShareActivity extends InsActivity implements
 	private MediaPlayer mMediaPlayer;
 	
 	private static final String TAG = "uploadImage";
+	
+	private LocationClient locationClient=null;
+	private static final int UPDATE_TIME = 5000;
+    private String mCurrentTime;//当前时间
+    private double mCurrentLat;//纬度
+    private double mCurrentLon;//经度
+    private String mCurrentAddress;//当前地址
+    
+    private LinearLayout mLocationText;
+    private TextView mAddressText;
+    private ImageView mDinwei;
+    private ImageView mDinweiDelete;
+    private boolean isNeedDinwei=false;
 
 	/**
 	 * 去上传文件
@@ -111,7 +129,43 @@ public class PhotoShareActivity extends InsActivity implements
 		findViewById();
 		setListener();
 		init();
-
+		
+		locationClient = new LocationClient(getApplicationContext());
+        //设置定位条件
+        LocationClientOption option = new LocationClientOption();
+        option.setLocationMode(LocationMode.Hight_Accuracy);
+        option.setOpenGps(true);        //是否打开GPS
+        option.setCoorType("bd09ll");       //设置返回值的坐标类型。
+//        option.setPriority(LocationClientOption.NetWorkFirst);  //设置定位优先级
+        option.setProdName("InsPicSoc"); //设置产品线名称。强烈建议您使用自定义的产品线名称，方便我们以后为您提供更高效准确的定位服务。
+        option.setScanSpan(UPDATE_TIME);    //设置定时定位的时间间隔。单位毫秒
+        option.setIsNeedAddress(true);//返回的定位结果包含地址信息
+        locationClient.setLocOption(option);
+        locationClient.start();
+        locationClient.requestLocation();
+        
+      //注册位置监听器
+        locationClient.registerLocationListener(new BDLocationListener() {
+             
+            @Override
+            public void onReceiveLocation(BDLocation location) {
+                // TODO Auto-generated method stub
+                if (location == null) {
+                    return;
+                }
+                mCurrentTime=location.getTime();
+                mCurrentLat=Double.valueOf(location.getLatitude());
+                mCurrentLon=Double.valueOf(location.getLongitude());
+                if (location.getLocType() == BDLocation.TypeNetWorkLocation){
+                	mCurrentAddress=location.getAddrStr();
+                }
+//                System.out.println(mCurrentTime+" "+mCurrentLat+" "+mCurrentLon+" "+mCurrentAddress);
+            }
+             
+            public void onReceivePoi(BDLocation poiLocation) {
+            
+            }            
+        });
 	}
 
 	private void findViewById() {
@@ -125,6 +179,10 @@ public class PhotoShareActivity extends InsActivity implements
 		mDisplayVoicePlay = (ImageView) findViewById(R.id.voice_display_voice_play);
 		mDisplayVoiceProgressBar = (ProgressBar) findViewById(R.id.voice_display_voice_progressbar);
 		mDisplayVoiceTime = (TextView) findViewById(R.id.voice_display_voice_time);
+		mLocationText=(LinearLayout)findViewById(R.id.location);
+		mAddressText=(TextView)findViewById(R.id.address);
+		mDinwei=(ImageView)findViewById(R.id.dinwei);
+		mDinweiDelete=(ImageView)findViewById(R.id.dinwei_delete);
 		// mLocation = (TextView) findViewById(R.id.photoshare_location);
 		// mDelete = (Button) findViewById(R.id.photoshare_location_delete);
 		// mAlbum = (TextView) findViewById(R.id.photoshare_album);
@@ -146,6 +204,33 @@ public class PhotoShareActivity extends InsActivity implements
 	}
 
 	private void setListener() {
+		mDinwei.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if(mCurrentAddress!=null){
+					isNeedDinwei=true;
+					mDinwei.setVisibility(ImageView.GONE);
+					mDinweiDelete.setVisibility(ImageView.VISIBLE);
+            		mLocationText.setVisibility(LinearLayout.VISIBLE);
+            		mAddressText.setText(mCurrentAddress);
+            	}
+				else{
+					mLocationText.setVisibility(LinearLayout.VISIBLE);
+            		mAddressText.setText("抱歉,获取定位失败");
+				}
+			}
+		});
+		mDinweiDelete.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				isNeedDinwei=false;
+				mDinwei.setVisibility(ImageView.VISIBLE);
+				mDinweiDelete.setVisibility(ImageView.GONE);
+        		mLocationText.setVisibility(LinearLayout.GONE);
+			}
+		});
 		mUgcVoice.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -170,15 +255,20 @@ public class PhotoShareActivity extends InsActivity implements
 			@Override
 			public void onClick(View v) {
 				// 判断手机相册界面是否关闭,如果没关闭则关闭
-				try {
-					if (!PhoneAlbumActivity.mInstance.isFinishing()) {
-						PhoneAlbumActivity.mInstance.finish();
-					}
-
-				} catch (Exception e) {
-
-				}
-
+//				try {
+//					if (!PhoneAlbumActivity.mInstance.isFinishing()) {
+//						PhoneAlbumActivity.mInstance.finish();
+//					}
+//
+//				} catch (Exception e) {
+//
+//				}
+				
+				
+				//图片信息保存在这个activity里
+				//mCurrentLat是纬度, mCurrentLon是经度, mCurrentAddress是具体地址
+				//isNeedDinwei是用户是否选择定位
+				
 				// 显示提示信息并关闭当前界面
 				Toast.makeText(PhotoShareActivity.this.getApplicationContext(),
 						"上传图片成功", Toast.LENGTH_SHORT).show();
@@ -367,96 +457,13 @@ public class PhotoShareActivity extends InsActivity implements
 			uploadUtil.uploadFiles(pics, InsUrl.UPLOAD_IMAGE_BASE, param);
 		}
 		// 获取地理位置数据
-		getLocation();
+//		getLocation();
 		// 显示默认地理位置、相册
 		// if(!mKXApplication.mMyLocationResults.isEmpty()){
 		// mLocation.setText(mKXApplication.mMyLocationResults.get(
 		// mLocationPosition).getName());
 		// }
 		// mAlbum.setText(mAlbums[mAlbumPosition]);
-	}
-
-	/**
-	 * 获取地理位置数据
-	 */
-	private void getLocation() {
-		if (mKXApplication.mMyLocationResults.isEmpty()) {
-			InputStream inputStream;
-			try {
-				inputStream = getAssets().open("data/my_location.KX");
-				String json = new TextUtil(mKXApplication)
-						.readTextFile(inputStream);
-				JSONArray array = new JSONArray(json);
-				LocationResult result = null;
-				for (int i = 0; i < array.length(); i++) {
-					result = new LocationResult();
-					result.setName(array.getJSONObject(i).getString("name"));
-					result.setLocation(array.getJSONObject(i).getString(
-							"location"));
-					mKXApplication.mMyLocationResults.add(result);
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	/**
-	 * 地理位置对话框
-	 */
-	private void locationDialog() {
-		AlertDialog.Builder builder = new Builder(PhotoShareActivity.this);
-		builder.setTitle("选择当前位置");
-		builder.setAdapter(new LocationAdapter(),
-				new DialogInterface.OnClickListener() {
-
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						mLocationPosition = which;
-						// mLocation.setText(mKXApplication.mMyLocationResults
-						// .get(which).getName());
-						dialog.dismiss();
-					}
-				});
-		builder.setPositiveButton("刷新", new DialogInterface.OnClickListener() {
-
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.dismiss();
-			}
-		});
-		builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.cancel();
-			}
-		}).create().show();
-	}
-
-	/**
-	 * 相册对话框
-	 */
-	private void AlbumDialog() {
-		AlertDialog.Builder builder = new Builder(PhotoShareActivity.this);
-		builder.setTitle("请选择相册");
-		builder.setAdapter(new AlbumAdapter(),
-				new DialogInterface.OnClickListener() {
-
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						mAlbumPosition = which;
-						// mAlbum.setText(mAlbums[which]);
-						dialog.dismiss();
-					}
-				});
-		builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.cancel();
-			}
-		}).create().show();
 	}
 
 	@Override
@@ -656,6 +663,10 @@ public class PhotoShareActivity extends InsActivity implements
 	protected void onDestroy() {
 		super.onDestroy();
 		mKXApplication.mAlbumList.clear();
+        if (locationClient != null && locationClient.isStarted()) {
+            locationClient.stop();
+            locationClient = null;
+        }
 	}
 
 	@Override
@@ -675,5 +686,4 @@ public class PhotoShareActivity extends InsActivity implements
 		// TODO Auto-generated method stub
 
 	}
-	
 }
