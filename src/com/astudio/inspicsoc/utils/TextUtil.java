@@ -59,53 +59,6 @@ public class TextUtil {
 		return readedStr;
 	}
 
-	/**
-	 * 表情的正则表达式
-	 * 
-	 * @return
-	 */
-	private Pattern buildPattern() {
-		StringBuilder patternString = new StringBuilder(
-				mKxApplication.mFacesText.size() * 3);
-		patternString.append('(');
-		for (int i = 0; i < mKxApplication.mFacesText.size(); i++) {
-			String s = mKxApplication.mFacesText.get(i);
-			patternString.append(Pattern.quote(s));
-			patternString.append('|');
-		}
-		patternString.replace(patternString.length() - 1,
-				patternString.length(), ")");
-		return Pattern.compile(patternString.toString());
-	}
-
-	/**
-	 * 将文本中含有表情字符的内容换成带有表情图片的文本
-	 * 
-	 * @param text
-	 *            带有表情字符的文本
-	 * @return 带有表情图片的文本
-	 */
-	public CharSequence replace(CharSequence text) {
-		try {
-			SpannableStringBuilder builder = new SpannableStringBuilder(text);
-			Pattern pattern = buildPattern();
-			Matcher matcher = pattern.matcher(text);
-			while (matcher.find()) {
-				Bitmap bitmap = mKxApplication
-						.getFaceBitmap(mKxApplication.mFacesText
-								.indexOf(matcher.group()));
-				if (bitmap != null) {
-					ImageSpan span = new ImageSpan(bitmap);
-					builder.setSpan(span, matcher.start(), matcher.end(),
-							Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-				}
-			}
-			return builder;
-		} catch (Exception e) {
-			return text;
-		}
-	}
-
 	public String getCharacterPinYin(char c) {
 		HanyuPinyinOutputFormat format = null;
 		format = new HanyuPinyinOutputFormat();

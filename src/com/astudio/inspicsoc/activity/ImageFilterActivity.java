@@ -6,11 +6,13 @@ import java.util.Map;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.astudio.inspicsoc.R;
 import com.astudio.inspicsoc.utils.ActivityForResultUtil;
@@ -31,6 +33,8 @@ public class ImageFilterActivity extends InsActivity {
 	private Button mEffect;
 	private Button mFace;
 	private Button mFrame;
+	private Button mGraffiti;
+	private Button mText;
 
 	private String mOldPath;// 旧图片地址
 	private Bitmap mOldBitmap;// 旧图片
@@ -60,6 +64,23 @@ public class ImageFilterActivity extends InsActivity {
 		mEffect = (Button) findViewById(R.id.imagefilter_effect);
 		mFace = (Button) findViewById(R.id.imagefilter_face);
 		mFrame = (Button) findViewById(R.id.imagefilter_frame);
+		mGraffiti = (Button) findViewById(R.id.imagefilter_graffiti);
+		mText = (Button) findViewById(R.id.imagefilter_text);
+	}
+	
+	public void showToast(){
+		Toast.makeText(this, "取消上传", Toast.LENGTH_SHORT).show();
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+			// Do something.
+			showToast();
+			this.finish();// 直接调用杀死当前activity方法.
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 
 	private void setListener() {
@@ -67,6 +88,7 @@ public class ImageFilterActivity extends InsActivity {
 
 			@Override
 			public void onClick(View v) {
+				showToast();
 				// 关闭当前界面
 				finish();
 			}
@@ -194,6 +216,40 @@ public class ImageFilterActivity extends InsActivity {
 						ActivityForResultUtil.REQUESTCODE_IMAGEFILTER_FRAME);
 			}
 		});
+		mGraffiti.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// 跳转到边框界面,并传递图片地址
+				Intent intent = new Intent();
+				intent.setClass(ImageFilterActivity.this,
+						ImageFilterGraffitiActivity.class);
+				if (mIsOld) {
+					intent.putExtra("path", mOldPath);
+				} else {
+					intent.putExtra("path", mNewPath);
+				}
+				startActivityForResult(intent,
+						ActivityForResultUtil.REQUESTCODE_IMAGEFILTER_GRAFFITI);
+			}
+		});
+		mText.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// 跳转到边框界面,并传递图片地址
+				Intent intent = new Intent();
+				intent.setClass(ImageFilterActivity.this,
+						ImageFilterTextActivity.class);
+				if (mIsOld) {
+					intent.putExtra("path", mOldPath);
+				} else {
+					intent.putExtra("path", mNewPath);
+				}
+				startActivityForResult(intent,
+						ActivityForResultUtil.REQUESTCODE_IMAGEFILTER_TEXT);
+			}
+		});
 	}
 
 	private void init() {
@@ -233,7 +289,6 @@ public class ImageFilterActivity extends InsActivity {
 			mBack.setEnabled(true);
 			mForward.setEnabled(false);
 			mDisplay.setImageBitmap(mNewBitmap);
-
 		}
 	}
 }
