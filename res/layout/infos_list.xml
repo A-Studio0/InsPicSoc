@@ -8,27 +8,28 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-    	android:layout_height="wrap_content"
-        >
-        <com.astudio.inspicsoc.view.RoundedImageView 
+        android:layout_height="wrap_content" >
+
+        <com.astudio.inspicsoc.view.RoundedImageView
             android:id="@+id/avator"
-            android:layout_gravity="center_horizontal" 
-            android:src="@drawable/head_default_miao" 
-            android:adjustViewBounds="true" 
-            android:layout_alignParentLeft="true"
             android:layout_width="28dp"
-            android:layout_height="28dp"/>
-        <TextView android:textSize="16.0sp" 
-            
-            android:layout_gravity="center_horizontal" 
-            android:layout_toRightOf="@id/avator"
-            android:id="@+id/nickNameTextView" 
-            android:layout_width="wrap_content" 
-            android:layout_height="wrap_content" 
+            android:layout_height="28dp"
+            android:layout_alignParentLeft="true"
+            android:layout_gravity="center_horizontal"
+            android:adjustViewBounds="true"
+            android:src="@drawable/head_default_miao" />
+
+        <TextView
+            android:id="@+id/nickNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginTop="10.0dip" 
-            android:text="miao"/>
-        <!-- 
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10.0dip"
+            android:layout_toRightOf="@id/avator"
+            android:text="miao"
+            android:textSize="16.0sp" />
+        <!--
         <Button
             android:id="@+id/add"
             android:layout_width="48dip"
@@ -38,113 +39,68 @@
             android:text="关注"
             android:textColor="#FFFFFF"
             android:textSize="14sp"
-            android:textStyle="bold" /> -->
-      <ImageView
-        android:id="@+id/add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:background="@drawable/attention_button" />
-      
-    </RelativeLayout>
-    <ImageView
+            android:textStyle="bold" />-->
+
+        <ImageView
+            android:id="@+id/add"
             android:layout_width="wrap_content"
-            android:layout_height="10dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/spilt_line" />
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/attention_button" />
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="10dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/spilt_line" />
+
     <com.astudio.dodowaterfall.widget.ScaleImageView
         android:id="@+id/news_pic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:src="@null" />
-    
-     <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/spilt_line" />
-    <LinearLayout 
+
+    <ImageView
         android:layout_width="match_parent"
-    	android:layout_height="wrap_content"
-    	android:orientation="vertical" 
-    	>
-        <TextView 
-	            android:layout_width="wrap_content"
-	        	android:layout_height="wrap_content"
-	        	android:id="@+id/news_title"
-	        	android:gravity="center"/>
-        <!-- 
-        <LinearLayout android:layout_width="match_parent"
-	    	android:layout_height="wrap_content"
-	    	android:orientation="horizontal" >
-            <TextView 
-	            android:layout_width="wrap_content"
-	        	android:layout_height="wrap_content"
-	        	android:background="@drawable/biaoqian"
-	        	android:gravity="center"
-	            android:text="年轻"
-	            android:layout_weight="1"/>
-            <TextView 
-	            android:layout_width="wrap_content"
-	        	android:layout_height="wrap_content"
-	        	android:gravity="center"
-	        	android:background="@drawable/biaoqian"
-	            android:text="活力"
-	            android:layout_weight="1"/>
-            <TextView 
-	            android:layout_width="wrap_content"
-	        	android:layout_height="wrap_content"
-	        	android:background="@drawable/biaoqian"
-	        	android:gravity="center"
-	            android:text="文气"
-	            android:layout_weight="1"/>
-            <TextView 
-	            android:layout_width="wrap_content"
-	        	android:layout_height="wrap_content"
-	        	android:background="@drawable/biaoqian"
-	        	android:gravity="center"
-	            android:text="艺术"
-	            android:layout_weight="1"/>
-        </LinearLayout>
-         -->
+        android:layout_height="10dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/spilt_line" />
+
+   <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/news_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center" />
+
     </LinearLayout>
- 
-    <RelativeLayout android:layout_width="match_parent"
-    	android:layout_height="wrap_content"
-    	android:orientation="horizontal" >
-            
-              <TextView 
-	            android:layout_width="wrap_content"
-	        	android:layout_height="wrap_content"
-	        	
-	        	android:gravity="center"
-	            android:text="热度：234"
-	            
-	            android:maxLines="1"/>
-              
-              <!-- 
-           <ImageView
+
+   <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/tool_box_fragment_miao_icon" /> --> 
-           
-            <ImageView
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="热度:" />
+
+        <TextView
+            android:id="@+id/comment_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            
-            android:layout_alignParentRight="true"
-            android:background="@drawable/android_my_jd_collects" />
-           
-            <!--  
-            <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/abs__ic_menu_share_holo_dark" /> --> 
-       </RelativeLayout>
-    		
-  
+            android:maxLines="1"
+            android:text="234" />
+
+      
+    </LinearLayout>
 
 </LinearLayout>

@@ -1,10 +1,18 @@
 package com.astudio.inspicsoc.activity;
 
+import java.io.File;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -17,6 +25,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +33,8 @@ import com.ab.view.slidingmenu.SlidingMenu;
 import com.astudio.inspicsoc.R;
 import com.astudio.inspicsoc.R.drawable;
 import com.astudio.inspicsoc.model.ActionItem;
+import com.astudio.inspicsoc.utils.ActivityForResultUtil;
+import com.astudio.inspicsoc.utils.PhotoUtil;
 import com.astudio.inspicsoc.view.TitlePopup;
 import com.astudio.inspicsoc.view.TitlePopup.OnItemOnClickListener;
 
@@ -54,6 +65,7 @@ public class MainActivity extends InsActivity implements OnClickListener {
 	private TitlePopup titlePopup;
 
 	private int fragmentFlag;
+	private Fragment mFrag;//侧滑栏
 
 	/**
 	 * 退出时间
@@ -293,7 +305,7 @@ public class MainActivity extends InsActivity implements OnClickListener {
 		setBehindContentView(R.layout.main_left_layout);
 		FragmentTransaction mFragementTransaction = getSupportFragmentManager()
 				.beginTransaction();
-		Fragment mFrag = new LeftSlidingMenuFragment(this);
+		mFrag = new LeftSlidingMenuFragment(this,mContext,mKXApplication);
 		mFragementTransaction.replace(R.id.main_left_fragment, mFrag);
 		mFragementTransaction.commit();
 		// customize the SlidingMenu
@@ -427,6 +439,108 @@ public class MainActivity extends InsActivity implements OnClickListener {
 			android.os.Process.killProcess(android.os.Process.myPid());
 			System.exit(0);
 		}
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+
+		switch (requestCode) {
+		/**
+		 * 通过照相修改头像
+		 */
+		case ActivityForResultUtil.REQUESTCODE_UPLOADAVATAR_CAMERA:
+			if (resultCode == RESULT_OK) {
+				if (!Environment.getExternalStorageState().equals(
+						Environment.MEDIA_MOUNTED)) {
+					Toast.makeText(this, "SD不可用", Toast.LENGTH_SHORT).show();
+					return;
+				}
+				File file = new File(mKXApplication.mUploadPhotoPath);
+				startPhotoZoom(Uri.fromFile(file));
+			} else {
+				Toast.makeText(this, "取消上传", Toast.LENGTH_SHORT).show();
+			}
+			break;
+		/**
+		 * 通过本地修改头像
+		 */
+		case ActivityForResultUtil.REQUESTCODE_UPLOADAVATAR_LOCATION:
+			Uri uri = null;
+			if (data == null) {
+				Toast.makeText(this, "取消上传", Toast.LENGTH_SHORT).show();
+				return;
+			}
+			if (resultCode == RESULT_OK) {
+				if (!Environment.getExternalStorageState().equals(
+						Environment.MEDIA_MOUNTED)) {
+					Toast.makeText(this, "SD不可用", Toast.LENGTH_SHORT).show();
+					return;
+				}
+				uri = data.getData();
+				startPhotoZoom(uri);
+			} else {
+				Toast.makeText(this, "照片获取失败", Toast.LENGTH_SHORT).show();
+			}
+			break;
+		/**
+		 * 裁剪修改的头像
+		 */
+		case ActivityForResultUtil.REQUESTCODE_UPLOADAVATAR_CROP:
+			if (data == null) {
+				Toast.makeText(this, "取消上传", Toast.LENGTH_SHORT).show();
+				return;
+			} else {
+				saveCropPhoto(data);
+			}
+			break;
+		}
+	}
+	
+	/**
+	 * 系统裁剪照片
+	 * 
+	 * @param uri
+	 */
+	private void startPhotoZoom(Uri uri) {
+		Intent intent = new Intent("com.android.camera.action.CROP");
+		intent.setDataAndType(uri, "image/*");
+		intent.putExtra("crop", "true");
+		intent.putExtra("aspectX", 1);
+		intent.putExtra("aspectY", 1);
+		intent.putExtra("outputX", 200);
+		intent.putExtra("outputY", 200);
+		intent.putExtra("scale", true);
+		intent.putExtra("noFaceDetection", true);
+		intent.putExtra("return-data", true);
+		startActivityForResult(intent,
+				ActivityForResultUtil.REQUESTCODE_UPLOADAVATAR_CROP);
+	}
+	
+	/**
+	 * 保存裁剪的照片
+	 * 
+	 * @param data
+	 */
+	private void saveCropPhoto(Intent data) {
+		Bundle extras = data.getExtras();
+		if (extras != null) {
+			Bitmap bitmap = extras.getParcelable("data");
+			bitmap = PhotoUtil.toRoundCorner(bitmap, 15);
+			if (bitmap != null) {
+				uploadPhoto(bitmap);
+			}
+		} else {
+			Toast.makeText(this, "获取裁剪照片错误", Toast.LENGTH_SHORT).show();
+		}
+	}
+	
+	/**
+	 * 更新头像
+	 */
+	private void uploadPhoto(Bitmap bitmap) {
+		mKXApplication.mHeadBitmap=bitmap;
+		((LeftSlidingMenuFragment) mFrag).setHeadBitmap(bitmap);
 	}
 
 }

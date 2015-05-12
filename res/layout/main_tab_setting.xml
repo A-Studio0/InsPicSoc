@@ -8,7 +8,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         
-        android:background="@drawable/app_list_corner_border"
+        android:background="@drawable/find_background"
         android:cacheColorHint="#00000000">
     </com.astudio.inspicsoc.view.CornerListView>
 <!-- 

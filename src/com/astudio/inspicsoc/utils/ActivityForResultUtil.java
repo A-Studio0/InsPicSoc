@@ -29,4 +29,5 @@ public class ActivityForResultUtil {
 	public static final int REQUESTCODE_IMAGEFILTER_GRAFFITI = 20;
 	public static final int REQUESTCODE_IMAGEFILTER_TEXT = 21;
 	public static final int REQUESTCODE_VOICE = 22;
+	public static final int REQUESTCODE_UPLOADPHOTO_ALBUM = 23;
 }
