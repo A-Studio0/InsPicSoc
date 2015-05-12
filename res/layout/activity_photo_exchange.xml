@@ -2,59 +2,59 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.astudio.inspicsoc.activity.Photo_exchange" 
-    android:orientation="vertical"
     android:background="@drawable/img_bg_texture"
-    >
-       <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="48dip"
-            android:background="@drawable/comm_title_bg" >
+    android:orientation="vertical"
+    tools:context="com.astudio.inspicsoc.activity.Photo_exchange" >
 
-            <Button
-                android:id="@+id/photo_exchange_back"
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="48dip"
+        android:background="@drawable/comm_title_bg" >
+
+        <Button
+            android:id="@+id/photo_exchange_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:background="@drawable/br_prev" />
+
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="20dip"
+            android:layout_marginRight="20dip"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="3dp"
-                android:background="@drawable/br_prev" />
-
-            <LinearLayout
-                android:layout_width="0dip"
-                android:layout_height="fill_parent"
-                android:layout_marginLeft="20dip"
-                android:layout_marginRight="20dip"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:gravity="center"
-                android:orientation="horizontal" 
-                
-                >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="8dip"
-                    android:text="图片兑换"
-                    android:textColor="#ffffff"
-                    android:textSize="18sp" />
-
-            </LinearLayout>
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="8dip"
-                android:layout_marginEnd="8dip" 
-                android:background="@drawable/showright_selector" 
-                android:visibility="invisible"/>
+                android:padding="8dip"
+                android:text="图片兑换"
+                android:textColor="#ffffff"
+                android:textSize="18sp" />
         </LinearLayout>
-        <ListView 
-            android:id="@+id/pictrue_exchange"
-           android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-          android:cacheColorHint="#00000000"
-          android:fadingEdge="none"
-            ></ListView>
 
+        <Button
+            android:id="@+id/px_upload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dip"
+            android:layout_marginRight="8dip"
+            android:text="发布"
+            android:textColor="#ffffff"
+            android:textSize="18sp"
+            android:background="@drawable/comm_title_bg"  />
+    </LinearLayout>
+
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:cacheColorHint="#00000000"
+        android:fadingEdge="none" >
+    </ListView>
 
 </LinearLayout>
