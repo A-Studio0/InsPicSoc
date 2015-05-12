@@ -6,5 +6,179 @@
     android:background="@drawable/kaixin_background"
     android:orientation="vertical" >
 
+     <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="48dip"
+        android:background="@drawable/global_top_background"
+        android:focusable="true"
+        android:focusableInTouchMode="true" >
 
+        <Button
+            android:id="@+id/photovoice_cancel"
+            android:layout_width="48dip"
+            android:layout_height="fill_parent"
+            android:layout_marginBottom="8dip"
+            android:layout_marginLeft="8dip"
+            android:layout_marginTop="8dip"
+            android:background="@drawable/title_text_button"
+            android:text="取消"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="20dip"
+            android:layout_marginRight="20dip"
+            android:layout_weight="1"
+            android:background="@drawable/title_bar_center_button_bg"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dip"
+                android:text="录音"
+                android:textColor="#ffffff"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/photovoice_upload"
+            android:layout_width="48dip"
+            android:layout_height="fill_parent"
+            android:layout_marginBottom="8dip"
+            android:layout_marginRight="8dip"
+            android:layout_marginTop="8dip"
+            android:background="@drawable/title_text_button"
+            android:text="上传"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:visibility="invisible" />
+    </LinearLayout>
+     <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+        <Button
+            android:id="@+id/voice_record_btn"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/voice_record_btn" />
+
+        <RelativeLayout
+            android:id="@+id/voice_record_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_above="@+id/voice_record_btn"
+            android:background="#80000000"
+            android:clickable="true" >
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_centerInParent="true"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/voice_ugc_icon_recording" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/voice_ugc_icon_recordingring"
+                    android:gravity="bottom" >
+
+                    <ImageView
+                        android:id="@+id/voice_recording_volume"
+                        android:layout_width="30dip"
+                        android:layout_height="0dip"
+                        android:background="@drawable/voice_ugc_icon_recordingvolume" />
+                </RelativeLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/voice_ugc_icon_recordingring" />
+
+                <RelativeLayout
+                    android:id="@+id/voice_recordinglight_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" >
+
+                    <ImageView
+                        android:id="@+id/voice_recordinglight_1"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_centerInParent="true"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/voice_ugc_icon_recordinglight"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        android:id="@+id/voice_recordinglight_2"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_centerInParent="true"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/voice_ugc_icon_recordinglight"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        android:id="@+id/voice_recordinglight_3"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_centerInParent="true"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/voice_ugc_icon_recordinglight"
+                        android:visibility="gone" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="20dip"
+                android:layout_marginLeft="20dip"
+                android:layout_marginRight="20dip" >
+
+                <TextView
+                    android:id="@+id/voice_record_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:text="0&apos;&apos;"
+                    android:textColor="#999999" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:text="60″"
+                    android:textColor="#999999" />
+
+                <ProgressBar
+                    android:id="@+id/voice_record_progressbar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="6dip"
+                    android:layout_below="@+id/voice_record_time"
+                    android:max="60"
+                    android:progress="0"
+                    android:progressDrawable="@drawable/globle_player_progress_bar_bg" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+  
 </LinearLayout>

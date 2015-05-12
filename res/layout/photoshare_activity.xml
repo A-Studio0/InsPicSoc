@@ -90,15 +90,64 @@
                     android:scaleType="fitXY"
                     android:visibility="gone" />
             </LinearLayout>
-			<ImageView
-	            android:id="@+id/ugc_voice"
-	            android:layout_width="44dip"
-	            android:layout_height="44dip"
-	            android:layout_gravity="center"
-	            android:layout_marginBottom="72dip"
-	            android:layout_marginLeft="43dip"
-	            android:src="@drawable/ugc_icon_type_voice"
-            />
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dip"
+                android:orientation="horizontal"
+                android:padding="8dip"
+                android:gravity="center" >
+				<ImageView
+		            android:id="@+id/ugc_voice"
+		            android:layout_width="44dip"
+		            android:layout_height="44dip"
+		            android:src="@drawable/ugc_icon_type_voice"
+            	/>
+				<LinearLayout
+	                android:id="@+id/voice_display_voice_layout"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_alignParentBottom="true"
+	                android:layout_marginLeft="10dip"
+	                android:layout_marginRight="10dip"
+	                android:background="@drawable/globle_player_bg"
+	                android:gravity="center_vertical"
+	                android:orientation="horizontal"
+	                android:visibility="gone" >
+	
+	                <ImageView
+	                    android:id="@+id/voice_display_voice_play"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:src="@drawable/globle_player_btn_play" />
+	
+	                <ProgressBar
+	                    android:id="@+id/voice_display_voice_progressbar"
+	                    style="?android:attr/progressBarStyleHorizontal"
+	                    android:layout_width="match_parent"
+	                    android:layout_height="6dip"
+	                    android:layout_margin="8dip"
+	                    android:layout_weight="1"
+	                    android:max="100"
+	                    android:progress="50"
+	                    android:progressDrawable="@drawable/globle_player_progress_bar_bg" />
+	
+	                <TextView
+	                    android:id="@+id/voice_display_voice_time"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:text="7″"
+	                    android:textColor="#999999"
+	                    android:textSize="12sp" />
+	            </LinearLayout>
+	            <ImageView
+		            android:id="@+id/ugc_voice_delete"
+		            android:layout_width="44dip"
+		            android:layout_height="44dip"
+		            android:src="@drawable/ugc_icon_type_voice_delete"
+		            android:visibility="gone"
+            	/>
+			</LinearLayout>
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -111,7 +160,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="8dip"
-                    android:text="标题"
+                    android:text="描述"
                     android:textColor="#000000"
                     android:textSize="14sp" />
 
@@ -120,206 +169,11 @@
                     android:layout_height="wrap_content"
                     android:background="#00000000"
                     android:gravity="center_vertical"
-                    android:hint="输入照片标题"
+                    android:hint="输入图片描述"
                     android:singleLine="true"
                     android:textColor="#000000"
                     android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
-
-        <RelativeLayout
-            android:id="@+id/voic_display_bg"
-            android:layout_width="fill_parent"
-            android:layout_height="160dip"
-            android:layout_margin="8dip"
-            android:background="@drawable/upload_photos_bg_topinput" >
-
-            <EditText
-                android:id="@+id/voice_content"
-                android:layout_width="205dip"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dip"
-                android:layout_marginTop="10dip"
-                android:background="@null"
-                android:focusable="false"
-                android:gravity="top"
-                android:hint="@string/tv_hint"
-                android:maxLength="140"
-                android:maxLines="3"
-                android:minHeight="50dip"
-                android:scrollbars="vertical"
-                android:textColor="#ff98bede"
-                android:textColorHint="#ff98bede" />
-
-            <LinearLayout
-                android:id="@+id/voice_display_voice_layout"
-                android:layout_width="205dip"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_marginLeft="10dip"
-                android:background="@drawable/globle_player_bg"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:visibility="gone" >
-
-                <ImageView
-                    android:id="@+id/voice_display_voice_play"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/globle_player_btn_play" />
-
-                <ProgressBar
-                    android:id="@+id/voice_display_voice_progressbar"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="6dip"
-                    android:layout_margin="8dip"
-                    android:layout_weight="1"
-                    android:max="100"
-                    android:progress="50"
-                    android:progressDrawable="@drawable/globle_player_progress_bar_bg" />
-
-                <TextView
-                    android:id="@+id/voice_display_voice_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="7″"
-                    android:textColor="#999999"
-                    android:textSize="12sp" />
-            </LinearLayout>
-        </RelativeLayout>
-
-        <Button
-            android:id="@+id/voice_send"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/voic_display_bg"
-            android:background="@drawable/globle_player_bg"
-            android:text="发送"
-            android:textColor="#ff98bede" 
-            android:visibility="gone"/>
-
-        <Button
-            android:id="@+id/voice_record_btn"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="@drawable/voice_record_btn" />
-
-        <RelativeLayout
-            android:id="@+id/voice_record_layout"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_above="@+id/voice_record_btn"
-            android:background="#80000000"
-            android:clickable="true" >
-
-            <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content" >
-
-                <ImageView
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_centerInParent="true"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/voice_ugc_icon_recording" />
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:background="@drawable/voice_ugc_icon_recordingring"
-                    android:gravity="bottom" >
-
-                    <ImageView
-                        android:id="@+id/voice_recording_volume"
-                        android:layout_width="30dip"
-                        android:layout_height="0dip"
-                        android:background="@drawable/voice_ugc_icon_recordingvolume" />
-                </RelativeLayout>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:background="@drawable/voice_ugc_icon_recordingring" />
-
-                <RelativeLayout
-                    android:id="@+id/voice_recordinglight_layout"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent" >
-
-                    <ImageView
-                        android:id="@+id/voice_recordinglight_1"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_centerInParent="true"
-                        android:scaleType="centerInside"
-                        android:src="@drawable/voice_ugc_icon_recordinglight"
-                        android:visibility="gone" />
-
-                    <ImageView
-                        android:id="@+id/voice_recordinglight_2"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_centerInParent="true"
-                        android:scaleType="centerInside"
-                        android:src="@drawable/voice_ugc_icon_recordinglight"
-                        android:visibility="gone" />
-
-                    <ImageView
-                        android:id="@+id/voice_recordinglight_3"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_centerInParent="true"
-                        android:scaleType="centerInside"
-                        android:src="@drawable/voice_ugc_icon_recordinglight"
-                        android:visibility="gone" />
-                </RelativeLayout>
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="20dip"
-                android:layout_marginLeft="20dip"
-                android:layout_marginRight="20dip" >
-
-                <TextView
-                    android:id="@+id/voice_record_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
-                    android:text="0&apos;&apos;"
-                    android:textColor="#999999" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    android:text="60″"
-                    android:textColor="#999999" />
-
-                <ProgressBar
-                    android:id="@+id/voice_record_progressbar"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="fill_parent"
-                    android:layout_height="6dip"
-                    android:layout_below="@+id/voice_record_time"
-                    android:max="60"
-                    android:progress="0"
-                    android:progressDrawable="@drawable/globle_player_progress_bar_bg" />
-            </RelativeLayout>
-        </RelativeLayout>
-    </RelativeLayout>
-
 </LinearLayout>
