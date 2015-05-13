@@ -1,0 +1,59 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context=".PhotoTakeHalfActivity">
+
+
+    <SurfaceView 
+        android:id="@+id/surfaceview_camera"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+    </SurfaceView>
+   	<LinearLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:weightSum="1.0"
+	    android:gravity="right"
+	    >
+
+   		<LinearLayout
+   		    android:layout_width="0dp"
+   		    android:layout_height="fill_parent"
+   		    android:layout_weight="0.5"
+   		    android:background="#88000000" >
+   		</LinearLayout>
+    </LinearLayout>
+    
+    <LinearLayout
+        android:id="@+id/panel_button"
+        android:layout_width="fill_parent"
+        android:layout_height="250dip"
+        android:layout_alignParentBottom="true"
+        android:gravity="center|bottom"
+        android:background="#000000"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/upload_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/photo_half_upload"
+            android:layout_margin="20dp"
+            android:visibility="gone"/>
+		
+        <Button
+            android:id="@+id/take_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/photo_take"
+            android:layout_margin="20dp" />
+        <Button
+            android:id="@+id/cancel_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/photo_half_redo"
+            android:layout_margin="20dp"
+            android:visibility="gone"/>
+    </LinearLayout>"
+
+</RelativeLayout>

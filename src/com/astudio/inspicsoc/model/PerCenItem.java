@@ -1,16 +1,20 @@
 package com.astudio.inspicsoc.model;
 
+import android.graphics.Bitmap;
+
 public class PerCenItem {
 	private String description;
-	private int imageId;
+	private String imageId;
 	private String position;
 	private String date;
 	private String collectNum;
 	private String viewNum;
 	private int comment;
+	private String voiceId;
+	private float playTimeId;
 	
-	public PerCenItem (int imageId,String description,String position,
-			String date,String collectNum,String viewNum,int comment){
+	public PerCenItem (String imageId,String description,String position,
+			String date,String collectNum,String viewNum,int comment,String voiceId,float playTimeId){
 	
 		this.description = description;
 		this.imageId = imageId;
@@ -19,6 +23,24 @@ public class PerCenItem {
 		this.collectNum = collectNum;
 		this.viewNum = viewNum;
 		this.comment = comment;
+		this.voiceId=voiceId;
+		this.playTimeId=playTimeId;
+	}
+
+	public float getPlayTimeId() {
+		return playTimeId;
+	}
+
+	public void setPlayTimeId(float playTimeId) {
+		this.playTimeId = playTimeId;
+	}
+
+	public String getVoiceId() {
+		return voiceId;
+	}
+
+	public void setVoiceId(String voiceId) {
+		this.voiceId = voiceId;
 	}
 
 	public void setDescription(String description) {
@@ -27,10 +49,10 @@ public class PerCenItem {
 	public String getDescription(){
 		return description;
 	}
-	public void setImageId(int imageId) {
+	public void setImageId(String imageId) {
 		this.imageId = imageId;
 	}
-	public int getImageId(){
+	public String getImageId(){
 		return imageId;
 	}
 	public void setPosition(String position) {

@@ -72,7 +72,7 @@ public class MyInfoActivity extends Activity implements OnClickListener {
 		birthday = (TextView) findViewById(R.id.birthday);
 		headImageView = (ImageView) findViewById(R.id.face);
 		mKXApplication = (InsApplication) this.getApplication();
-		headImageView.setImageBitmap(mKXApplication.mHeadBitmap);
+		headImageView.setImageBitmap(mKXApplication.getPhoneAlbum(mKXApplication.mHeadBitmap));
 		
 		activity = this;
 		username = mKXApplication.userName;

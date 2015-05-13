@@ -14,6 +14,7 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -36,7 +38,7 @@ import android.widget.Toast;
 
 import com.astudio.inspicsoc.R;
 import com.astudio.inspicsoc.common.InsUrl;
-import com.astudio.inspicsoc.result.LocationResult;
+import com.astudio.inspicsoc.model.PerCenItem;
 import com.astudio.inspicsoc.service.UploadUtil;
 import com.astudio.inspicsoc.service.UploadUtil.OnUploadProcessListener;
 import com.astudio.inspicsoc.utils.ActivityForResultUtil;
@@ -101,6 +103,8 @@ public class PhotoShareActivity extends InsActivity implements
     private ImageView mDinwei;
     private ImageView mDinweiDelete;
     private boolean isNeedDinwei=false;
+    
+    private EditText mMiaoshu;
 
 	/**
 	 * 去上传文件
@@ -184,6 +188,7 @@ public class PhotoShareActivity extends InsActivity implements
 		mAddressText=(TextView)findViewById(R.id.address);
 		mDinwei=(ImageView)findViewById(R.id.dinwei);
 		mDinweiDelete=(ImageView)findViewById(R.id.dinwei_delete);
+		mMiaoshu=(EditText)findViewById(R.id.miaoshu);
 		// mLocation = (TextView) findViewById(R.id.photoshare_location);
 		// mDelete = (Button) findViewById(R.id.photoshare_location_delete);
 		// mAlbum = (TextView) findViewById(R.id.photoshare_album);
@@ -270,9 +275,17 @@ public class PhotoShareActivity extends InsActivity implements
 				//mCurrentLat是纬度, mCurrentLon是经度, mCurrentAddress是具体地址
 				//isNeedDinwei是用户是否选择定位
 				
+				PerCenItem percen1 = new PerCenItem(mCurrentPath,
+						mMiaoshu.getText().toString(),(isNeedDinwei?mCurrentAddress:""),
+						mCurrentTime,"收藏数：0","浏览数：0",0,mCurrentVoicePath,mPlayTime);
+				mKXApplication.PerCenItemList.add(0,percen1);
+				
 				// 显示提示信息并关闭当前界面
 				Toast.makeText(PhotoShareActivity.this.getApplicationContext(),
 						"上传图片成功", Toast.LENGTH_SHORT).show();
+				Intent i=new Intent();
+				i.setClass(PhotoShareActivity.this,ImageFilterActivity.class);
+				setResult(RESULT_OK,i);
 				PhotoShareActivity.this.finish();
 			}
 		});
@@ -306,28 +319,6 @@ public class PhotoShareActivity extends InsActivity implements
 				startActivityForResult(intent, 0);
 			}
 		});
-		// mLocation.setOnClickListener(new OnClickListener() {
-		//
-		// public void onClick(View v) {
-		// // 显示地理位置对话框
-		// locationDialog();
-		// }
-		// });
-		// mDelete.setOnClickListener(new OnClickListener() {
-		//
-		// public void onClick(View v) {
-		// // 更换显示,设置地理位置编号
-		// mLocation.setText("选择当前位置");
-		// mLocationPosition = -1;
-		// }
-		// });
-		// mAlbum.setOnClickListener(new OnClickListener() {
-		//
-		// public void onClick(View v) {
-		// // 相册对话框
-		// AlbumDialog();
-		// }
-		// });
 		mDisplayVoicePlay.setOnClickListener(new OnClickListener() {
 	
 			public void onClick(View v) {
@@ -457,14 +448,6 @@ public class PhotoShareActivity extends InsActivity implements
 			param.put("username", "HeyJim");
 			uploadUtil.uploadFiles(pics, InsUrl.UPLOAD_IMAGE_BASE, param);
 		}
-		// 获取地理位置数据
-//		getLocation();
-		// 显示默认地理位置、相册
-		// if(!mKXApplication.mMyLocationResults.isEmpty()){
-		// mLocation.setText(mKXApplication.mMyLocationResults.get(
-		// mLocationPosition).getName());
-		// }
-		// mAlbum.setText(mAlbums[mAlbumPosition]);
 	}
 
 	@Override
@@ -501,103 +484,6 @@ public class PhotoShareActivity extends InsActivity implements
     			mDisplayVoiceProgressBar.setProgress(0);
     			mDisplayVoiceTime.setText((int) mPlayTime + "″");
     		}
-		}
-	}
-
-	private class LocationAdapter extends BaseAdapter {
-
-		@Override
-		public int getCount() {
-			return mKXApplication.mMyLocationResults.size();
-		}
-
-		@Override
-		public Object getItem(int position) {
-			return mKXApplication.mMyLocationResults.get(position);
-		}
-
-		@Override
-		public long getItemId(int position) {
-			return position;
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			ViewHolder holder = null;
-			if (convertView == null) {
-				convertView = LayoutInflater.from(PhotoShareActivity.this)
-						.inflate(R.layout.photoshare_activity_location_item,
-								null);
-				holder = new ViewHolder();
-				holder.icon = (ImageView) convertView
-						.findViewById(R.id.photoshare_activity_location_item_icon);
-				holder.name = (TextView) convertView
-						.findViewById(R.id.photoshare_activity_location_item_name);
-				holder.location = (TextView) convertView
-						.findViewById(R.id.photoshare_activity_location_item_location);
-				convertView.setTag(holder);
-			} else {
-				holder = (ViewHolder) convertView.getTag();
-			}
-			LocationResult result = mKXApplication.mMyLocationResults
-					.get(position);
-			if (mLocationPosition == position) {
-				holder.icon.setVisibility(View.VISIBLE);
-			} else {
-				holder.icon.setVisibility(View.INVISIBLE);
-			}
-			holder.name.setText(result.getName());
-			holder.location.setText(result.getLocation());
-			return convertView;
-		}
-
-		class ViewHolder {
-			ImageView icon;
-			TextView name;
-			TextView location;
-		}
-	}
-
-	private class AlbumAdapter extends BaseAdapter {
-
-		@Override
-		public int getCount() {
-			return mAlbums.length;
-		}
-
-		@Override
-		public Object getItem(int position) {
-			return mAlbums[position];
-		}
-
-		@Override
-		public long getItemId(int position) {
-			return position;
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			ViewHolder holder = null;
-			if (convertView == null) {
-				convertView = LayoutInflater.from(PhotoShareActivity.this)
-						.inflate(R.layout.photoshare_activity_album_item, null);
-				holder = new ViewHolder();
-				holder.icon = (ImageView) convertView
-						.findViewById(R.id.photoshare_activity_album_item_icon);
-				holder.name = (TextView) convertView
-						.findViewById(R.id.photoshare_activity_album_item_name);
-				convertView.setTag(holder);
-			} else {
-				holder = (ViewHolder) convertView.getTag();
-			}
-			holder.icon.setVisibility(View.VISIBLE);
-			holder.name.setText(mAlbums[position]);
-			return convertView;
-		}
-
-		class ViewHolder {
-			ImageView icon;
-			TextView name;
 		}
 	}
 

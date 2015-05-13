@@ -159,7 +159,7 @@ public class MainActivity extends InsActivity implements OnClickListener {
 			public void onClick(View v) {
 				Intent intent = new Intent();
 				intent.setClass(MainActivity.this, MenuActivity.class);
-				mActivity.startActivity(intent);
+				mActivity.startActivityForResult(intent,ActivityForResultUtil.REQUESTCODE_MENU);
 				mActivity.overridePendingTransition(R.anim.activity_open, 0);
 			}
 		});
@@ -193,6 +193,7 @@ public class MainActivity extends InsActivity implements OnClickListener {
 				break;
 			case 4:
 				fragment = new PerCenfragment();
+//				PerCenfragment.adapter.notifyDataSetChanged();
 				break;
 			
 			}
@@ -494,6 +495,12 @@ public class MainActivity extends InsActivity implements OnClickListener {
 				saveCropPhoto(data);
 			}
 			break;
+		case ActivityForResultUtil.REQUESTCODE_MENU:
+			if (resultCode == RESULT_OK) {
+				viewPager.setCurrentItem(4);
+				PerCenfragment.adapter.notifyDataSetChanged();
+			}
+			break;
 		}
 	}
 	
@@ -539,7 +546,7 @@ public class MainActivity extends InsActivity implements OnClickListener {
 	 * 更新头像
 	 */
 	private void uploadPhoto(Bitmap bitmap) {
-		mKXApplication.mHeadBitmap=bitmap;
+		mKXApplication.mHeadBitmap=PhotoUtil.saveToLocal(bitmap);
 		((LeftSlidingMenuFragment) mFrag).setHeadBitmap(bitmap);
 	}
 
