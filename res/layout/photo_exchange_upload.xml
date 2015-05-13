@@ -53,7 +53,7 @@
             android:visibility="visible" />
     </RelativeLayout>
 
-    <ImageButton
+    <ImageView
         android:id="@+id/add_photo"
         android:layout_width="fill_parent"
         android:layout_height="200dp"
