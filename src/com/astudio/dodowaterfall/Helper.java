@@ -15,9 +15,11 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 public class Helper {
-	// �?测网络连�?
+	// �?测网络连�?
 	public static boolean checkConnection(Context context) {
-		ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(context.CONNECTIVITY_SERVICE);
+
+		ConnectivityManager connectivityManager = (ConnectivityManager) context
+				.getSystemService(context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 		if (networkInfo != null) {
 			return networkInfo.isAvailable();
@@ -26,7 +28,8 @@ public class Helper {
 	}
 
 	public static boolean isWifi(Context mContext) {
-		ConnectivityManager connectivityManager = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+		ConnectivityManager connectivityManager = (ConnectivityManager) mContext
+				.getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo activeNetInfo = connectivityManager.getActiveNetworkInfo();
 		if (activeNetInfo != null && activeNetInfo.getTypeName().equals("WIFI")) {
 			return true;
@@ -42,7 +45,8 @@ public class Helper {
 	 * @throws IOException
 	 * @throws ClientProtocolException
 	 */
-	public static String getStringFromUrl(String url) throws ClientProtocolException, IOException {
+	public static String getStringFromUrl(String url)
+			throws ClientProtocolException, IOException {
 		HttpGet get = new HttpGet(url);
 		HttpClient client = new DefaultHttpClient();
 		HttpResponse response = client.execute(get);

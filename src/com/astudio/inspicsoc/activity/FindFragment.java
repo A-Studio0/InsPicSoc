@@ -101,7 +101,7 @@ public class FindFragment extends Fragment {
                                  startActivity(intent);
                         	 }
                         	 if( position==2){
-                                 intent = new Intent(getActivity(),PhotoCircleActivity.class);
+                                 intent = new Intent(getActivity(),PhotoDetailActivity.class);
                                  startActivity(intent);
                         	 }
                         	 if( position==3){

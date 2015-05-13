@@ -56,6 +56,7 @@
     <uses-permission android:name="android.permission.READ_LOGS" >
     </uses-permission>
     
+
     <!-- share to weibo... -->
     <uses-permission android:name="android.permission.GET_TASKS" />
 
@@ -73,20 +74,25 @@
 
         <activity
             android:name=".activity.LoginActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".activity.MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
         </activity>
+
         <activity
             android:name=".activity.PhotoDetailActivity"
-            android:theme="@android:style/Theme.Black.NoTitleBar" >
+            android:theme="@android:style/Theme.Black.NoTitleBar"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="cn.sharesdk.framework.ShareSDKUIShell"
@@ -102,22 +108,38 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name="com.astudio.inspicsoc.activity.FriendActivity"
-            android:theme="@android:style/Theme.NoTitleBar" >
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.astudio.inspicsoc.activity.MessageCenterActivity"
-            android:theme="@android:style/Theme.NoTitleBar" >
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.astudio.inspicsoc.activity.MyInfoActivity"
-            android:label="@string/title_activity_fragment" >
+            android:label="@string/title_activity_fragment"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.astudio.inspicsoc.activity.FriendInfoActivity"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".activity.PhoneAlbumActivity"
             android:screenOrientation="portrait" >
         </activity>
+        
+        <activity
+            android:name=".activity.PhoneAlbumActivity2"
+            android:screenOrientation="portrait" >
+        </activity>
         <activity
             android:name=".activity.AlbumActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.AlbumActivity2"
             android:screenOrientation="portrait" >
         </activity>
         <activity
@@ -155,63 +177,105 @@
         <activity
             android:name=".activity.MenuActivity"
             android:label="@string/title_activity_menu"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".activity.BaiduMapActivity"
-            android:label="@string/title_activity_menu" >
+            android:label="@string/title_activity_menu"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".activity.PhotoVSActivity"
-            android:label="@android:style/Theme.Translucent.NoTitleBar" >
+            android:label="@android:style/Theme.Translucent.NoTitleBar"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".activity.PhotoVSResultActivity"
-            android:label="@android:style/Theme.Translucent.NoTitleBar" >
+            android:label="@android:style/Theme.Translucent.NoTitleBar"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".activity.PhotoHalfActivity"
-            android:label="@android:style/Theme.Translucent.NoTitleBar" >
+            android:label="@android:style/Theme.Translucent.NoTitleBar"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".activity.PhotoCircleActivity"
-            android:label="@android:style/Theme.Translucent.NoTitleBar" >
+            android:label="@android:style/Theme.Translucent.NoTitleBar"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".activity.QuanquanActivity"
-            android:label="@android:style/Theme.Translucent.NoTitleBar" >
+            android:label="@android:style/Theme.Translucent.NoTitleBar"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".activity.ShakeActivity"
-            android:label="@android:style/Theme.Translucent.NoTitleBar" >
+            android:label="@android:style/Theme.Translucent.NoTitleBar"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".activity.P2PActivity"
-            android:label="@android:style/Theme.Translucent.NoTitleBar" >
+            android:label="@android:style/Theme.Translucent.NoTitleBar"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".activity.Photo_exchange"
+            android:label="@android:style/Theme.Translucent.NoTitleBar"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+
+            android:name=".activity.PhotoExDetailActivity"
             android:label="@android:style/Theme.Translucent.NoTitleBar" >
         </activity>
         <activity
-            android:name=".activity.ModifyActivity"
+            android:name=".activity.PhotoExSendPoints"
             android:label="@android:style/Theme.Translucent.NoTitleBar" >
         </activity>
         <activity
-            android:name=".activity.VoiceActivity"
+            android:name=".activity.PhotoExSendPhoto"
             android:label="@android:style/Theme.Translucent.NoTitleBar" >
         </activity>
         <activity
-            android:name=".activity.RegisterActivity"
+            android:name=".activity.PhotoExUploadActivity"
             android:label="@android:style/Theme.Translucent.NoTitleBar" >
         </activity>
+
          <activity
             android:name=".activity.ContactActivity"
             android:label="@android:style/Theme.Translucent.NoTitleBar" >
         </activity>
-        
+
+        <activity
+            android:name=".activity.ModifyActivity"
+            android:label="@android:style/Theme.Translucent.NoTitleBar"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.VoiceActivity"
+            android:label="@android:style/Theme.Translucent.NoTitleBar"
+            android:screenOrientation="portrait" >
+        </activity>
+
+        <activity
+            android:name=".activity.RegisterActivity"
+            android:label="@android:style/Theme.Translucent.NoTitleBar"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.PhotoTakeHalfActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" ></activity>
+        <activity
+            android:name=".activity.PhotoPingHalfActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" ></activity>
+    
         <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote">
 		</service>
+
     </application>
 
 </manifest>

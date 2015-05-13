@@ -18,7 +18,7 @@ public class MessageCenterActivity extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.message_center);
 		back = (ImageButton) this.findViewById(R.id.ivTitleBtnLeft);
-		// back.setOnClickListener(this);
+		back.setOnClickListener(this);
 		miaoBtnLayout = LeftSlidingMenuFragment.view
 				.findViewById(R.id.miaoBtnLayout);
 	}

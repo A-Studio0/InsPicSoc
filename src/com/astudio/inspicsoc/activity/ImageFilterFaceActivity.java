@@ -134,7 +134,7 @@ public class ImageFilterFaceActivity extends InsActivity {
 					canvas.save(Canvas.ALL_SAVE_FLAG);
 					canvas.restore();
 					// 保存到本地
-					mPath = PhotoUtil.saveToLocalPNG(mNewBitmap);
+					mPath = PhotoUtil.saveToLocal(mNewBitmap);
 					// 返回图片地址并关闭当前界面
 					Intent intent = new Intent();
 					intent.putExtra("path", mPath);

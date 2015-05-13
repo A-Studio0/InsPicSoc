@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/news_list"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/news_item_bg"
+    android:orientation = "vertical"
+     >
+    
+    <RelativeLayout
+        android:id="@+id/head_bar"
+        android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:orientation = "horizontal"
+        >
+      
+        <com.astudio.inspicsoc.view.RoundedImageView 
+            android:id="@+id/avator"
+            android:layout_gravity="center_horizontal" 
+            android:adjustViewBounds="true" 
+            android:layout_alignParentLeft="true"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginLeft="10dp"/>
+        <TextView android:textSize="16.0sp" 
+            android:layout_gravity="center_horizontal" 
+            android:layout_toRightOf="@id/avator"
+            android:id="@+id/nickNameTextView" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:layout_centerVertical="true"
+            android:layout_marginTop="10.0dip" />
+           <com.astudio.inspicsoc.view.RoundedImageView 
+            android:id="@+id/avator1"
+            android:layout_gravity="center_horizontal" 
+            android:adjustViewBounds="true" 
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+        	android:layout_centerVertical="true"/>
+          <TextView android:textSize="16.0sp" 
+            android:layout_gravity="center_horizontal" 
+            android:layout_toLeftOf="@id/avator1"
+            android:id="@+id/nickNameTextView1" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:layout_centerVertical="true"
+            android:layout_marginTop="10.0dip" />
+
+    </RelativeLayout>
+    <LinearLayout 
+        	android:id="@+id/spiltline"
+            android:layout_width="match_parent"
+    		android:layout_height="wrap_content"
+    		android:layout_below="@id/head_bar" >
+   		 <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/spilt_line" />
+    </LinearLayout>
+    <!-- 
+    <com.astudio.dodowaterfall.widget.ScaleImageView
+        android:id="@+id/news_pic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@null" />
+     -->
+ 
+    <RelativeLayout 
+        android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:layout_below="@id/spiltline" 
+    	android:orientation="horizontal" >
+          <ImageView
+		        android:id="@+id/percenitem_image"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="1"
+				android:gravity="center_vertical"/>
+       </RelativeLayout>
+        <RelativeLayout 
+        android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:layout_alignParentBottom="true"
+    	 >
+          <ImageView
+              android:id="@+id/bottom_half"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/photo_half_bottom" />
+       </RelativeLayout>
+        
+    		
+  
+
+
+    
+</RelativeLayout>	
+
+ 

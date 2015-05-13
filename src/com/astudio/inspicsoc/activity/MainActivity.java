@@ -1,50 +1,56 @@
 package com.astudio.inspicsoc.activity;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.SimpleOnPageChangeListener;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ab.view.slidingmenu.SlidingMenu;
 import com.astudio.inspicsoc.R;
 import com.astudio.inspicsoc.R.drawable;
+import com.astudio.inspicsoc.common.InsUrl;
 import com.astudio.inspicsoc.model.ActionItem;
+import com.astudio.inspicsoc.model.UploadItem;
+import com.astudio.inspicsoc.service.UploadUtil;
+import com.astudio.inspicsoc.service.UploadUtil.OnUploadProcessListener;
 import com.astudio.inspicsoc.utils.ActivityForResultUtil;
 import com.astudio.inspicsoc.utils.PhotoUtil;
 import com.astudio.inspicsoc.view.TitlePopup;
-import com.astudio.inspicsoc.view.TitlePopup.OnItemOnClickListener;
 
 @SuppressLint("SdCardPath")
-public class MainActivity extends InsActivity implements OnClickListener {
+public class MainActivity extends InsActivity implements OnClickListener,
+		OnUploadProcessListener {
 
 	protected SlidingMenu mSlidingMenu;
 	private ImageButton ivTitleBtnLeft;
 	protected Context mContext = this;
 	protected Activity mActivity = this;
+	UploadUtil uploadUtil;
 
 	private int[] selectList;
 	private ViewPager viewPager;
@@ -65,7 +71,7 @@ public class MainActivity extends InsActivity implements OnClickListener {
 	private TitlePopup titlePopup;
 
 	private int fragmentFlag;
-	private Fragment mFrag;//侧滑栏
+	private Fragment mFrag;// 侧滑栏
 
 	/**
 	 * 退出时间
@@ -88,8 +94,8 @@ public class MainActivity extends InsActivity implements OnClickListener {
 		firstPageBtn = (Button) findViewById(R.id.tab_rb_a);
 		cameraBtn = (Button) findViewById(R.id.camera_btn);
 		personalPageBtn = (Button) findViewById(R.id.tab_rb_c);
-		messageBtn=(Button)findViewById(R.id.message);
-		findBtn=(Button)findViewById(R.id.find);
+		messageBtn = (Button) findViewById(R.id.message);
+		findBtn = (Button) findViewById(R.id.find);
 		ivTitleName = (TextView) findViewById(R.id.ivTitleName);
 		selectList = new int[] { 0, 1, 2, 3, 4 };
 		viewPager = (ViewPager) findViewById(R.id.viewPager);
@@ -102,8 +108,10 @@ public class MainActivity extends InsActivity implements OnClickListener {
 		ivTitleName.setOnClickListener(listener);
 		viewPager.setOnPageChangeListener(changeListener);
 
+		uploadUtil = UploadUtil.getInstance();
+		uploadUtil.setOnUploadProcessListener(this); // 设置监听器监听上传状态
 		// 实例化标题栏弹窗
-		
+
 		titlePopup = new TitlePopup(this, LayoutParams.WRAP_CONTENT,
 				LayoutParams.WRAP_CONTENT);
 		// 实例化标题栏按钮并设置监听
@@ -111,55 +119,37 @@ public class MainActivity extends InsActivity implements OnClickListener {
 		titleBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//titlePopup.show(v);
+				// titlePopup.show(v);
 			}
 		});
 
 		initData();
-/*
-		OnItemOnClickListener myListener = new OnItemOnClickListener() {
-			@Override
-			public void onItemClick(ActionItem item, int position) {
-				Intent intent;
-				switch (position) {
-				case 0:
-					intent = new Intent(MainActivity.this,
-							BaiduMapActivity.class);
-					mActivity.startActivity(intent);
-					break;
-				case 1:
-					intent = new Intent(MainActivity.this,
-							PhotoHalfActivity.class);
-					mActivity.startActivity(intent);
-					break;
-				case 2:
-					intent = new Intent(MainActivity.this,
-							PhotoCircleActivity.class);
-					mActivity.startActivity(intent);
-					break;
-				case 3:
-					intent = new Intent(MainActivity.this, Photo_exchange.class);
-					mActivity.startActivity(intent);
-					break;
-				case 4:
-					intent = new Intent(MainActivity.this, ShakeActivity.class);
-					mActivity.startActivity(intent);
-					break;
-				default:
-					break;
-				}
-			}
-		};
-		
-		titlePopup.setItemOnClickListener(myListener);
-*/
+		/*
+		 * OnItemOnClickListener myListener = new OnItemOnClickListener() {
+		 * 
+		 * @Override public void onItemClick(ActionItem item, int position) {
+		 * Intent intent; switch (position) { case 0: intent = new
+		 * Intent(MainActivity.this, BaiduMapActivity.class);
+		 * mActivity.startActivity(intent); break; case 1: intent = new
+		 * Intent(MainActivity.this, PhotoHalfActivity.class);
+		 * mActivity.startActivity(intent); break; case 2: intent = new
+		 * Intent(MainActivity.this, PhotoCircleActivity.class);
+		 * mActivity.startActivity(intent); break; case 3: intent = new
+		 * Intent(MainActivity.this, Photo_exchange.class);
+		 * mActivity.startActivity(intent); break; case 4: intent = new
+		 * Intent(MainActivity.this, ShakeActivity.class);
+		 * mActivity.startActivity(intent); break; default: break; } } };
+		 * 
+		 * titlePopup.setItemOnClickListener(myListener);
+		 */
 		cameraBtn.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent();
 				intent.setClass(MainActivity.this, MenuActivity.class);
-				mActivity.startActivity(intent);
+				mActivity.startActivityForResult(intent,
+						ActivityForResultUtil.REQUESTCODE_MENU);
 				mActivity.overridePendingTransition(R.anim.activity_open, 0);
 			}
 		});
@@ -193,8 +183,9 @@ public class MainActivity extends InsActivity implements OnClickListener {
 				break;
 			case 4:
 				fragment = new PerCenfragment();
+				// PerCenfragment.adapter.notifyDataSetChanged();
 				break;
-			
+
 			}
 			return fragment;
 		}
@@ -211,11 +202,9 @@ public class MainActivity extends InsActivity implements OnClickListener {
 				fragmentFlag = 1;
 			} else if (viewPager.getCurrentItem() == 2) {
 				fragmentFlag = 2;
-			}
-			else if (viewPager.getCurrentItem() == 3) {
+			} else if (viewPager.getCurrentItem() == 3) {
 				fragmentFlag = 3;
-			}
-			else if (viewPager.getCurrentItem() == 4) {
+			} else if (viewPager.getCurrentItem() == 4) {
 				fragmentFlag = 4;
 			}
 			setFragment(fragmentFlag);
@@ -283,14 +272,11 @@ public class MainActivity extends InsActivity implements OnClickListener {
 	 */
 	private void initData() {
 		// 给标题栏弹窗添加子类
-		titlePopup.addAction(new ActionItem(this, "附近的图",
-				R.drawable.nearimg));
+		titlePopup.addAction(new ActionItem(this, "附近的图", R.drawable.nearimg));
 		titlePopup.addAction(new ActionItem(this, "拼图", R.drawable.pingtu));
 		titlePopup.addAction(new ActionItem(this, "圈圈", R.drawable.quanquan));
-		titlePopup.addAction(new ActionItem(this, "照片兑换",
-				R.drawable.changimg));
-		titlePopup.addAction(new ActionItem(this, "摇一摇",
-				R.drawable.yaoyiyao));
+		titlePopup.addAction(new ActionItem(this, "照片兑换", R.drawable.changimg));
+		titlePopup.addAction(new ActionItem(this, "摇一摇", R.drawable.yaoyiyao));
 	}
 
 	private void initView() {
@@ -305,7 +291,7 @@ public class MainActivity extends InsActivity implements OnClickListener {
 		setBehindContentView(R.layout.main_left_layout);
 		FragmentTransaction mFragementTransaction = getSupportFragmentManager()
 				.beginTransaction();
-		mFrag = new LeftSlidingMenuFragment(this,mContext,mKXApplication);
+		mFrag = new LeftSlidingMenuFragment(this, mContext, mKXApplication);
 		mFragementTransaction.replace(R.id.main_left_fragment, mFrag);
 		mFragementTransaction.commit();
 		// customize the SlidingMenu
@@ -440,7 +426,7 @@ public class MainActivity extends InsActivity implements OnClickListener {
 			System.exit(0);
 		}
 	}
-	
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
@@ -494,9 +480,15 @@ public class MainActivity extends InsActivity implements OnClickListener {
 				saveCropPhoto(data);
 			}
 			break;
+		case ActivityForResultUtil.REQUESTCODE_MENU:
+			if (resultCode == RESULT_OK) {
+				viewPager.setCurrentItem(4);
+				PerCenfragment.adapter.notifyDataSetChanged();
+			}
+			break;
 		}
 	}
-	
+
 	/**
 	 * 系统裁剪照片
 	 * 
@@ -516,7 +508,7 @@ public class MainActivity extends InsActivity implements OnClickListener {
 		startActivityForResult(intent,
 				ActivityForResultUtil.REQUESTCODE_UPLOADAVATAR_CROP);
 	}
-	
+
 	/**
 	 * 保存裁剪的照片
 	 * 
@@ -534,13 +526,47 @@ public class MainActivity extends InsActivity implements OnClickListener {
 			Toast.makeText(this, "获取裁剪照片错误", Toast.LENGTH_SHORT).show();
 		}
 	}
-	
+
 	/**
 	 * 更新头像
 	 */
 	private void uploadPhoto(Bitmap bitmap) {
-		mKXApplication.mHeadBitmap=bitmap;
+		mKXApplication.mHeadBitmap = PhotoUtil.saveToLocal(bitmap);
 		((LeftSlidingMenuFragment) mFrag).setHeadBitmap(bitmap);
+
+		// UploadUtil util = UploadUtil.getInstance();
+
+		Map<String, String> param = new HashMap<String, String>();
+		param.put("username", mKXApplication.userName);
+		File file = new File(PhotoUtil.saveToLocal(bitmap));
+
+		if (file.exists()) {
+			Log.e("不ucnzai", "图片不在");
+			final List<UploadItem> files = new ArrayList<UploadItem>();
+			UploadItem item = new UploadItem();
+			item.setFile(file);
+			item.setPath("image");
+			files.add(item);
+			uploadUtil.uploadFiles(files, InsUrl.CHANGE_USER_HEADPIC, param);
+		}
+	}
+
+	@Override
+	public void onUploadDone(int responseCode, String message) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onUploadProcess(int uploadSize) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void initUpload(int fileSize) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

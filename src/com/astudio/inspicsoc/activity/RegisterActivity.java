@@ -13,9 +13,11 @@ import android.widget.EditText;
 import com.ab.http.AbHttpUtil;
 import com.ab.http.AbStringHttpResponseListener;
 import com.ab.util.AbToastUtil;
+import com.astudio.dodowaterfall.Helper;
 import com.astudio.inspicsoc.R;
 import com.astudio.inspicsoc.common.InsUrl;
 import com.astudio.inspicsoc.common.StringUtils;
+import com.astudio.inspicsoc.utils.EncryptHelper;
 
 /**
  * 此类 是对布局main.xml上 控件的操作
@@ -46,6 +48,10 @@ public class RegisterActivity extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
+		if (!Helper.checkConnection(this.getApplicationContext())) {
+			AbToastUtil.showToast(getApplicationContext(), "请检查您的网络再试");
+			return;
+		}
 		int viewId = v.getId();
 		switch (viewId) {
 		case R.id.login_reback_btn:// 返回按钮
@@ -70,7 +76,8 @@ public class RegisterActivity extends Activity implements OnClickListener {
 				AbHttpUtil httpUtil = AbHttpUtil.getInstance(getApplication());
 
 				String loginUrl = InsUrl.USER_REGISTER.replace("@un",
-						userEditStr).replace("@ps", passwdEditStr);
+						userEditStr).replace("@ps",
+						EncryptHelper.md5(passwdEditStr));
 
 				httpUtil.get(loginUrl, new AbStringHttpResponseListener() {
 					@Override

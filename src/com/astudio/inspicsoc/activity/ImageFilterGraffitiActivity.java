@@ -124,7 +124,7 @@ public class ImageFilterGraffitiActivity extends InsActivity{
 					// 保存修改后的图片
 					mNewBitmap = mDisplay.getResult();
 					// 保存到本地
-					mPath = PhotoUtil.saveToLocalPNG(mNewBitmap);
+					mPath = PhotoUtil.saveToLocal(mNewBitmap);
 					// 返回图片地址并关闭当前界面
 					Intent intent = new Intent();
 					intent.putExtra("path", mPath);

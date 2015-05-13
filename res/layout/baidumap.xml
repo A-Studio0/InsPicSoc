@@ -2,48 +2,90 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical" >
+
     <RelativeLayout
-	    android:layout_width="fill_parent"
-	    android:layout_height="44dip"
-	    android:gravity="center_vertical"
-	    android:padding="0.0px" >
-	
-	    <ImageView
-	        android:id="@+id/rlCommenTitleBG"
-	        android:layout_width="fill_parent"
-	        android:layout_height="fill_parent"
-	        android:background="@drawable/comm_title_bg" />
-	
-	    <TextView
-	        android:id="@+id/ivTitleName"
-	        style="@style/A1_Font"
-	        android:layout_width="wrap_content"
-	        android:layout_height="fill_parent"
-	        android:layout_centerInParent="true"
-	        android:ellipsize="end"
-	        android:gravity="center"
-	        android:paddingLeft="96.0dip"
-	        android:paddingRight="96.0dip"
-	        android:singleLine="true"
-	        android:text="附近的图片" />
-	
-	    <ImageButton
-	        android:id="@+id/close_baidumap"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_alignParentLeft="true"
-	        android:layout_marginLeft="5dip"
-	        android:layout_centerVertical="true"
-	        android:background="@drawable/back_button_normal"
-	        android:gravity="center"
-	        android:includeFontPadding="false" />
-	
-	</RelativeLayout>
-    <com.baidu.mapapi.map.MapView  
-	    android:id="@+id/bmapView"  
-	    android:layout_width="fill_parent"  
-	    android:layout_height="fill_parent"  
-	    android:clickable="true" />
+        android:layout_width="fill_parent"
+        android:layout_height="44dip"
+        android:gravity="center_vertical"
+        android:padding="0.0px" >
+
+        <ImageView
+            android:id="@+id/rlCommenTitleBG"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@drawable/comm_title_bg" />
+
+        <TextView
+            android:id="@+id/ivTitleName"
+            style="@style/A1_Font"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_centerInParent="true"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:paddingLeft="96.0dip"
+            android:paddingRight="96.0dip"
+            android:singleLine="true"
+            android:text="附近的图片" />
+
+        <ImageButton
+            android:id="@+id/close_baidumap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dip"
+            android:background="@drawable/back_button_normal"
+            android:gravity="center"
+            android:includeFontPadding="false" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <com.baidu.mapapi.map.MapView
+            android:id="@+id/bmapView"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dip"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:id="@+id/dinwei"
+                android:layout_width="44dip"
+                android:layout_height="44dip"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ugc_icon_type_dinwei" />
+
+
+
+            <LinearLayout
+                android:id="@+id/location"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dip"
+                android:background="@drawable/circle_list_single"
+                android:orientation="horizontal"
+                android:visibility="gone" >
+
+                <TextView
+                    android:id="@+id/address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="8dip"
+                    android:text=""
+                    android:textColor="#000000"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>

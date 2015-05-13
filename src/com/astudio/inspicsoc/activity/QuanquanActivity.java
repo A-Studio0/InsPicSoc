@@ -176,7 +176,7 @@ public class QuanquanActivity extends Activity implements IXListViewListener {
 				holder.imageView = (ScaleImageView) convertView
 						.findViewById(R.id.news_pic);
 				holder.contentView = (TextView) convertView
-						.findViewById(R.id.news_title);
+						.findViewById(R.id.msg_conetnt);
 				convertView.setTag(holder);
 			}
 
