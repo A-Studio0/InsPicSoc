@@ -5,17 +5,23 @@ import java.util.Map;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.View.OnClickListener;
+import android.view.ViewTreeObserver.OnPreDrawListener;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.astudio.inspicsoc.R;
 import com.astudio.inspicsoc.utils.ActivityForResultUtil;
+import com.astudio.inspicsoc.utils.PhotoUtil;
 
 /**
  * 图片编辑类
@@ -42,6 +48,11 @@ public class ImageFilterActivity extends InsActivity {
 	private Bitmap mNewBitmap;// 新图片
 	private boolean mIsOld = true;// 是否是选择了旧图片
 	private boolean mIsSetResult = false;// 是否是要返回数据
+	
+	private boolean mIsMeasured;// 是否已经计算大小
+	public static float mMaxWidth;// 图片最大宽度
+	public static float mMaxHeight;// 图片最大高度
+	private RelativeLayout mDisplayLayout;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -51,7 +62,21 @@ public class ImageFilterActivity extends InsActivity {
 		// this.setBehindContentView(R.layout.main_left_fragment);
 		findViewById();
 		setListener();
-		init();
+		// 获取RelativeLayout的高度和宽度
+		ViewTreeObserver vto = mDisplayLayout.getViewTreeObserver();
+		vto.addOnPreDrawListener(new OnPreDrawListener() {
+
+			@Override
+			public boolean onPreDraw() {
+				if (mIsMeasured == false) {
+					mMaxWidth = mDisplayLayout.getMeasuredWidth();
+					mMaxHeight = mDisplayLayout.getMeasuredHeight();
+					init();
+					mIsMeasured = true;
+				}
+				return true;
+			}
+		});
 	}
 
 	private void findViewById() {
@@ -66,6 +91,7 @@ public class ImageFilterActivity extends InsActivity {
 		mFrame = (Button) findViewById(R.id.imagefilter_frame);
 		mGraffiti = (Button) findViewById(R.id.imagefilter_graffiti);
 		mText = (Button) findViewById(R.id.imagefilter_text);
+		mDisplayLayout=(RelativeLayout) findViewById(R.id.imagefilter_display_layout);
 	}
 	
 	public void showToast(){
@@ -116,10 +142,9 @@ public class ImageFilterActivity extends InsActivity {
 						map.put("image_path", mNewPath);
 					}
 					mKXApplication.mAlbumList.add(map);
-					startActivity(new Intent(ImageFilterActivity.this,
-							PhotoShareActivity.class));
+					startActivityForResult(new Intent(ImageFilterActivity.this,
+							PhotoShareActivity.class),ActivityForResultUtil.REQUESTCODE_MENU);
 				}
-				finish();
 			}
 		});
 		mBack.setOnClickListener(new OnClickListener() {
@@ -263,15 +288,81 @@ public class ImageFilterActivity extends InsActivity {
 		// 接收传递的图片地址
 		mOldPath = getIntent().getStringExtra("path");
 		mNewPath = getIntent().getStringExtra("path");
-		mOldBitmap = mKXApplication.getPhoneAlbum(mOldPath);
-		mNewBitmap = mKXApplication.getPhoneAlbum(mNewPath);
+		mOldBitmap = zoom(mKXApplication.getPhoneAlbum(mOldPath));
+		mNewBitmap = mOldBitmap;
+		mOldPath=PhotoUtil.saveToLocal(mOldBitmap);
+		mNewPath=mOldPath;
 		// 显示图片
 		mDisplay.setImageBitmap(mOldBitmap);
+	}
+	
+	/**
+	 * 缩放图片
+	 * 
+	 * @param bitmap
+	 *            需要缩放的图片
+	 * @return 缩放后的图片
+	 */
+	public Bitmap zoom(Bitmap bitmap) {
+		// 获取图片的高度和宽度
+		float width = bitmap.getWidth();
+		float height = bitmap.getHeight();
+		// 获取40dip的px值
+		int padding = (int) TypedValue.applyDimension(
+				TypedValue.COMPLEX_UNIT_DIP, 40, getResources()
+						.getDisplayMetrics());
+		// 设置最大宽度和高度
+		float maxWidth = mMaxWidth - padding;
+		float maxHeight = mMaxHeight - padding;
+		// 判断如果宽度或高度超过最大值,则缩放,否则返回原图片
+		if (width > maxWidth || height > maxHeight) {
+			// 获取缩放比例
+			float scale = getScale(width, height, maxWidth, maxHeight);
+
+			// 缩放后的图片的宽度和高度
+			int bitmapWidth = (int) (width * scale);
+			int bitmapHeight = (int) (height * scale);
+			// 创建缩放的图片
+			Bitmap zoomBitmap = Bitmap.createScaledBitmap(bitmap, bitmapWidth,
+					bitmapHeight, true);
+			return zoomBitmap;
+		} else {
+			return bitmap;
+		}
+
+	}
+
+	/**
+	 * 获取缩放比例
+	 * 
+	 * @param width
+	 *            当前图片的宽度
+	 * @param height
+	 *            当前图片的高度
+	 * @param maxWidth
+	 *            最大宽度
+	 * @param maxHeight
+	 *            最大高度
+	 * @return
+	 */
+	private float getScale(float width, float height, float maxWidth,
+			float maxHeight) {
+		float scaleWidth = maxWidth / width;
+		float scaleHeight = maxHeight / height;
+		return Math.min(scaleWidth, scaleHeight);
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
+		if(requestCode==ActivityForResultUtil.REQUESTCODE_MENU&&resultCode==RESULT_OK){
+				Intent i=new Intent();
+				i.setClass(ImageFilterActivity.this,MenuActivity.class);
+				setResult(RESULT_OK,i);
+				finish();
+		}else if(requestCode==ActivityForResultUtil.REQUESTCODE_MENU&&resultCode!=RESULT_OK){
+			finish();
+		}
 		if (resultCode == RESULT_OK) {
 			// 接收修改后的图片地址,并更新
 			if (mIsOld) {

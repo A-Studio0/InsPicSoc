@@ -9,7 +9,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -17,14 +19,17 @@ import android.widget.TextView;
 import com.astudio.inspicsoc.R;
 import com.astudio.inspicsoc.model.ExchangeItem;
 
-public class Photo_exchange extends Activity {
+public class Photo_exchange extends Activity implements OnClickListener {
 
 	private List<ExchangeItem> ItemList = new ArrayList<ExchangeItem>();
+	private Button back;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_photo_exchange);
+		back = (Button) this.findViewById(R.id.photo_exchange_back);
+		back.setOnClickListener(this);
 
 		initData();
 
@@ -95,4 +100,13 @@ public class Photo_exchange extends Activity {
 		}
 	}
 
+	@Override
+	public void onClick(View arg0) {
+		// TODO Auto-generated method stub
+		switch (arg0.getId()) {
+		case R.id.photo_exchange_back:
+			this.finish();
+			break;
+		}
+	}
 }

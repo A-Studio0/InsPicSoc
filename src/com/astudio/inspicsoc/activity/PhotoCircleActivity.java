@@ -20,6 +20,9 @@ public class PhotoCircleActivity extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.circles);
+		back = (Button) this.findViewById(R.id.photo_circle_back);
+		back.setOnClickListener(this);
+
 		button[0] = (RelativeLayout) this.findViewById(R.id.imageView1);
 		button[1] = (RelativeLayout) this.findViewById(R.id.imageView2);
 		button[2] = (RelativeLayout) this.findViewById(R.id.imageView3);
@@ -56,6 +59,9 @@ public class PhotoCircleActivity extends Activity implements OnClickListener {
 		// TODO Auto-generated method stub
 		String str = "圈圈们";
 		switch (arg0.getId()) {
+		case R.id.photo_circle_back:
+			this.finish();
+			break;
 		case R.id.imageView1:
 			str = title[0].getText().toString();
 			break;

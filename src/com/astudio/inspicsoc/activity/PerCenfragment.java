@@ -14,31 +14,12 @@ import android.widget.ListView;
 import com.astudio.inspicsoc.R;
 import com.astudio.inspicsoc.adapter.PerCenItemAdapter;
 import com.astudio.inspicsoc.model.PerCenItem;
+import com.astudio.inspicsoc.view.RoundedImageView;
 
 public class PerCenfragment extends Fragment {
-	private String[] data = { "percen1", "percen2" ,"percen3","percen4","percen5"};
-	private List<PerCenItem> PerCenItemList = new ArrayList<PerCenItem>();
-
-	private void initPerCenItems() {
-		PerCenItem percen1 = new PerCenItem(R.drawable.pinpho1,"this is description","120.19, 30.26",
-				"2015-05-12","收藏数：128","浏览数：834",R.drawable.percen_comment1);
-		PerCenItemList.add(percen1);
-		PerCenItem percen2 = new PerCenItem(R.drawable.pinpho3,"this is description","116.34, 39.97",
-				"2015-05-12","收藏数：456","浏览数：930",R.drawable.percen_comment2);
-		PerCenItemList.add(percen2);
-
-		PerCenItem percen3 = new PerCenItem(R.drawable.pinpho2,"this is description","118.98, 34.67",
-				"2015-05-12","收藏数：532","浏览数：912",R.drawable.percen_comment1);
-		PerCenItemList.add(percen3);
-
-		PerCenItem percen4 = new PerCenItem(R.drawable.head_default_miao,"this is description","121.46, 23.90",
-				"2015-05-12","收藏数：888","浏览数：962",R.drawable.percen_comment2);
-		PerCenItemList.add(percen4);
-		
-		PerCenItem percen5 = new PerCenItem(R.drawable.pinpho4,"this is description","115.98, 37.67",
-				"2015-05-12","收藏数：562","浏览数：812",R.drawable.percen_comment1);
-		PerCenItemList.add(percen5);
-	}
+	private RoundedImageView mHead;
+	private InsApplication mApp;
+	public static PerCenItemAdapter adapter;
 
 	@Override
 	public void onAttach(Activity activity) {
@@ -51,15 +32,16 @@ public class PerCenfragment extends Fragment {
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.person_center_fragment, container,
 				false);
-
-		initPerCenItems();// 初始化数据
+		mApp = (InsApplication) getActivity().getApplication();
+//		mHead = (RoundedImageView) v.findViewById(R.id.headImageView);
+//		mHead.setImageBitmap(mApp.mHeadBitmap);
 		/*
 		 * ArrayAdapter<String> adapter = new ArrayAdapter<String>(
 		 * MainActivity.this,android.R.layout.simple_list_item_1,data);
 		 */
 		// View view = null;
-		PerCenItemAdapter adapter = new PerCenItemAdapter(getActivity(),
-				R.layout.percen_item, PerCenItemList);
+		adapter = new PerCenItemAdapter(getActivity(),
+				R.layout.percen_item, mApp.PerCenItemList,mApp);
 		ListView listView = (ListView) v.findViewById(R.id.list_view);
 		listView.setAdapter(adapter);
 		/*
