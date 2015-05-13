@@ -1,12 +1,18 @@
 package com.astudio.inspicsoc.activity;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
 
 import com.astudio.inspicsoc.R;
+import com.astudio.inspicsoc.adapter.PhotoDetailAdapter;
+import com.astudio.inspicsoc.model.ExchangeItem;
+import com.astudio.inspicsoc.model.PerCenItem;
+import com.astudio.inspicsoc.model.PhotoDetailItem;
 
 import cn.sharesdk.onekeyshare.*;
 import cn.sharesdk.sina.weibo.SinaWeibo;
@@ -14,32 +20,38 @@ import android.os.Bundle;
 import android.os.Handler.Callback;
 import android.os.Message;
 import android.app.Activity;
+import android.app.ListActivity;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 public class PhotoDetailActivity extends Activity implements OnClickListener,
 		Callback {
-
-	private Button guanzhuBtn;
-	private ImageButton commentBtn;
-	private ImageButton collectBtn;
-	private ImageButton shareBtn;
-	private ImageView showComment;
+	private String[] data = { "photoDetail01"};
+	
+	private List<PhotoDetailItem> photoDetailItemList = new ArrayList<PhotoDetailItem>();
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.photo_detail);
-		ShareSDK.initSDK(this);
+
+		PhotoDetailAdapter adapter = new PhotoDetailAdapter(this,
+				R.layout.photo_detail_item, photoDetailItemList);
+		ListView listView = (ListView) findViewById(R.id.photo_detail);
+		listView.setAdapter(adapter);
+		
+		
+		/*ShareSDK.initSDK(this);
 		findViewById(R.id.shareweibo).setOnClickListener(this);
 		guanzhuBtn = (Button)findViewById(R.id.guanzhu);
 		collectBtn = (ImageButton) findViewById(R.id.collect);
 		shareBtn = (ImageButton) findViewById(R.id.shareweibo);
-		showComment = (ImageView) findViewById(R.id.photo_comment);
+		//showComment = (ImageView) findViewById(R.id.photo_comment);
 		guanzhuBtn.setOnClickListener(new OnClickListener(){
 
 			@Override
@@ -50,8 +62,8 @@ public class PhotoDetailActivity extends Activity implements OnClickListener,
 				Toast.makeText(PhotoDetailActivity.this, "添加关注成功~", Toast.LENGTH_SHORT).show();
 			}
 			
-		});
-		
+		});*/
+		/*
 		commentBtn = (ImageButton)findViewById(R.id.comment);
 		commentBtn.setOnClickListener(new OnClickListener(){
 
@@ -65,10 +77,20 @@ public class PhotoDetailActivity extends Activity implements OnClickListener,
 				showComment.setVisibility(View.VISIBLE);
 			}
 			
-		});
+		});*/
+		initData();
+
 
 	}
-
+	
+	private void initData() {
+		PhotoDetailItem photoDetail01 = new PhotoDetailItem(R.drawable.head_default_miao,"miao",R.drawable.pinpho1,
+				"this is description","120.19, 30.26",
+				"2015-05-12","浏览数：834",R.drawable.percen_comment1,"#thisIsTag#");
+		photoDetailItemList.add(photoDetail01);
+		
+	}
+	
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub

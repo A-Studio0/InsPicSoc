@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ import cn.sharesdk.onekeyshare.OnekeyShare;
 
 
 
+
 import com.astudio.inspicsoc.R;
 import com.astudio.inspicsoc.utils.*;
 import com.astudio.inspicsoc.adapter.SortAdapter;
@@ -43,7 +45,7 @@ public class FriendActivity extends Activity implements OnClickListener {
 	private TextView dialog;
 	private SortAdapter adapter;
 	private ClearEditText mClearEditText;
-	
+	private ImageButton addContactBtn;
 	/**
 	 * 汉字转换成拼音的类
 	 */
@@ -66,8 +68,8 @@ public class FriendActivity extends Activity implements OnClickListener {
 		back.setOnClickListener(this);
 		circleBtnLayout = LeftSlidingMenuFragment.view
 				.findViewById(R.id.circleBtnLayout);
-
-		
+		addContactBtn = (ImageButton) this.findViewById(R.id.add_contact);
+		addContactBtn.setOnClickListener(this);
 		initViews();
 	}
 
@@ -207,6 +209,12 @@ public class FriendActivity extends Activity implements OnClickListener {
 			this.finish();
 			circleBtnLayout.setSelected(false);
 			break;
+		case R.id.add_contact:
+			Intent i=new Intent();
+			i.setClass(FriendActivity.this,ContactActivity.class);
+			startActivityForResult(i,0);
+			break;
+			
 		case R.id.invite:
 			OnekeyShare oks = new OnekeyShare();
 			// 分享时Notification的图标和文字

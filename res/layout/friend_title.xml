@@ -34,17 +34,31 @@
         android:background="@drawable/back_button_normal"
         android:gravity="center"
         android:includeFontPadding="false" />
-
+	<ImageButton
+        android:id="@+id/add_contact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="5dip"
+        android:background="@drawable/composer_icn_plus_pressed"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:visibility="visible" />
+	 
     <ImageButton
         android:id="@+id/invite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="5dip"
+        android:layout_marginRight="25dip"
+        android:layout_toLeftOf="@id/add_contact"
         android:background="@drawable/friends_title_invite1"
         android:gravity="center"
         android:includeFontPadding="false"
         android:visibility="visible" />
-
+	
+    
+   
 </RelativeLayout>
