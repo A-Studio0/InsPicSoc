@@ -119,6 +119,10 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
+            android:name="com.astudio.inspicsoc.activity.FriendInfoActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name=".activity.PhoneAlbumActivity"
             android:screenOrientation="portrait" >
         </activity>

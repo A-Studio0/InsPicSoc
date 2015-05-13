@@ -266,7 +266,6 @@ public class PhotoShareActivity extends InsActivity implements
 					AbToastUtil.showToast(getApplicationContext(), "请检查您的网络再试");
 					return;
 				}
-
 				PerCenItem percen1 = new PerCenItem(mCurrentPath, mContent
 						.getText().toString(), (isNeedDinwei ? mCurrentAddress
 						: ""), mCurrentTime, "收藏数：0", "浏览数：0", 0,

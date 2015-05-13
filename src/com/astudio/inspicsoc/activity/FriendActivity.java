@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
+
 
 
 
@@ -103,9 +105,15 @@ public class FriendActivity extends Activity implements OnClickListener {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// 这里要利用adapter.getItem(position)来获取当前position所对应的对象
-				Toast.makeText(getApplication(),
-						((SortModel) adapter.getItem(position)).getName(),
-						Toast.LENGTH_SHORT).show();
+//				Toast.makeText(getApplication(),
+//						((SortModel) adapter.getItem(position)).getName(),
+//						Toast.LENGTH_SHORT).show();
+				Intent i=new Intent();
+				i.setClass(FriendActivity.this,FriendInfoActivity.class);
+				Bundle bundle=new Bundle();
+				bundle.putString("friendUserName",((SortModel) adapter.getItem(position)).getName());
+				i.putExtras(bundle); 
+				startActivity(i);
 			}
 		});
 

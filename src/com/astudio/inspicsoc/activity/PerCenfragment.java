@@ -33,8 +33,8 @@ public class PerCenfragment extends Fragment {
 		View v = inflater.inflate(R.layout.person_center_fragment, container,
 				false);
 		mApp = (InsApplication) getActivity().getApplication();
-//		mHead = (RoundedImageView) v.findViewById(R.id.headImageView);
-//		mHead.setImageBitmap(mApp.mHeadBitmap);
+		mHead = (RoundedImageView) v.findViewById(R.id.headImageView);
+		mHead.setImageBitmap(mApp.getPhoneAlbum(mApp.mHeadBitmap));
 		/*
 		 * ArrayAdapter<String> adapter = new ArrayAdapter<String>(
 		 * MainActivity.this,android.R.layout.simple_list_item_1,data);
