@@ -46,7 +46,8 @@
                         android:layout_centerVertical="true" />
                     <RelativeLayout 
                         android:layout_gravity="center_vertical" 
-                        android:paddingLeft="12.0dip" 
+                        android:paddingLeft="12.0dip"  
+                        android:paddingRight="0dip" 
                         android:layout_width="fill_parent" 
                         android:layout_height="wrap_content" 
                         android:layout_weight="1.0" 
@@ -78,7 +79,8 @@
                             android:layout_below="@id/nick" 
                             style="@style/Font_Settings" />
                     </RelativeLayout>
-                    <ImageView 
+                    <ImageView
+                        android:id="@+id/byebye"
                         android:layout_width="14.0dip" 
                         android:layout_height="14.0dip" 
                         android:layout_marginRight="8.0dip" 

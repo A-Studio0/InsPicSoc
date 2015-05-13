@@ -105,8 +105,6 @@ public class PhotoShareActivity extends InsActivity implements
     private ImageView mDinwei;
     private ImageView mDinweiDelete;
     private boolean isNeedDinwei=false;
-    
-    private EditText mMiaoshu;
 
 	UploadUtil uploadUtil;
 
@@ -285,7 +283,7 @@ public class PhotoShareActivity extends InsActivity implements
 				//isNeedDinwei是用户是否选择定位
 				
 				PerCenItem percen1 = new PerCenItem(mCurrentPath,
-						mMiaoshu.getText().toString(),(isNeedDinwei?mCurrentAddress:""),
+						mContent.getText().toString(),(isNeedDinwei?mCurrentAddress:""),
 						mCurrentTime,"收藏数：0","浏览数：0",0,mCurrentVoicePath,mPlayTime);
 				mKXApplication.PerCenItemList.add(0,percen1);
 
