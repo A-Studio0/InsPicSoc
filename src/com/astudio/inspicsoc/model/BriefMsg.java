@@ -13,7 +13,7 @@ public class BriefMsg {
 	private String headPic;
 	private String smallfirstPic;
 	private String text;
-	private int commentNum;
+	private Integer commentNum;
 	private String userNickName;
 
 	public String getUserNickName() {
@@ -64,11 +64,11 @@ public class BriefMsg {
 		this.text = text;
 	}
 
-	public int getCommentNum() {
+	public Integer getCommentNum() {
 		return commentNum;
 	}
 
-	public void setCommentNum(int commentNum) {
+	public void setCommentNum(Integer commentNum) {
 		this.commentNum = commentNum;
 	}
 

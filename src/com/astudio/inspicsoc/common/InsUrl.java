@@ -41,4 +41,7 @@ public class InsUrl {
 			+ "/image/uploadImage.json";
 
 	public static final String ADD_MSG = GET_MSG_BASE + "/addmsg.json";
+
+	public static final String GET_MSG_DETAIL = GET_MSG_BASE
+			+ "/getmsgdetail.json?username=@un&msgId=@mi";
 }
