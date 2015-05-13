@@ -11,10 +11,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -24,14 +20,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.astudio.android.bitmapfun.util.ImageFetcher;
 import com.astudio.dodowaterfall.Helper;
 import com.astudio.inspicsoc.R;
-import com.astudio.inspicsoc.utils.ActivityForResultUtil;
 import com.astudio.inspicsoc.common.InsUrl;
+import com.astudio.inspicsoc.utils.ActivityForResultUtil;
 import com.astudio.inspicsoc.view.RoundedImageView;
 
 @SuppressLint("ValidFragment")
@@ -54,10 +49,11 @@ public class LeftSlidingMenuFragment extends Fragment implements
 
 	// private ;
 
-	public LeftSlidingMenuFragment(MainActivity activity,Context context,InsApplication mKXApplication) {
+	public LeftSlidingMenuFragment(MainActivity activity, Context context,
+			InsApplication mKXApplication) {
 		this.mActivity = activity;
-		this.mContext=context;
-		this.mKXApplication=mKXApplication;
+		this.mContext = context;
+		this.mKXApplication = mKXApplication;
 	}
 
 	@Override
@@ -88,7 +84,7 @@ public class LeftSlidingMenuFragment extends Fragment implements
 
 		task = new ContentTask(this.getActivity(), 2);
 		userName = mKXApplication.userName;
-//		task.execute(userName);
+		task.execute(userName);
 
 		// settingBtnLayout = view.findViewById(R.id.inviteFriendBtnLayout);
 		// settingBtnLayout.setOnClickListener(this);
@@ -194,73 +190,74 @@ public class LeftSlidingMenuFragment extends Fragment implements
 			settingBtnLayout.setSelected(true);
 			break;
 		case R.id.headImageView:
-			new AlertDialog.Builder(mContext).setTitle("修改头像")
-			.setItems(
-					new String[] {"拍照上传", "上传手机中的照片" },
-					new DialogInterface.OnClickListener() {
+			new AlertDialog.Builder(mContext)
+					.setTitle("修改头像")
+					.setItems(new String[] { "拍照上传", "上传手机中的照片" },
+							new DialogInterface.OnClickListener() {
 
-						public void onClick(
-							DialogInterface dialog, int which) {
-							Intent intent = null;
-							switch (which) {
-							case 0:
-								intent = new Intent(
-										MediaStore.ACTION_IMAGE_CAPTURE);
-								File dir = new File(
-										"/sdcard/InsPicSoc/Camera/");
-								if (!dir.exists()) {
-									dir.mkdirs();
-								}
-								mKXApplication.mUploadPhotoPath = "/sdcard/InsPicSoc/Camera/"
-										+ UUID.randomUUID()
-												.toString();
-								File file = new File(
-										mKXApplication.mUploadPhotoPath);
-								if (!file
-										.exists()) {
-									try {
-										file.createNewFile();
-									} catch (IOException e) {
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									Intent intent = null;
+									switch (which) {
+									case 0:
+										intent = new Intent(
+												MediaStore.ACTION_IMAGE_CAPTURE);
+										File dir = new File(
+												"/sdcard/InsPicSoc/Camera/");
+										if (!dir.exists()) {
+											dir.mkdirs();
+										}
+										mKXApplication.mUploadPhotoPath = "/sdcard/InsPicSoc/Camera/"
+												+ UUID.randomUUID().toString();
+										File file = new File(
+												mKXApplication.mUploadPhotoPath);
+										if (!file.exists()) {
+											try {
+												file.createNewFile();
+											} catch (IOException e) {
 
+											}
+										}
+										intent.putExtra(
+												MediaStore.EXTRA_OUTPUT,
+												Uri.fromFile(file));
+										mActivity
+												.startActivityForResult(
+														intent,
+														ActivityForResultUtil.REQUESTCODE_UPLOADAVATAR_CAMERA);
+										break;
+
+									case 1:
+										intent = new Intent(Intent.ACTION_PICK,
+												null);
+										intent.setDataAndType(
+												MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+												"image/*");
+										mActivity
+												.startActivityForResult(
+														intent,
+														ActivityForResultUtil.REQUESTCODE_UPLOADAVATAR_LOCATION);
+										break;
 									}
 								}
-								intent.putExtra(
-										MediaStore.EXTRA_OUTPUT,
-										Uri.fromFile(file));
-								mActivity.startActivityForResult(
-												intent,
-												ActivityForResultUtil.REQUESTCODE_UPLOADAVATAR_CAMERA);
-								break;
+							})
+					.setNegativeButton("取消",
+							new DialogInterface.OnClickListener() {
 
-							case 1:
-								intent = new Intent(
-										Intent.ACTION_PICK,
-										null);
-								intent.setDataAndType(
-										MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-										"image/*");
-								mActivity.startActivityForResult(
-												intent,
-												ActivityForResultUtil.REQUESTCODE_UPLOADAVATAR_LOCATION);
-								break;
-							}
-						}
-					})
-			.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-
-						public void onClick(
-							DialogInterface dialog,
-							int which) {
-							dialog.cancel();
-						}
-					}).create().show();
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									dialog.cancel();
+								}
+							}).create().show();
 			break;
 		default:
 			break;
 		}
 	}
-	
-	public void setHeadBitmap(Bitmap bitmap){
+
+	public void setHeadBitmap(Bitmap bitmap) {
 		headImageView.setImageBitmap(bitmap);
 	}
 }

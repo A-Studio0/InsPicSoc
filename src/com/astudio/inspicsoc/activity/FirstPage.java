@@ -3,6 +3,7 @@
  */
 package com.astudio.inspicsoc.activity;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -51,6 +52,7 @@ public class FirstPage extends Fragment implements IXListViewListener {
 	private int currentPage = 0;
 	ContentTask task = new ContentTask(this.getActivity(), 2);
 	public static Activity myActivity;
+	List<BriefMsg> Msgs = new ArrayList<BriefMsg>();
 
 	private class ContentTask extends
 			AsyncTask<String, Integer, List<BriefMsg>> {
@@ -95,7 +97,7 @@ public class FirstPage extends Fragment implements IXListViewListener {
 		}
 
 		public List<BriefMsg> parseNewsJSON(String url) throws IOException {
-			List<BriefMsg> Msgs = new ArrayList<BriefMsg>();
+
 			String json = "";
 			if (Helper.checkConnection(mContext)) {
 				try {
@@ -112,26 +114,36 @@ public class FirstPage extends Fragment implements IXListViewListener {
 
 			try {
 				if (null != json) {
-					JSONObject newsObject = new JSONObject(json);
+					// JSONObject newsObject = new JSONObject(json);
 					// JSONObject jsonObject = newsObject.getJSONObject("data");
-					JSONArray blogsJson = newsObject.getJSONArray("pics");
+					JSONArray blogsJson = new JSONArray(json);
 
 					for (int i = 0; i < blogsJson.length(); i++) {
 						JSONObject newObject = blogsJson.getJSONObject(i);
 						BriefMsg newsInfo1 = new BriefMsg();
-						newsInfo1.setMsgId((newObject.isNull("msgid") ? ""
-								: newObject.getString("msgid")));
-						newsInfo1.setSmallfirstPic(newObject
-								.isNull("smallfirstPic") ? "" : newObject
-								.getString("smallfirstPic"));
+						newsInfo1.setMsgId((newObject.isNull("msgId") ? ""
+								: newObject.getString("msgId")));
+
+						JSONArray smallpics = newObject
+								.getJSONArray("smallpics");
+						newsInfo1.setSmallfirstPic(smallpics.getString(0)
+								.isEmpty() ? "" : smallpics.getString(0));
+
 						newsInfo1.setHeadPic(newObject.isNull("headPic") ? ""
 								: newObject.getString("headPic"));
 						newsInfo1.setText(newObject.isNull("text") ? ""
 								: newObject.getString("text"));
-						newsInfo1.setCommentNum(newObject.getInt("commentNum"));
+						newsInfo1
+								.setCommentNum(newObject.getInt("commentsNum"));
+						newsInfo1.setUserName(newObject.isNull("userName") ? ""
+								: newObject.getString("userName"));
 						newsInfo1.setUserNickName(newObject
 								.isNull("userNickName") ? "" : newObject
 								.getString("userNickName"));
+						File data = mImageFetcher.downloadBitmap(
+								myActivity.getApplicationContext(),
+								newsInfo1.getHeadPic());
+						newsInfo1.setHeadPic(data.toString());
 						Msgs.add(newsInfo1);
 					}
 				}
@@ -173,7 +185,7 @@ public class FirstPage extends Fragment implements IXListViewListener {
 		public View getView(int position, View convertView, ViewGroup parent) {
 
 			ViewHolder holder;
-			BriefMsg BriefMsg = mInfos.get(position);
+			final BriefMsg BriefMsg = mInfos.get(position);
 
 			if (convertView == null) {
 				LayoutInflater layoutInflator = LayoutInflater.from(parent
@@ -183,7 +195,7 @@ public class FirstPage extends Fragment implements IXListViewListener {
 				holder.imageView = (ScaleImageView) convertView
 						.findViewById(R.id.news_pic);
 				holder.contentView = (TextView) convertView
-						.findViewById(R.id.news_title);
+						.findViewById(R.id.msg_conetnt);
 				holder.headPic = (RoundedImageView) convertView
 						.findViewById(R.id.avator);
 				holder.nickName = (TextView) convertView
@@ -194,12 +206,15 @@ public class FirstPage extends Fragment implements IXListViewListener {
 			}
 
 			holder = (ViewHolder) convertView.getTag();
-			// holder.imageView.setImageWidth(BriefMsg.getWidth());
-			// holder.imageView.setImageHeight(BriefMsg.getHeight());
-			// holder.contentView.setText(BriefMsg.getMsg());
-			mImageFetcher.loadImage(BriefMsg.getHeadPic(), holder.headPic);
+			// mImageFetcher.loadImage(, holder.headPic);
+
+			holder.headPic
+					.setImageBitmap(mImageFetcher.decodeSampledBitmapFromFile(
+							BriefMsg.getHeadPic(), 80, 80));
 			holder.nickName.setText(BriefMsg.getUserNickName());
-			holder.numView.setText(BriefMsg.getCommentNum());
+			// holder.numView.setText(BriefMsg.getCommentNum() == null ? 0
+			// : BriefMsg.getCommentNum());
+			holder.contentView.setText(BriefMsg.getText());
 			mImageFetcher.loadImage(BriefMsg.getSmallfirstPic(),
 					holder.imageView);
 			return convertView;
@@ -260,14 +275,21 @@ public class FirstPage extends Fragment implements IXListViewListener {
 			@Override
 			public void onItemClick(PLA_AdapterView<?> parent, View view,
 					int position, long id) {
-				// TODO Auto-generated method stub
-				Intent intent = new Intent(myActivity,
-						PhotoDetailActivity.class);
+				BriefMsg msg = Msgs.get(position);
+
+				String userName = msg.getUserName();
+				String msgId = msg.getMsgId();
+
+				Intent intent = new Intent();
+
+				intent.putExtra("userName", userName);
+
+				intent.putExtra("msgId", msgId);
+
+				Log.e("msgId", msgId);
+				Log.e("userName", userName);
+				intent.setClass(myActivity, PhotoDetailActivity.class);
 				startActivity(intent);
-				// ViewHolder holder = (ViewHolder) view.getTag();
-				// Toast.makeText(myActivity.getApplicationContext(),
-				// holder.contentView.getText().toString(),
-				// Toast.LENGTH_LONG).show();
 			}
 
 		});
