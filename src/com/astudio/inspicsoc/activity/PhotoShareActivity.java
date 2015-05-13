@@ -2,14 +2,12 @@ package com.astudio.inspicsoc.activity;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.json.JSONArray;
-
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
@@ -26,20 +24,27 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.ab.util.AbToastUtil;
+import com.astudio.dodowaterfall.Helper;
 import com.astudio.inspicsoc.R;
 import com.astudio.inspicsoc.common.InsUrl;
-import com.astudio.inspicsoc.result.LocationResult;
+import com.astudio.inspicsoc.model.UploadItem;
 import com.astudio.inspicsoc.service.UploadUtil;
 import com.astudio.inspicsoc.service.UploadUtil.OnUploadProcessListener;
 import com.astudio.inspicsoc.utils.ActivityForResultUtil;
-import com.astudio.inspicsoc.utils.TextUtil;
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
+import com.baidu.location.LocationClientOption.LocationMode;
+import com.baidu.navisdk.util.common.StringUtils;
 
 /**
  * 照片分享类
@@ -55,9 +60,6 @@ public class PhotoShareActivity extends InsActivity implements
 	private ImageView mDisplaySingle;
 	private ImageView mUgcVoice;
 	private ImageView mUgcVoiceDelete;
-	// private TextView mLocation;
-	// private Button mDelete;
-	// private TextView mAlbum;
 	private LinearLayout mDisplayVoiceLayout;
 	private ImageView mDisplayVoicePlay;
 	private ProgressBar mDisplayVoiceProgressBar;
@@ -71,16 +73,35 @@ public class PhotoShareActivity extends InsActivity implements
 	private String[] mAlbums = new String[] { "手机相册" };// 相册
 	private int mAlbumPosition;// 当前选择的相册在列表的位置
 
-	private List<File> pics = new ArrayList<File>();
-	
+	private List<UploadItem> items = new ArrayList<UploadItem>();
+
 	private String mCurrentVoicePath;
 	private float mPlayTime;
 
 	private boolean mPlayState; // 播放状态
 	private int mPlayCurrentPosition;// 当前播放的时间
 	private MediaPlayer mMediaPlayer;
-	
+
+	private EditText mContent;
+
+	private Activity mActivity;
+
 	private static final String TAG = "uploadImage";
+
+	private LocationClient locationClient = null;
+	private static final int UPDATE_TIME = 5000;
+	private String mCurrentTime;// 当前时间
+	private Double mCurrentLat;// 纬度
+	private Double mCurrentLon;// 经度
+	private String mCurrentAddress;// 当前地址
+
+	private LinearLayout mLocationText;
+	private TextView mAddressText;
+	private ImageView mDinwei;
+	private ImageView mDinweiDelete;
+	private boolean isNeedDinwei = false;
+
+	UploadUtil uploadUtil;
 
 	/**
 	 * 去上传文件
@@ -107,6 +128,7 @@ public class PhotoShareActivity extends InsActivity implements
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.photoshare_activity);
+		mActivity = this;
 		findViewById();
 		setListener();
 		init();
@@ -119,25 +141,54 @@ public class PhotoShareActivity extends InsActivity implements
 		mDisplay = (Gallery) findViewById(R.id.photoshare_display);
 		mDisplaySingle = (ImageView) findViewById(R.id.photoshare_display_single);
 		mUgcVoice = (ImageView) findViewById(R.id.ugc_voice);
-		mUgcVoiceDelete=(ImageView)findViewById(R.id.ugc_voice_delete);
+		mUgcVoiceDelete = (ImageView) findViewById(R.id.ugc_voice_delete);
 		mDisplayVoiceLayout = (LinearLayout) findViewById(R.id.voice_display_voice_layout);
 		mDisplayVoicePlay = (ImageView) findViewById(R.id.voice_display_voice_play);
 		mDisplayVoiceProgressBar = (ProgressBar) findViewById(R.id.voice_display_voice_progressbar);
 		mDisplayVoiceTime = (TextView) findViewById(R.id.voice_display_voice_time);
-		// mLocation = (TextView) findViewById(R.id.photoshare_location);
-		// mDelete = (Button) findViewById(R.id.photoshare_location_delete);
-		// mAlbum = (TextView) findViewById(R.id.photoshare_album);
+		mContent = (EditText) findViewById(R.id.text_content);
+		mLocationText = (LinearLayout) findViewById(R.id.location);
+		mAddressText = (TextView) findViewById(R.id.address);
+		mDinwei = (ImageView) findViewById(R.id.dinwei);
+		mDinweiDelete = (ImageView) findViewById(R.id.dinwei_delete);
 	}
 
 	private void setListener() {
+
+		mDinwei.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (mCurrentAddress != null) {
+					isNeedDinwei = true;
+					mDinwei.setVisibility(ImageView.GONE);
+					mDinweiDelete.setVisibility(ImageView.VISIBLE);
+					mLocationText.setVisibility(LinearLayout.VISIBLE);
+					mAddressText.setText(mCurrentAddress);
+				} else {
+					mLocationText.setVisibility(LinearLayout.VISIBLE);
+					mAddressText.setText("抱歉,获取定位失败");
+				}
+			}
+		});
+		mDinweiDelete.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				isNeedDinwei = false;
+				mDinwei.setVisibility(ImageView.VISIBLE);
+				mDinweiDelete.setVisibility(ImageView.GONE);
+				mLocationText.setVisibility(LinearLayout.GONE);
+			}
+		});
 		mUgcVoice.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-//				PhotoShareActivity.this.finish();
-				Intent i=new Intent();
-				i.setClass(PhotoShareActivity.this,VoiceActivity.class);
-				startActivityForResult(i,0);
+				// PhotoShareActivity.this.finish();
+				Intent i = new Intent();
+				i.setClass(PhotoShareActivity.this, VoiceActivity.class);
+				startActivityForResult(i, 0);
 			}
 		});
 		mCancel.setOnClickListener(new OnClickListener() {
@@ -152,6 +203,11 @@ public class PhotoShareActivity extends InsActivity implements
 
 			@Override
 			public void onClick(View v) {
+
+				if (!Helper.checkConnection(mActivity)) {
+					AbToastUtil.showToast(getApplicationContext(), "请检查您的网络再试");
+					return;
+				}
 				// 判断手机相册界面是否关闭,如果没关闭则关闭
 				try {
 					if (!PhoneAlbumActivity.mInstance.isFinishing()) {
@@ -162,10 +218,60 @@ public class PhotoShareActivity extends InsActivity implements
 
 				}
 
+				if (mCurrentPath != null) {
+					File file = new File(mCurrentPath);
+					if (file.exists()) {
+						UploadItem item = new UploadItem();
+						item.setFile(file);
+						item.setPath("image");
+						items.add(item);
+					}
+				}
+				for (int i = 0; i < mKXApplication.mAlbumList.size(); i++) {
+					Map<String, String> results = mKXApplication.mAlbumList
+							.get(i);
+					File file1 = new File(results.get("image_path"));
+					if (file1.exists()) {
+						UploadItem item = new UploadItem();
+						item.setFile(file1);
+						item.setPath("image");
+						items.add(item);
+					}
+				}
+
+				if (mCurrentVoicePath != null) {
+					UploadItem item = new UploadItem();
+					File file2 = new File(mCurrentVoicePath);
+					if (file2.exists()) {
+						item.setFile(file2);
+						item.setPath("voice");
+						items.add(item);
+					}
+				}
+
+				if (items.isEmpty()) {
+					Log.e("Empty", "true", null);
+					return;
+				} else {
+					Map<String, String> param = new HashMap<String, String>();
+					if (StringUtils.isNotEmpty(mContent.getText().toString()))
+						param.put("content", mContent.getText().toString());
+
+					if (isNeedDinwei) {
+						if (mCurrentLat != null && mCurrentLon != null
+								&& mCurrentAddress != null) {
+							param.put("mCurrentLon",
+									String.valueOf(mCurrentLon));
+							param.put("mCurrentLat",
+									String.valueOf(mCurrentLat));
+							param.put("locationName", mCurrentAddress);
+						}
+					}
+					param.put("username", mKXApplication.userName);
+					uploadUtil.uploadFiles(items, InsUrl.ADD_MSG, param);
+				}
+
 				// 显示提示信息并关闭当前界面
-				Toast.makeText(PhotoShareActivity.this.getApplicationContext(),
-						"上传图片成功", Toast.LENGTH_SHORT).show();
-				PhotoShareActivity.this.finish();
 			}
 		});
 		mDisplay.setOnItemClickListener(new OnItemClickListener() {
@@ -198,30 +304,9 @@ public class PhotoShareActivity extends InsActivity implements
 				startActivityForResult(intent, 0);
 			}
 		});
-		// mLocation.setOnClickListener(new OnClickListener() {
-		//
-		// public void onClick(View v) {
-		// // 显示地理位置对话框
-		// locationDialog();
-		// }
-		// });
-		// mDelete.setOnClickListener(new OnClickListener() {
-		//
-		// public void onClick(View v) {
-		// // 更换显示,设置地理位置编号
-		// mLocation.setText("选择当前位置");
-		// mLocationPosition = -1;
-		// }
-		// });
-		// mAlbum.setOnClickListener(new OnClickListener() {
-		//
-		// public void onClick(View v) {
-		// // 相册对话框
-		// AlbumDialog();
-		// }
-		// });
 		mDisplayVoicePlay.setOnClickListener(new OnClickListener() {
-	
+
+			@Override
 			public void onClick(View v) {
 				// 播放录音
 				if (!mPlayState) {
@@ -235,9 +320,10 @@ public class PhotoShareActivity extends InsActivity implements
 						mMediaPlayer.start();
 						// 根据时间修改界面
 						new Thread(new Runnable() {
-	
+
+							@Override
 							public void run() {
-	
+
 								mDisplayVoiceProgressBar
 										.setMax((int) mPlayTime);
 								mPlayCurrentPosition = 0;
@@ -254,9 +340,11 @@ public class PhotoShareActivity extends InsActivity implements
 						// 修改播放图标
 						mDisplayVoicePlay
 								.setImageResource(R.drawable.globle_player_btn_stop);
-	
-						mMediaPlayer.setOnCompletionListener(new OnCompletionListener() {
+
+						mMediaPlayer
+								.setOnCompletionListener(new OnCompletionListener() {
 									// 播放结束后调用
+									@Override
 									public void onCompletion(MediaPlayer mp) {
 										// 停止播放
 										mMediaPlayer.stop();
@@ -271,7 +359,7 @@ public class PhotoShareActivity extends InsActivity implements
 												.setProgress(mPlayCurrentPosition);
 									}
 								});
-	
+
 					} catch (IllegalArgumentException e) {
 						e.printStackTrace();
 					} catch (IllegalStateException e) {
@@ -303,12 +391,13 @@ public class PhotoShareActivity extends InsActivity implements
 			}
 		});
 		mUgcVoiceDelete.setOnClickListener(new OnClickListener() {
-	
+
+			@Override
 			public void onClick(View v) {
-				mCurrentVoicePath=null;
-				mPlayTime=0;
+				mCurrentVoicePath = null;
+				mPlayTime = 0;
 				mDisplayVoiceLayout.setVisibility(View.GONE);
-    			mUgcVoiceDelete.setVisibility(View.GONE);
+				mUgcVoiceDelete.setVisibility(View.GONE);
 			}
 		});
 	}
@@ -332,89 +421,45 @@ public class PhotoShareActivity extends InsActivity implements
 					.getPhoneAlbum(mCurrentPath));
 		}
 
-		for (int i = 0; i < mKXApplication.mAlbumList.size(); i++) {
-			Map<String, String> results = mKXApplication.mAlbumList.get(i);
-			File file = new File(results.get("image_path"));
-			pics.add(file);
-		}
+		uploadUtil = UploadUtil.getInstance();
+		uploadUtil.setOnUploadProcessListener(this); // 设置监听器监听上传状态
 
-		UploadUtil uploadUtil = UploadUtil.getInstance();
-		if (pics.isEmpty()) {
-			Log.e("Empty", "true", null);
-			return;
-		} else {
-			Map<String, String> param = new HashMap<String, String>();
+		locationClient = new LocationClient(getApplicationContext());
+		// 设置定位条件
+		LocationClientOption option = new LocationClientOption();
+		option.setLocationMode(LocationMode.Hight_Accuracy);
+		option.setOpenGps(true); // 是否打开GPS
+		option.setCoorType("bd09ll"); // 设置返回值的坐标类型。
+		// option.setPriority(LocationClientOption.NetWorkFirst); //设置定位优先级
+		option.setProdName("InsPicSoc"); // 设置产品线名称。强烈建议您使用自定义的产品线名称，方便我们以后为您提供更高效准确的定位服务。
+		option.setScanSpan(UPDATE_TIME); // 设置定时定位的时间间隔。单位毫秒
+		option.setIsNeedAddress(true);// 返回的定位结果包含地址信息
+		locationClient.setLocOption(option);
+		locationClient.start();
+		locationClient.requestLocation();
 
-			uploadUtil.setOnUploadProcessListener(this); // 设置监听器监听上传状态
-			param.put("username", "HeyJim");
-			uploadUtil.uploadFiles(pics, InsUrl.UPLOAD_IMAGE_BASE, param);
-		}
-		// 获取地理位置数据
-		getLocation();
-		// 显示默认地理位置、相册
-		// if(!mKXApplication.mMyLocationResults.isEmpty()){
-		// mLocation.setText(mKXApplication.mMyLocationResults.get(
-		// mLocationPosition).getName());
-		// }
-		// mAlbum.setText(mAlbums[mAlbumPosition]);
-	}
-
-	/**
-	 * 获取地理位置数据
-	 */
-	private void getLocation() {
-		if (mKXApplication.mMyLocationResults.isEmpty()) {
-			InputStream inputStream;
-			try {
-				inputStream = getAssets().open("data/my_location.KX");
-				String json = new TextUtil(mKXApplication)
-						.readTextFile(inputStream);
-				JSONArray array = new JSONArray(json);
-				LocationResult result = null;
-				for (int i = 0; i < array.length(); i++) {
-					result = new LocationResult();
-					result.setName(array.getJSONObject(i).getString("name"));
-					result.setLocation(array.getJSONObject(i).getString(
-							"location"));
-					mKXApplication.mMyLocationResults.add(result);
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	/**
-	 * 地理位置对话框
-	 */
-	private void locationDialog() {
-		AlertDialog.Builder builder = new Builder(PhotoShareActivity.this);
-		builder.setTitle("选择当前位置");
-		builder.setAdapter(new LocationAdapter(),
-				new DialogInterface.OnClickListener() {
-
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						mLocationPosition = which;
-						// mLocation.setText(mKXApplication.mMyLocationResults
-						// .get(which).getName());
-						dialog.dismiss();
-					}
-				});
-		builder.setPositiveButton("刷新", new DialogInterface.OnClickListener() {
+		// 注册位置监听器
+		locationClient.registerLocationListener(new BDLocationListener() {
 
 			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.dismiss();
+			public void onReceiveLocation(BDLocation location) {
+				// TODO Auto-generated method stub
+				if (location == null) {
+					return;
+				}
+				mCurrentTime = location.getTime();
+				mCurrentLat = Double.valueOf(location.getLatitude());
+				mCurrentLon = Double.valueOf(location.getLongitude());
+				if (location.getLocType() == BDLocation.TypeNetWorkLocation) {
+					mCurrentAddress = location.getAddrStr();
+				}
+				// System.out.println(mCurrentTime+" "+mCurrentLat+" "+mCurrentLon+" "+mCurrentAddress);
+			}
+
+			public void onReceivePoi(BDLocation poiLocation) {
+
 			}
 		});
-		builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.cancel();
-			}
-		}).create().show();
 	}
 
 	/**
@@ -458,78 +503,23 @@ public class PhotoShareActivity extends InsActivity implements
 				mDisplaySingle.setImageBitmap(mKXApplication
 						.getPhoneAlbum(mCurrentPath));
 			}
-		}
-		else if(requestCode==0&&resultCode == ActivityForResultUtil.REQUESTCODE_VOICE){
+		} else if (requestCode == 0
+				&& resultCode == ActivityForResultUtil.REQUESTCODE_VOICE) {
 			Bundle bundle = data.getExtras();
-            mCurrentVoicePath=bundle.getString("voicePath");
-            mPlayTime=Float.valueOf(bundle.getString("recordTime"));
-            if(mCurrentVoicePath==null){
-    			mDisplayVoiceLayout.setVisibility(View.GONE);
-    		}
-    		else{
-    			mDisplayVoiceLayout.setVisibility(View.VISIBLE);
-    			mUgcVoiceDelete.setVisibility(View.VISIBLE);
-//    			voiceGallery.setVisibility(View.VISIBLE);
-    			mDisplayVoicePlay
-    					.setImageResource(R.drawable.globle_player_btn_play);
-    			mDisplayVoiceProgressBar.setMax((int) mPlayTime);
-    			mDisplayVoiceProgressBar.setProgress(0);
-    			mDisplayVoiceTime.setText((int) mPlayTime + "″");
-    		}
-		}
-	}
-
-	private class LocationAdapter extends BaseAdapter {
-
-		@Override
-		public int getCount() {
-			return mKXApplication.mMyLocationResults.size();
-		}
-
-		@Override
-		public Object getItem(int position) {
-			return mKXApplication.mMyLocationResults.get(position);
-		}
-
-		@Override
-		public long getItemId(int position) {
-			return position;
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			ViewHolder holder = null;
-			if (convertView == null) {
-				convertView = LayoutInflater.from(PhotoShareActivity.this)
-						.inflate(R.layout.photoshare_activity_location_item,
-								null);
-				holder = new ViewHolder();
-				holder.icon = (ImageView) convertView
-						.findViewById(R.id.photoshare_activity_location_item_icon);
-				holder.name = (TextView) convertView
-						.findViewById(R.id.photoshare_activity_location_item_name);
-				holder.location = (TextView) convertView
-						.findViewById(R.id.photoshare_activity_location_item_location);
-				convertView.setTag(holder);
+			mCurrentVoicePath = bundle.getString("voicePath");
+			mPlayTime = Float.valueOf(bundle.getString("recordTime"));
+			if (mCurrentVoicePath == null) {
+				mDisplayVoiceLayout.setVisibility(View.GONE);
 			} else {
-				holder = (ViewHolder) convertView.getTag();
+				mDisplayVoiceLayout.setVisibility(View.VISIBLE);
+				mUgcVoiceDelete.setVisibility(View.VISIBLE);
+				// voiceGallery.setVisibility(View.VISIBLE);
+				mDisplayVoicePlay
+						.setImageResource(R.drawable.globle_player_btn_play);
+				mDisplayVoiceProgressBar.setMax((int) mPlayTime);
+				mDisplayVoiceProgressBar.setProgress(0);
+				mDisplayVoiceTime.setText((int) mPlayTime + "″");
 			}
-			LocationResult result = mKXApplication.mMyLocationResults
-					.get(position);
-			if (mLocationPosition == position) {
-				holder.icon.setVisibility(View.VISIBLE);
-			} else {
-				holder.icon.setVisibility(View.INVISIBLE);
-			}
-			holder.name.setText(result.getName());
-			holder.location.setText(result.getLocation());
-			return convertView;
-		}
-
-		class ViewHolder {
-			ImageView icon;
-			TextView name;
-			TextView location;
 		}
 	}
 
@@ -643,13 +633,19 @@ public class PhotoShareActivity extends InsActivity implements
 
 	@Override
 	public void onUploadDone(int responseCode, String message) {
-		// TODO Auto-generated method stub
+		// if (responseCode == UploadUtil.UPLOAD_SUCCESS_CODE) {
+		// AbToastUtil.showToast(getApplicationContext(), "上传成功");
+		// Intent intent = new Intent();
+		// intent.setClass(PhotoShareActivity.this, MainActivity.class);
+		// startActivityForResult(intent, 0);
+		// } else {
+		// AbToastUtil.showToast(getApplicationContext(), "上传失败，请重试");
+		// }
 
 	}
 
 	@Override
 	public void onUploadProcess(int uploadSize) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -658,5 +654,5 @@ public class PhotoShareActivity extends InsActivity implements
 		// TODO Auto-generated method stub
 
 	}
-	
+
 }
