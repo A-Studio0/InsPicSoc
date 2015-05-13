@@ -16,6 +16,7 @@ import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -30,6 +31,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ab.util.AbToastUtil;
 import com.astudio.dodowaterfall.Helper;
@@ -52,6 +54,7 @@ import com.baidu.navisdk.util.common.StringUtils;
  *
  * 
  */
+
 public class PhotoShareActivity extends InsActivity implements
 		OnUploadProcessListener {
 	private Button mCancel;
@@ -133,6 +136,42 @@ public class PhotoShareActivity extends InsActivity implements
 		setListener();
 		init();
 
+		locationClient = new LocationClient(getApplicationContext());
+		// 设置定位条件
+		LocationClientOption option = new LocationClientOption();
+		option.setLocationMode(LocationMode.Hight_Accuracy);
+		option.setOpenGps(true); // 是否打开GPS
+		option.setCoorType("bd09ll"); // 设置返回值的坐标类型。
+		// option.setPriority(LocationClientOption.NetWorkFirst); //设置定位优先级
+		option.setProdName("InsPicSoc"); // 设置产品线名称。强烈建议您使用自定义的产品线名称，方便我们以后为您提供更高效准确的定位服务。
+		option.setScanSpan(UPDATE_TIME); // 设置定时定位的时间间隔。单位毫秒
+		option.setIsNeedAddress(true);// 返回的定位结果包含地址信息
+		locationClient.setLocOption(option);
+		locationClient.start();
+		locationClient.requestLocation();
+
+		// 注册位置监听器
+		locationClient.registerLocationListener(new BDLocationListener() {
+
+			@Override
+			public void onReceiveLocation(BDLocation location) {
+				// TODO Auto-generated method stub
+				if (location == null) {
+					return;
+				}
+				mCurrentTime = location.getTime();
+				mCurrentLat = Double.valueOf(location.getLatitude());
+				mCurrentLon = Double.valueOf(location.getLongitude());
+				if (location.getLocType() == BDLocation.TypeNetWorkLocation) {
+					mCurrentAddress = location.getAddrStr();
+				}
+				// System.out.println(mCurrentTime+" "+mCurrentLat+" "+mCurrentLon+" "+mCurrentAddress);
+			}
+
+			public void onReceivePoi(BDLocation poiLocation) {
+
+			}
+		});
 	}
 
 	private void findViewById() {
@@ -151,10 +190,25 @@ public class PhotoShareActivity extends InsActivity implements
 		mAddressText = (TextView) findViewById(R.id.address);
 		mDinwei = (ImageView) findViewById(R.id.dinwei);
 		mDinweiDelete = (ImageView) findViewById(R.id.dinwei_delete);
+
+	}
+
+	public void showToast() {
+		Toast.makeText(this, "取消上传", Toast.LENGTH_SHORT).show();
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+			// Do something.
+			showToast();
+			this.finish();// 直接调用杀死当前activity方法.
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 
 	private void setListener() {
-
 		mDinwei.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -185,7 +239,6 @@ public class PhotoShareActivity extends InsActivity implements
 
 			@Override
 			public void onClick(View v) {
-				// PhotoShareActivity.this.finish();
 				Intent i = new Intent();
 				i.setClass(PhotoShareActivity.this, VoiceActivity.class);
 				startActivityForResult(i, 0);
@@ -196,6 +249,7 @@ public class PhotoShareActivity extends InsActivity implements
 			@Override
 			public void onClick(View v) {
 				// 关闭当前界面
+				showToast();
 				finish();
 			}
 		});
@@ -209,14 +263,18 @@ public class PhotoShareActivity extends InsActivity implements
 					return;
 				}
 				// 判断手机相册界面是否关闭,如果没关闭则关闭
-				try {
-					if (!PhoneAlbumActivity.mInstance.isFinishing()) {
-						PhoneAlbumActivity.mInstance.finish();
-					}
+				// try {
+				// if (!PhoneAlbumActivity.mInstance.isFinishing()) {
+				// PhoneAlbumActivity.mInstance.finish();
+				// }
+				//
+				// } catch (Exception e) {
+				//
+				// }
 
-				} catch (Exception e) {
-
-				}
+				// 图片信息保存在这个activity里
+				// mCurrentLat是纬度, mCurrentLon是经度, mCurrentAddress是具体地址
+				// isNeedDinwei是用户是否选择定位
 
 				if (mCurrentPath != null) {
 					File file = new File(mCurrentPath);
@@ -437,10 +495,8 @@ public class PhotoShareActivity extends InsActivity implements
 		locationClient.setLocOption(option);
 		locationClient.start();
 		locationClient.requestLocation();
-
 		// 注册位置监听器
 		locationClient.registerLocationListener(new BDLocationListener() {
-
 			@Override
 			public void onReceiveLocation(BDLocation location) {
 				// TODO Auto-generated method stub
@@ -457,7 +513,6 @@ public class PhotoShareActivity extends InsActivity implements
 			}
 
 			public void onReceivePoi(BDLocation poiLocation) {
-
 			}
 		});
 	}
@@ -629,6 +684,10 @@ public class PhotoShareActivity extends InsActivity implements
 	protected void onDestroy() {
 		super.onDestroy();
 		mKXApplication.mAlbumList.clear();
+		if (locationClient != null && locationClient.isStarted()) {
+			locationClient.stop();
+			locationClient = null;
+		}
 	}
 
 	@Override
@@ -654,5 +713,4 @@ public class PhotoShareActivity extends InsActivity implements
 		// TODO Auto-generated method stub
 
 	}
-
 }

@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -14,14 +16,14 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
-
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
-
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
+
+
 
 
 import com.astudio.inspicsoc.R;
@@ -230,6 +232,8 @@ public class FriendActivity extends Activity implements OnClickListener {
 			//oks.setSiteUrl("http://sharesdk.cn");
 
 			oks.show(arg0.getContext());
+			
+			
 			break;
 		}
 	}

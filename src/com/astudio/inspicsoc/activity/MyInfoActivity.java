@@ -17,6 +17,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.astudio.android.bitmapfun.util.ImageFetcher;
@@ -42,18 +43,27 @@ public class MyInfoActivity extends Activity implements OnClickListener {
 	private ImageFetcher mImageFetcher;
 	private String username;
 	private View settingBtnLayout;
-
+	private Activity mActivity = this;
+	private RelativeLayout mAccount;
+	private ImageView mHead;
 	UserDetail user = new UserDetail();
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.personal_info);
 		logoutBtn = (Button) findViewById(R.id.button_settings_logout);
-		back = (ImageButton) this.findViewById(R.id.ivTitleBtnLeft);
-		nickName = (TextView) findViewById(R.id.nick);
-		back.setOnClickListener(this);
 		logoutBtn.setOnClickListener(this);
+		
+		back = (ImageButton) this.findViewById(R.id.ivTitleBtnLeft);
+		back.setOnClickListener(this);
+		
+		settingBtnLayout = LeftSlidingMenuFragment.view.findViewById(R.id.settingBtnLayout);
+		
+		mAccount=(RelativeLayout)findViewById(R.id.button_settings_account);
+		mAccount.setOnClickListener(this);
+		
+		nickName = (TextView) findViewById(R.id.nick);
 		personalGraph = (TextView) findViewById(R.id.status);
 		gender = (TextView) findViewById(R.id.textView3);
 		email = (TextView) findViewById(R.id.email);
@@ -61,16 +71,15 @@ public class MyInfoActivity extends Activity implements OnClickListener {
 		phone = (TextView) findViewById(R.id.phone);
 		birthday = (TextView) findViewById(R.id.birthday);
 		headImageView = (ImageView) findViewById(R.id.face);
-		settingBtnLayout = LeftSlidingMenuFragment.view
-				.findViewById(R.id.settingBtnLayout);
-
-		activity = this;
 		mKXApplication = (InsApplication) this.getApplication();
+		headImageView.setImageBitmap(mKXApplication.mHeadBitmap);
+		
+		activity = this;
 		username = mKXApplication.userName;
 		mImageFetcher = new ImageFetcher(headImageView.getContext(), 240);
 
 		ContentTask task = new ContentTask(this, 2);
-		task.execute(username);
+//		task.execute(username);
 
 	}
 
@@ -196,6 +205,9 @@ public class MyInfoActivity extends Activity implements OnClickListener {
 			settingBtnLayout.setSelected(false);
 			break;
 		case R.id.button_settings_logout:
+			Intent intent1 = new Intent(MyInfoActivity.this, LoginActivity.class);
+			mActivity.startActivity(intent1);
+			finish();
 			break;
 		case R.id.button_settings_account:
 			Intent intent;
@@ -204,5 +216,10 @@ public class MyInfoActivity extends Activity implements OnClickListener {
 			break;
 		}
 	}
-
+	
+	@Override
+	public void onBackPressed() {
+		this.finish();
+		settingBtnLayout.setSelected(false);
+	}
 }

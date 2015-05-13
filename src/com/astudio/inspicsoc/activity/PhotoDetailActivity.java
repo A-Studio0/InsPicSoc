@@ -7,8 +7,8 @@ import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
 
 import com.astudio.inspicsoc.R;
-import cn.sharesdk.onekeyshare.*;
 
+import cn.sharesdk.onekeyshare.*;
 import cn.sharesdk.sina.weibo.SinaWeibo;
 import android.os.Bundle;
 import android.os.Handler.Callback;
@@ -18,16 +18,54 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 public class PhotoDetailActivity extends Activity implements OnClickListener,
 		Callback {
 
+	private Button guanzhuBtn;
+	private ImageButton commentBtn;
+	private ImageButton collectBtn;
+	private ImageButton shareBtn;
+	private ImageView showComment;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.photo_detail);
 		ShareSDK.initSDK(this);
 		findViewById(R.id.shareweibo).setOnClickListener(this);
+		guanzhuBtn = (Button)findViewById(R.id.guanzhu);
+		collectBtn = (ImageButton) findViewById(R.id.collect);
+		shareBtn = (ImageButton) findViewById(R.id.shareweibo);
+		showComment = (ImageView) findViewById(R.id.photo_comment);
+		guanzhuBtn.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				guanzhuBtn.setText("已关注");
+				guanzhuBtn.setBackgroundDrawable(getResources().getDrawable(R.drawable.guanzhubackground));
+				Toast.makeText(PhotoDetailActivity.this, "添加关注成功~", Toast.LENGTH_SHORT).show();
+			}
+			
+		});
+		
+		commentBtn = (ImageButton)findViewById(R.id.comment);
+		commentBtn.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				
+				collectBtn.setVisibility(View.INVISIBLE) ;
+				shareBtn.setVisibility(View.INVISIBLE) ;
+				commentBtn.setVisibility(View.INVISIBLE) ;
+				showComment.setVisibility(View.VISIBLE);
+			}
+			
+		});
 
 	}
 

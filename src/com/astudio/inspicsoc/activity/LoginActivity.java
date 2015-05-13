@@ -64,7 +64,9 @@ public class LoginActivity extends Activity implements OnClickListener {
 		int viewId = v.getId();
 		switch (viewId) {
 		case R.id.login_reback_btn:// 返回按钮
-			LoginActivity.this.finish();// 关闭这个Activity 返回上一个Activity
+			this.finish();
+			android.os.Process.killProcess(android.os.Process.myPid());
+			System.exit(0);
 			break;
 		case R.id.login_login_btn:// 点击登录按钮 进行判断 用户名和密码是否为空
 			final String userEditStr = userEdit.getText().toString().trim();
@@ -132,6 +134,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 				Intent intent = new Intent(LoginActivity.this,
 						MainActivity.class);
 				mActivity.startActivity(intent);
+				finish();
 			}
 			break;
 		case R.id.forget_passwd:// 点击 “忘记密码” 这个文本
@@ -166,5 +169,12 @@ public class LoginActivity extends Activity implements OnClickListener {
 			forgetPasswdBtn.setEnabled(true);
 		}
 		return super.onTouchEvent(event);
+	}
+	
+	@Override
+	public void onBackPressed() {
+		this.finish();
+		android.os.Process.killProcess(android.os.Process.myPid());
+		System.exit(0);
 	}
 }
