@@ -1,0 +1,72 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context=".PhotoTakeHalfeActivity">
+
+
+    <SurfaceView 
+        android:id="@+id/surfaceview_camera_add"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+    </SurfaceView>
+   	<LinearLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:weightSum="1.0"
+	    android:layout_gravity="top"
+	    >
+		<LinearLayout 
+		    android:layout_width="0dp"
+		    android:layout_height="fill_parent"
+		    android:layout_weight="0.5"
+		    android:weightSum="1.0"
+		    android:orientation="vertical">
+			<ImageView
+	   		    android:id="@+id/banban"
+	   		    android:layout_width="fill_parent"
+	   		    android:scaleType="fitXY"
+	   		    android:layout_height="0dp"
+	   		    android:layout_weight="0.5" >
+	   		</ImageView>
+		</LinearLayout>
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:weightSum="1.0"
+        android:gravity="bottom">
+		<LinearLayout 
+		    android:layout_width="fill_parent"
+		    android:layout_height="0dp"
+		    android:layout_weight="0.5"
+	        android:gravity="center|bottom"
+		    android:background="#000000"
+		    android:orientation="horizontal"
+		    >
+			<Button
+	            android:id="@+id/upload_photo_add"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_margin="20dp"
+	            android:background="@drawable/photo_half_upload"
+	            android:visibility="gone"/>
+	        <Button
+	            android:id="@+id/take_photo_add"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:background="@drawable/photo_take"
+	            android:layout_margin="20dp" />
+	
+	        <Button
+	            android:id="@+id/cancel_photo_add"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:background="@drawable/photo_half_redo"
+	            android:layout_margin="20dp"
+	            android:visibility="gone"/>
+    	</LinearLayout>
+	</LinearLayout>
+</RelativeLayout>

@@ -12,12 +12,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+
+import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -25,18 +31,24 @@ import android.widget.TextView;
 import com.astudio.inspicsoc.R;
 import com.astudio.inspicsoc.model.ExchangeItem;
 
-public class Photo_exchange extends ListActivity {
+
+public class Photo_exchange extends ListActivity implements OnClickListener{
 
 	private List<ExchangeItem> ItemList = new ArrayList<ExchangeItem>();
 	// 发布按钮
 	private Button upload;
 	// 返回按钮
+
+//public class Photo_exchange extends Activity implements OnClickListener {
+
 	private Button back;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_photo_exchange);
+		back = (Button) this.findViewById(R.id.photo_exchange_back);
+		back.setOnClickListener(this);
 
 		initData();
 
@@ -137,7 +149,7 @@ public class Photo_exchange extends ListActivity {
 				PhotoExDetailActivity.class);
 		startActivity(intent);
 	}
-
+	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.px_upload:
@@ -150,10 +162,14 @@ public class Photo_exchange extends ListActivity {
 		//	Intent intent1 = new Intent(Photo_exchange.this,
 		//			PhotoExUploadActivity.class);
 		//	startActivity(intent1);
-		//	break;
+			this.finish();
+			break;
+		
 		default:
 			break;
 		}
 	}
 
+	
+	
 }

@@ -21,11 +21,8 @@ import android.widget.Toast;
 
 import com.astudio.inspicsoc.R;
 import com.astudio.inspicsoc.model.Cat;
-import com.astudio.inspicsoc.result.FriendInfoResult;
-import com.astudio.inspicsoc.result.LocationResult;
-import com.astudio.inspicsoc.result.PhotoResult;
-import com.astudio.inspicsoc.result.StatusResult;
-import com.astudio.inspicsoc.result.VisitorsResult;
+import com.astudio.inspicsoc.model.HalfItem;
+import com.astudio.inspicsoc.model.PerCenItem;
 import com.astudio.inspicsoc.utils.PhotoUtil;
 import com.astudio.inspicsoc.websocket.LooperExecutor;
 import com.astudio.inspicsoc.websocket.WebSocketClient;
@@ -63,276 +60,35 @@ public class InsApplication extends Application implements WebSocketEvents {
 	/**
 	 * 用户头像
 	 */
-	public Bitmap mHeadBitmap;
-
+	public String mHeadBitmap;
+	
 	public String userName;
+	
 	/**
-	 * 默认壁纸
+	 * 一半一半数据
 	 */
-	public Bitmap mDefault_Wallpager;
+	public String mHeadYiBanTemp;
+	public String mBitmap = null;
+	public String mName;
+	public String mNameYiBanTemp;
+	public List<HalfItem> HalfItemList = new ArrayList<HalfItem>();
+	
+	
 	/**
-	 * 默认标题壁纸
+	 * 个人主页数据
 	 */
-	public Bitmap mDefault_TitleWallpager;
-	/**
-	 * 默认头像
-	 */
-	public Bitmap mDefault_Avatar;
-	/**
-	 * 默认照片
-	 */
-	public Bitmap mDefault_Photo;
-	/**
-	 * 壁纸缓存
-	 */
-	public HashMap<String, SoftReference<Bitmap>> mWallpagersCache = new HashMap<String, SoftReference<Bitmap>>();
-	/**
-	 * 壁纸名称
-	 */
-	public String[] mWallpagersName;
-	/**
-	 * 标题壁纸缓存
-	 */
-	public HashMap<String, SoftReference<Bitmap>> mTitleWallpagersCache = new HashMap<String, SoftReference<Bitmap>>();
-	/**
-	 * 标题壁纸名称
-	 */
-	public String[] mTitleWallpagersName;
-	/**
-	 * 当前壁纸编号
-	 */
-	public int mWallpagerPosition = 0;
-	/**
-	 * 圆形头像缓存
-	 */
-	public HashMap<String, SoftReference<Bitmap>> mAvatarCache = new HashMap<String, SoftReference<Bitmap>>();
-	/**
-	 * 默认头像缓存
-	 */
-	public HashMap<String, SoftReference<Bitmap>> mDefaultAvatarCache = new HashMap<String, SoftReference<Bitmap>>();
-	/**
-	 * 头像名称
-	 */
-	public String[] mAvatars;
-	/**
-	 * 公共主页头像缓存
-	 */
-	public HashMap<String, SoftReference<Bitmap>> mPublicPageAvatarCache = new HashMap<String, SoftReference<Bitmap>>();
-	/**
-	 * 公共主页头像名称
-	 */
-	public String[] mPublicPageAvatars;
-	/**
-	 * 照片缓存
-	 */
-	public HashMap<String, SoftReference<Bitmap>> mPhotoCache = new HashMap<String, SoftReference<Bitmap>>();
-	/**
-	 * 照片名称
-	 */
-	public String[] mPhotosName;
-	/**
-	 * 转帖图片缓存
-	 */
-	public HashMap<String, SoftReference<Bitmap>> mViewedCache = new HashMap<String, SoftReference<Bitmap>>();
-	/**
-	 * 转帖图片名称
-	 */
-	public String[] mViewedName;
-	/**
-	 * 热门转帖图片缓存
-	 */
-	public HashMap<String, SoftReference<Bitmap>> mViewedHotCache = new HashMap<String, SoftReference<Bitmap>>();
-	/**
-	 * 热门转帖图片名称
-	 */
-	public String[] mViewedHotName;
-	/**
-	 * 游戏图片缓存
-	 */
-	public HashMap<String, SoftReference<Bitmap>> mRecommendCache = new HashMap<String, SoftReference<Bitmap>>();
-	/**
-	 * 附近照片缓存
-	 */
-	public HashMap<String, SoftReference<Bitmap>> mNearbyPhoto = new HashMap<String, SoftReference<Bitmap>>();
-	/**
-	 * 主页图片缓存
-	 */
-	public HashMap<String, SoftReference<Bitmap>> mHomeCache = new HashMap<String, SoftReference<Bitmap>>();
+	public List<PerCenItem> PerCenItemList = new ArrayList<PerCenItem>();
+	
+	
 	/**
 	 * 手机SD卡图片缓存
 	 */
 	public HashMap<String, SoftReference<Bitmap>> mPhoneAlbumCache = new HashMap<String, SoftReference<Bitmap>>();
+	
 	/**
 	 * 手机SD卡图片的路径
 	 */
 	public Map<String, List<Map<String, String>>> mPhoneAlbum = new HashMap<String, List<Map<String, String>>>();
-
-	/**
-	 * 当期用户首页数据
-	 */
-	// public List<HomeResult> mMyHomeResults = new ArrayList<HomeResult>();
-	/**
-	 * 当前用户的资料数据
-	 */
-	public FriendInfoResult mMyInfoResult;
-
-	/**
-	 * 当前用户的来访数据
-	 */
-	public List<VisitorsResult> mMyVisitorsResults = new ArrayList<VisitorsResult>();
-	/**
-	 * 当前用户的状态数据
-	 */
-	public List<StatusResult> mMyStatusResults = new ArrayList<StatusResult>();
-	/**
-	 * 当前用户的相册数据
-	 */
-	public List<PhotoResult> mMyPhotoResults = new ArrayList<PhotoResult>();
-	/**
-	 * 当前用户的日记数据
-	 */
-	// public List<DiaryResult> mMyDiaryResults = new ArrayList<DiaryResult>();
-	/**
-	 * 当前用户的好友数据
-	 */
-	// public List<FriendsResult> mMyFriendsResults = new
-	// ArrayList<FriendsResult>();
-	/**
-	 * 当前用户的好友根据姓名首字母分组
-	 */
-	// public Map<String, List<FriendsResult>> mMyFriendsGroupByFirstName = new
-	// HashMap<String, List<FriendsResult>>();
-	/**
-	 * 当前用户的好友的姓名首字母在列表中的位置
-	 */
-	public Map<String, Integer> mMyFriendsFirstNamePosition = new HashMap<String, Integer>();
-	/**
-	 * 当前用户的好友的姓名的首字母数据
-	 */
-	public List<String> mMyFriendsFirstName = new ArrayList<String>();
-	/**
-	 * 当前用户的好友的姓名的首字母的在列表中的位置
-	 */
-	public List<Integer> mMyFriendsPosition = new ArrayList<Integer>();
-
-	/**
-	 * 当前用户的公共主页数据
-	 */
-	// public List<PublicPageResult> mMyPublicPageResults = new
-	// ArrayList<PublicPageResult>();
-	/**
-	 * 当前用户的公共主页根据姓名首字母分组
-	 */
-	// public Map<String, List<PublicPageResult>> mMyPublicPageGroupByFirstName
-	// = new HashMap<String, List<PublicPageResult>>();
-
-	/**
-	 * 当前用户的好友转帖数据
-	 */
-	// public List<ViewedResult> mMyViewedResults = new
-	// ArrayList<ViewedResult>();
-
-	/**
-	 * 当前用户的热门转帖数据
-	 */
-	// public List<ViewedResult> mViewedHotResults = new
-	// ArrayList<ViewedResult>();
-
-	/**
-	 * 当前用户的最近过生日好友数据
-	 */
-	// public List<FriendsBirthdayResult> mMyFriendsBirthdayResults = new
-	// ArrayList<FriendsBirthdayResult>();
-
-	/**
-	 * 当前用户的推荐官方模块数据
-	 */
-	// public List<RecommendResult> mMyRecommendOfficialResults = new
-	// ArrayList<RecommendResult>();
-	/**
-	 * 当前用户的推荐应用下载数据
-	 */
-	// public List<RecommendResult> mMyRecommendAppDownLoadResults = new
-	// ArrayList<RecommendResult>();
-
-	/**
-	 * 当前用户的附近的人数据
-	 */
-	// public List<NearbyPeopleResult> mMyNearByPeopleResults = new
-	// ArrayList<NearbyPeopleResult>();
-
-	/**
-	 * 当前用户的附近的照片数据
-	 */
-	// public List<NearbyPhotoResult> mMyNearbyPhotoResults = new
-	// ArrayList<NearbyPhotoResult>();
-
-	/**
-	 * 当前用户的地理位置数据
-	 */
-	public List<LocationResult> mMyLocationResults = new ArrayList<LocationResult>();
-
-	/**
-	 * 所有好友的资料数据 (Key对应该好友的uid)
-	 */
-	public Map<String, FriendInfoResult> mFriendInfoResults = new HashMap<String, FriendInfoResult>();
-
-	/**
-	 * 所有好友的来访数据 (Key对应该好友的uid)
-	 */
-	public Map<String, List<VisitorsResult>> mFriendVisitorsResults = new HashMap<String, List<VisitorsResult>>();
-
-	/**
-	 * 所有好友的状态数据 (Key对应该好友的uid)
-	 */
-	public Map<String, List<StatusResult>> mFriendStatusResults = new HashMap<String, List<StatusResult>>();
-
-	/**
-	 * 所有好友的相册数据 (Key对应该好友的uid)
-	 */
-	public Map<String, List<PhotoResult>> mFriendPhotoResults = new HashMap<String, List<PhotoResult>>();
-
-	/**
-	 * 所有好友的日记数据 (Key对应该好友的uid)
-	 */
-	// public Map<String, List<DiaryResult>> mFriendDiaryResults = new
-	// HashMap<String, List<DiaryResult>>();
-
-	/**
-	 * 所有好友的好友数据 (Key对应该好友的uid)
-	 */
-	// public Map<String, List<FriendsResult>> mFriendFriendsResults = new
-	// HashMap<String, List<FriendsResult>>();
-
-	/**
-	 * 存放聊天记录
-	 */
-	// public List<ChatResult> mChatResults = new ArrayList<ChatResult>();
-
-	/**
-	 * 存放赠送礼物的好友
-	 */
-	public Map<String, Map<String, String>> mGiftFriendsList = new HashMap<String, Map<String, String>>();
-
-	/**
-	 * 存放礼物图片
-	 */
-	public HashMap<String, SoftReference<Bitmap>> mGiftsCache = new HashMap<String, SoftReference<Bitmap>>();
-
-	public String[] mGiftsName;
-	/**
-	 * 存放礼物的具体信息
-	 */
-	// public List<GiftResult> mGiftResults = new ArrayList<GiftResult>();
-
-	/**
-	 * 存放存为草稿的日记标题
-	 */
-	public String mDraft_DiaryTitle;
-	/**
-	 * 存放存为草稿的日记内容
-	 */
-	public String mDraft_DiaryContent;
 
 	/**
 	 * 存放拍照上传的照片路径
@@ -349,34 +105,45 @@ public class InsApplication extends Application implements WebSocketEvents {
 		/**
 		 * 初始化默认数据
 		 */
-//		mDefault_Wallpager = BitmapFactory.decodeResource(getResources(),
-//				R.drawable.cover);
-//		mDefault_TitleWallpager = BitmapFactory.decodeResource(getResources(),
-//				R.drawable.cover_title);
-//		mDefault_Photo = BitmapFactory.decodeResource(getResources(),
-//				R.drawable.photo);
-//		mDefault_Avatar = PhotoUtil.toRoundCorner(
-//				BitmapFactory.decodeResource(getResources(), R.drawable.head),
-//				15);
-//		mWallpagerPosition = (int) (Math.random() * 12);
-		mHeadBitmap=PhotoUtil.toRoundCorner(
-				BitmapFactory.decodeResource(getResources(), R.drawable.img_test_face),
-				15);
+		
+		mHeadBitmap=PhotoUtil.saveToLocal(PhotoUtil.toRoundCorner(
+				BitmapFactory.decodeResource(getResources(), R.drawable.head_default_miao),
+				15));
+		
+		
+		mName="麦兜兜";
+		PerCenItem percen1 = new PerCenItem(PhotoUtil.saveToLocal(BitmapFactory.decodeResource(getResources(), R.drawable.pinpho1)),"this is description","120.19, 30.26",
+				"2015-05-12","收藏数：128","浏览数：834",R.drawable.percen_comment1,null,0);
+		PerCenItemList.add(percen1);
+		PerCenItem percen2 = new PerCenItem(PhotoUtil.saveToLocal(BitmapFactory.decodeResource(getResources(), R.drawable.pinpho3)),"this is description","116.34, 39.97",
+				"2015-05-12","收藏数：456","浏览数：930",R.drawable.percen_comment2,null,0);
+		PerCenItemList.add(percen2);
+
+		PerCenItem percen3 = new PerCenItem(PhotoUtil.saveToLocal(BitmapFactory.decodeResource(getResources(), R.drawable.pinpho2)),"this is description","118.98, 34.67",
+				"2015-05-12","收藏数：532","浏览数：912",R.drawable.percen_comment1,null,0);
+		PerCenItemList.add(percen3);
+
+		PerCenItem percen4 = new PerCenItem(PhotoUtil.saveToLocal(BitmapFactory.decodeResource(getResources(), R.drawable.head_default_miao)),"this is description","121.46, 23.90",
+				"2015-05-12","收藏数：888","浏览数：962",R.drawable.percen_comment2,null,0);
+		PerCenItemList.add(percen4);
+		
+		PerCenItem percen5 = new PerCenItem(PhotoUtil.saveToLocal(BitmapFactory.decodeResource(getResources(), R.drawable.pinpho4)),"this is description","115.98, 37.67",
+				"2015-05-12","收藏数：562","浏览数：812",R.drawable.percen_comment1,null,0);
+		PerCenItemList.add(percen5);
 		/**
 		 * 初始化所有的数据信息
 		 */
-		try {
-			mWallpagersName = getAssets().list("wallpaper");
-			mTitleWallpagersName = getAssets().list("title_wallpager");
-			mAvatars = getAssets().list("avatar");
-			mPublicPageAvatars = getAssets().list("publicpage_avatar");
-			mPhotosName = getAssets().list("photo");
-			mViewedName = getAssets().list("viewed");
-			mViewedHotName = getAssets().list("viewed_hot");
-			mGiftsName = getAssets().list("gifts");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			mWallpagersName = getAssets().list("wallpaper");
+//			mTitleWallpagersName = getAssets().list("title_wallpager");
+//			mAvatars = getAssets().list("avatar");
+//			mPublicPageAvatars = getAssets().list("publicpage_avatar");
+//			mPhotosName = getAssets().list("photo");
+//			mViewedName = getAssets().list("viewed");
+//			mViewedHotName = getAssets().list("viewed_hot");
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 		
 		/**
 		 * 初始化Push
@@ -408,179 +175,6 @@ public class InsApplication extends Application implements WebSocketEvents {
 				.setSmallIcon(R.drawable.ic_launcher);
 	}
 
-	/**
-	 * 根据壁纸编号获取壁纸
-	 */
-	public Bitmap getWallpager(int position) {
-		try {
-			String wallpagerName = mWallpagersName[position];
-			Bitmap bitmap = null;
-			if (mWallpagersCache.containsKey(wallpagerName)) {
-				SoftReference<Bitmap> reference = mWallpagersCache
-						.get(wallpagerName);
-				bitmap = reference.get();
-				if (bitmap != null) {
-					return bitmap;
-				}
-			}
-			bitmap = BitmapFactory.decodeStream(getAssets().open(
-					"wallpaper/" + wallpagerName));
-			mWallpagersCache.put(wallpagerName, new SoftReference<Bitmap>(
-					bitmap));
-			return bitmap;
-
-		} catch (Exception e) {
-			return mDefault_Wallpager;
-		}
-	}
-
-	/**
-	 * 根据壁纸编号获取标题壁纸
-	 */
-	public Bitmap getTitleWallpager(int position) {
-		try {
-			String titleWallpagerName = mTitleWallpagersName[position];
-			Bitmap bitmap = null;
-			if (mTitleWallpagersCache.containsKey(titleWallpagerName)) {
-				SoftReference<Bitmap> reference = mTitleWallpagersCache
-						.get(titleWallpagerName);
-				bitmap = reference.get();
-				if (bitmap != null) {
-					return bitmap;
-				}
-			}
-			bitmap = BitmapFactory.decodeStream(getAssets().open(
-					"title_wallpager/" + titleWallpagerName));
-			mTitleWallpagersCache.put(titleWallpagerName,
-					new SoftReference<Bitmap>(bitmap));
-			return bitmap;
-		} catch (Exception e) {
-			return mDefault_TitleWallpager;
-		}
-	}
-
-	/**
-	 * 根据图片名称获取主页图片
-	 */
-	// public Bitmap getHome(String photo) {
-	// try {
-	// String homeName = photo + ".jpg";
-	// Bitmap bitmap = null;
-	// if (mHomeCache.containsKey(homeName)) {
-	// SoftReference<Bitmap> reference = mHomeCache.get(homeName);
-	// bitmap = reference.get();
-	// if (bitmap != null) {
-	// return bitmap;
-	// }
-	// }
-	// bitmap = BitmapFactory.decodeStream(getAssets().open(
-	// "home/" + homeName));
-	// mHomeCache.put(homeName, new SoftReference<Bitmap>(bitmap));
-	// return bitmap;
-	// } catch (Exception e) {
-	// return BitmapFactory.decodeResource(getResources(),
-	// R.drawable.picture_default_fg);
-	// }
-	// }
-
-	/**
-	 * 根据编号获取用户圆形头像
-	 */
-	public Bitmap getAvatar(int position) {
-		try {
-			String avatarName = mAvatars[position];
-			Bitmap bitmap = null;
-			if (mAvatarCache.containsKey(avatarName)) {
-				SoftReference<Bitmap> reference = mAvatarCache.get(avatarName);
-				bitmap = reference.get();
-				if (bitmap != null) {
-					return bitmap;
-				}
-			}
-			bitmap = PhotoUtil.toRoundCorner(
-					BitmapFactory.decodeStream(getAssets().open(
-							"avatar/" + avatarName)), 15);
-			mAvatarCache.put(avatarName, new SoftReference<Bitmap>(bitmap));
-			return bitmap;
-		} catch (Exception e) {
-			return mDefault_Avatar;
-		}
-	}
-
-	/**
-	 * 根据编号获取用户默认头像
-	 */
-	// public Bitmap getDefaultAvatar(int position) {
-	// try {
-	// String avatarName = mAvatars[position];
-	// Bitmap bitmap = null;
-	// if (mDefaultAvatarCache.containsKey(avatarName)) {
-	// SoftReference<Bitmap> reference = mDefaultAvatarCache
-	// .get(avatarName);
-	// bitmap = reference.get();
-	// if (bitmap != null) {
-	// return bitmap;
-	// }
-	// }
-	// bitmap = BitmapFactory.decodeStream(getAssets().open(
-	// "avatar/" + avatarName));
-	// mDefaultAvatarCache.put(avatarName, new SoftReference<Bitmap>(
-	// bitmap));
-	// return bitmap;
-	// } catch (Exception e) {
-	// return BitmapFactory
-	// .decodeResource(getResources(), R.drawable.head);
-	// }
-	// }
-
-
-	/**
-	 * 根据编号获取照片
-	 */
-	public Bitmap getPhoto(int position) {
-		try {
-			String photosName = mPhotosName[position];
-			Bitmap bitmap = null;
-			if (mPhotoCache.containsKey(photosName)) {
-				SoftReference<Bitmap> reference = mPhotoCache.get(photosName);
-				bitmap = reference.get();
-				if (bitmap != null) {
-					return bitmap;
-				}
-			}
-			bitmap = BitmapFactory.decodeStream(getAssets().open(
-					"photo/" + photosName));
-			mPhotoCache.put(photosName, new SoftReference<Bitmap>(bitmap));
-			return bitmap;
-		} catch (Exception e) {
-			return mDefault_Photo;
-		}
-	}
-	/**
-	 * 根据图片名称获取附近照片的图片
-	 */
-	// public Bitmap getNearbyPhoto(String position) {
-	// try {
-	// String nearbyPhotoName = position + ".jpg";
-	// Bitmap bitmap = null;
-	// if (mNearbyPhoto.containsKey(nearbyPhotoName)) {
-	// SoftReference<Bitmap> reference = mNearbyPhoto
-	// .get(nearbyPhotoName);
-	// bitmap = reference.get();
-	// if (bitmap != null) {
-	// return bitmap;
-	// }
-	// }
-	// bitmap = BitmapFactory.decodeStream(getAssets().open(
-	// "nearby_photo/" + nearbyPhotoName));
-	// mNearbyPhoto
-	// .put(nearbyPhotoName, new SoftReference<Bitmap>(bitmap));
-	// return bitmap;
-	// } catch (Exception e) {
-	// return BitmapFactory.decodeResource(getResources(),
-	// R.drawable.lbs_checkin_photo_icon);
-	// }
-	// }
 
 	/**
 	 * 根据地址获取手机SD卡图片

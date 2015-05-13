@@ -41,9 +41,10 @@ public class PhotoExDetailActivity extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.px_back:
-			Intent intent = new Intent(PhotoExDetailActivity.this,
+			/*Intent intent = new Intent(PhotoExDetailActivity.this,
 					Photo_exchange.class);
-			startActivity(intent);
+			startActivity(intent);*/
+			this.finish();
 			break;
 		case R.id.px_btn:
 			openOptionsMenu();

@@ -50,6 +50,7 @@ public class PhotoExUploadActivity extends InsActivity implements
 			Intent intent = new Intent(PhotoExUploadActivity.this,
 					PhotoExDetailActivity.class);
 			startActivity(intent);
+			this.finish();
 			break;
 		case R.id.add_photo:
 			// this.startActivity(new Intent(PhotoExUploadActivity.this,
@@ -141,6 +142,7 @@ public class PhotoExUploadActivity extends InsActivity implements
 	private void saveCropPhoto(Intent data) {
 		Bundle extras = data.getExtras();
 		if (extras != null) {
+			//Bitmap bitmap = extras.getParcelable("data");
 			Bitmap bitmap = extras.getParcelable("data");
 			bitmap = PhotoUtil.toRoundCorner(bitmap, 15);
 			if (bitmap != null) {
@@ -154,8 +156,14 @@ public class PhotoExUploadActivity extends InsActivity implements
 	/**
 	 * 更新photo
 	 */
+	/*
 	private void uploadPhoto(Bitmap bitmap) {
 		mKXApplication.mHeadBitmap = bitmap;
+		// ((LeftSlidingMenuFragment) mFrag).setHeadBitmap(bitmap);
+		addPhoto.setImageBitmap(bitmap);
+	}*/
+	private void uploadPhoto(Bitmap bitmap) {
+		//mKXApplication.mHeadBitmap = bitmap;
 		// ((LeftSlidingMenuFragment) mFrag).setHeadBitmap(bitmap);
 		addPhoto.setImageBitmap(bitmap);
 	}

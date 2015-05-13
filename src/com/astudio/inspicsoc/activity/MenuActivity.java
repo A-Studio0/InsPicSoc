@@ -106,7 +106,7 @@ public class MenuActivity extends InsActivity implements OnClickListener {
 			if (resultCode == RESULT_OK) {
 				if (!Environment.getExternalStorageState().equals(
 						Environment.MEDIA_MOUNTED)) {
-					Toast.makeText(this, "SD不可用", Toast.LENGTH_SHORT).show                      ();
+					Toast.makeText(this, "SD不可用", Toast.LENGTH_SHORT).show();
 					return;
 				}
 				Intent intent = new Intent();
@@ -115,9 +115,10 @@ public class MenuActivity extends InsActivity implements OnClickListener {
 						mKXApplication.mUploadPhotoPath, mScreenWidth,
 						mScreenHeight));
 				intent.putExtra("path", path);
-				startActivity(intent);
+				startActivityForResult(intent,ActivityForResultUtil.REQUESTCODE_MENU);
 			} else {
 				Toast.makeText(this, "取消上传", Toast.LENGTH_SHORT).show();
+				this.finish();
 			}
 			break;
 		case ActivityForResultUtil.REQUESTCODE_UPLOADPHOTO_ALBUM:
@@ -138,10 +139,20 @@ public class MenuActivity extends InsActivity implements OnClickListener {
 						mScreenHeight));
 				intent.putExtra("path", path);
 				// 开始跳转界面
-				startActivity(intent);
+				startActivityForResult(intent,ActivityForResultUtil.REQUESTCODE_MENU);
 			} else {
 				Toast.makeText(this, "取消上传", Toast.LENGTH_SHORT).show();
+				this.finish();
 			}
+			break;
+		case ActivityForResultUtil.REQUESTCODE_MENU:
+			if(resultCode==RESULT_OK){
+				Intent i=new Intent();
+				i.setClass(MenuActivity.this,MainActivity.class);
+				setResult(RESULT_OK,i);
+			}
+			this.finish();
+			break;
 		}
 	}
 }

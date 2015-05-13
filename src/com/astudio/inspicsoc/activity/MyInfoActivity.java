@@ -54,15 +54,16 @@ public class MyInfoActivity extends Activity implements OnClickListener {
 		setContentView(R.layout.personal_info);
 		logoutBtn = (Button) findViewById(R.id.button_settings_logout);
 		logoutBtn.setOnClickListener(this);
-		
+
 		back = (ImageButton) this.findViewById(R.id.ivTitleBtnLeft);
 		back.setOnClickListener(this);
-		
-		settingBtnLayout = LeftSlidingMenuFragment.view.findViewById(R.id.settingBtnLayout);
-		
-		mAccount=(RelativeLayout)findViewById(R.id.button_settings_account);
+
+		settingBtnLayout = LeftSlidingMenuFragment.view
+				.findViewById(R.id.settingBtnLayout);
+
+		mAccount = (RelativeLayout) findViewById(R.id.button_settings_account);
 		mAccount.setOnClickListener(this);
-		
+
 		nickName = (TextView) findViewById(R.id.nick);
 		personalGraph = (TextView) findViewById(R.id.status);
 		gender = (TextView) findViewById(R.id.textView3);
@@ -72,14 +73,14 @@ public class MyInfoActivity extends Activity implements OnClickListener {
 		birthday = (TextView) findViewById(R.id.birthday);
 		headImageView = (ImageView) findViewById(R.id.face);
 		mKXApplication = (InsApplication) this.getApplication();
-		headImageView.setImageBitmap(mKXApplication.mHeadBitmap);
-		
+		headImageView.setImageBitmap(mKXApplication.getPhoneAlbum(mKXApplication.mHeadBitmap));
+
 		activity = this;
 		username = mKXApplication.userName;
 		mImageFetcher = new ImageFetcher(headImageView.getContext(), 240);
 
 		ContentTask task = new ContentTask(this, 2);
-//		task.execute(username);
+		//task.execute(username);
 
 	}
 
@@ -205,7 +206,8 @@ public class MyInfoActivity extends Activity implements OnClickListener {
 			settingBtnLayout.setSelected(false);
 			break;
 		case R.id.button_settings_logout:
-			Intent intent1 = new Intent(MyInfoActivity.this, LoginActivity.class);
+			Intent intent1 = new Intent(MyInfoActivity.this,
+					LoginActivity.class);
 			mActivity.startActivity(intent1);
 			finish();
 			break;
@@ -216,7 +218,7 @@ public class MyInfoActivity extends Activity implements OnClickListener {
 			break;
 		}
 	}
-	
+
 	@Override
 	public void onBackPressed() {
 		this.finish();
