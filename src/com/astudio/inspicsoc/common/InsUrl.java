@@ -44,4 +44,7 @@ public class InsUrl {
 
 	public static final String GET_MSG_DETAIL = GET_MSG_BASE
 			+ "/getmsgdetail.json?username=@un&msgId=@mi";
+
+	public static final String CHANGE_USER_HEADPIC = USER_BASE
+			+ "/changeHeadpic.json";
 }

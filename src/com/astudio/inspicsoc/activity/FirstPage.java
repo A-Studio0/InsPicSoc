@@ -124,15 +124,14 @@ public class FirstPage extends Fragment implements IXListViewListener {
 						newsInfo1.setMsgId((newObject.isNull("msgId") ? ""
 								: newObject.getString("msgId")));
 
-						JSONArray smallpics = newObject
-								.getJSONArray("smallpics");
+						JSONArray smallpics = newObject.getJSONArray("pics");
 						newsInfo1.setSmallfirstPic(smallpics.getString(0)
 								.isEmpty() ? "" : smallpics.getString(0));
 
 						newsInfo1.setHeadPic(newObject.isNull("headPic") ? ""
 								: newObject.getString("headPic"));
-						newsInfo1.setText(newObject.isNull("text") ? ""
-								: newObject.getString("text"));
+						newsInfo1.setText(newObject.isNull("content") ? ""
+								: newObject.getString("content"));
 						newsInfo1
 								.setCommentNum(newObject.getInt("commentsNum"));
 						newsInfo1.setUserName(newObject.isNull("userName") ? ""
@@ -217,6 +216,8 @@ public class FirstPage extends Fragment implements IXListViewListener {
 			holder.contentView.setText(BriefMsg.getText());
 			mImageFetcher.loadImage(BriefMsg.getSmallfirstPic(),
 					holder.imageView);
+			holder.username = BriefMsg.getUserName();
+			holder.msgId = BriefMsg.getMsgId();
 			return convertView;
 		}
 
@@ -253,6 +254,8 @@ public class FirstPage extends Fragment implements IXListViewListener {
 		RoundedImageView headPic;
 		TextView nickName;
 		TextView numView;
+		String username;
+		String msgId;
 	}
 
 	@Override
@@ -275,10 +278,11 @@ public class FirstPage extends Fragment implements IXListViewListener {
 			@Override
 			public void onItemClick(PLA_AdapterView<?> parent, View view,
 					int position, long id) {
-				BriefMsg msg = Msgs.get(position);
+				BriefMsg msg = Msgs.get(position - 1);
 
-				String userName = msg.getUserName();
-				String msgId = msg.getMsgId();
+				ViewHolder holder = (ViewHolder) view.getTag();
+				String userName = holder.username;
+				String msgId = holder.msgId;
 
 				Intent intent = new Intent();
 
@@ -297,7 +301,7 @@ public class FirstPage extends Fragment implements IXListViewListener {
 		mAdapter = new StaggeredAdapter(v.getContext(), mAdapterView);
 
 		mImageFetcher = new ImageFetcher(v.getContext(), 240);
-		mImageFetcher.setLoadingImage(R.drawable.empty_photo);
+		// mImageFetcher.setLoadingImage(R.drawable.empty_photo);
 		return v;
 
 	}

@@ -12,7 +12,6 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
@@ -95,18 +94,16 @@ public class PhotoShareActivity extends InsActivity implements
 
 	private LocationClient locationClient = null;
 	private static final int UPDATE_TIME = 5000;
-    private String mCurrentTime;//当前时间
-    private Double mCurrentLat;//纬度
-    private Double mCurrentLon;//经度
-    private String mCurrentAddress;//当前地址
-    
-    private LinearLayout mLocationText;
-    private TextView mAddressText;
-    private ImageView mDinwei;
-    private ImageView mDinweiDelete;
-    private boolean isNeedDinwei=false;
-    
-    private EditText mMiaoshu;
+	private String mCurrentTime;// 当前时间
+	private Double mCurrentLat;// 纬度
+	private Double mCurrentLon;// 经度
+	private String mCurrentAddress;// 当前地址
+
+	private LinearLayout mLocationText;
+	private TextView mAddressText;
+	private ImageView mDinwei;
+	private ImageView mDinweiDelete;
+	private boolean isNeedDinwei = false;
 
 	UploadUtil uploadUtil;
 
@@ -189,10 +186,10 @@ public class PhotoShareActivity extends InsActivity implements
 		mDisplayVoicePlay = (ImageView) findViewById(R.id.voice_display_voice_play);
 		mDisplayVoiceProgressBar = (ProgressBar) findViewById(R.id.voice_display_voice_progressbar);
 		mDisplayVoiceTime = (TextView) findViewById(R.id.voice_display_voice_time);
-		mLocationText=(LinearLayout)findViewById(R.id.location);
-		mAddressText=(TextView)findViewById(R.id.address);
-		mDinwei=(ImageView)findViewById(R.id.dinwei);
-		mDinweiDelete=(ImageView)findViewById(R.id.dinwei_delete);
+		mLocationText = (LinearLayout) findViewById(R.id.location);
+		mAddressText = (TextView) findViewById(R.id.address);
+		mDinwei = (ImageView) findViewById(R.id.dinwei);
+		mDinweiDelete = (ImageView) findViewById(R.id.dinwei_delete);
 		// mLocation = (TextView) findViewById(R.id.photoshare_location);
 		// mDelete = (Button) findViewById(R.id.photoshare_location_delete);
 		// mAlbum = (TextView) findViewById(R.id.photoshare_album);
@@ -269,25 +266,12 @@ public class PhotoShareActivity extends InsActivity implements
 					AbToastUtil.showToast(getApplicationContext(), "请检查您的网络再试");
 					return;
 				}
-				// 判断手机相册界面是否关闭,如果没关闭则关闭
-//				try {
-//					if (!PhoneAlbumActivity.mInstance.isFinishing()) {
-//						PhoneAlbumActivity.mInstance.finish();
-//					}
-//
-//				} catch (Exception e) {
-//
-//				}
-				
-				
-				//图片信息保存在这个activity里
-				//mCurrentLat是纬度, mCurrentLon是经度, mCurrentAddress是具体地址
-				//isNeedDinwei是用户是否选择定位
-				
-				PerCenItem percen1 = new PerCenItem(mCurrentPath,
-						mMiaoshu.getText().toString(),(isNeedDinwei?mCurrentAddress:""),
-						mCurrentTime,"收藏数：0","浏览数：0",0,mCurrentVoicePath,mPlayTime);
-				mKXApplication.PerCenItemList.add(0,percen1);
+
+				PerCenItem percen1 = new PerCenItem(mCurrentPath, mContent
+						.getText().toString(), (isNeedDinwei ? mCurrentAddress
+						: ""), mCurrentTime, "收藏数：0", "浏览数：0", 0,
+						mCurrentVoicePath, mPlayTime);
+				mKXApplication.PerCenItemList.add(0, percen1);
 
 				if (mCurrentPath != null) {
 					File file = new File(mCurrentPath);
@@ -345,9 +329,9 @@ public class PhotoShareActivity extends InsActivity implements
 				// 显示提示信息并关闭当前界面
 				Toast.makeText(PhotoShareActivity.this.getApplicationContext(),
 						"上传图片成功", Toast.LENGTH_SHORT).show();
-				Intent i=new Intent();
-				i.setClass(PhotoShareActivity.this,ImageFilterActivity.class);
-				setResult(RESULT_OK,i);
+				Intent i = new Intent();
+				i.setClass(PhotoShareActivity.this, ImageFilterActivity.class);
+				setResult(RESULT_OK, i);
 				PhotoShareActivity.this.finish();
 			}
 		});
@@ -530,7 +514,7 @@ public class PhotoShareActivity extends InsActivity implements
 				}
 				// System.out.println(mCurrentTime+" "+mCurrentLat+" "+mCurrentLon+" "+mCurrentAddress);
 			}
-			
+
 			public void onReceivePoi(BDLocation poiLocation) {
 			}
 
@@ -582,21 +566,20 @@ public class PhotoShareActivity extends InsActivity implements
 		} else if (requestCode == 0
 				&& resultCode == ActivityForResultUtil.REQUESTCODE_VOICE) {
 			Bundle bundle = data.getExtras();
-            mCurrentVoicePath=bundle.getString("voicePath");
-            mPlayTime=Float.valueOf(bundle.getString("recordTime"));
-            if(mCurrentVoicePath==null){
-    			mDisplayVoiceLayout.setVisibility(View.GONE);
-    		}
-    		else{
-    			mDisplayVoiceLayout.setVisibility(View.VISIBLE);
-    			mUgcVoiceDelete.setVisibility(View.VISIBLE);
-//    			voiceGallery.setVisibility(View.VISIBLE);
-    			mDisplayVoicePlay
-    					.setImageResource(R.drawable.globle_player_btn_play);
-    			mDisplayVoiceProgressBar.setMax((int) mPlayTime);
-    			mDisplayVoiceProgressBar.setProgress(0);
-    			mDisplayVoiceTime.setText((int) mPlayTime + "″");
-    		}
+			mCurrentVoicePath = bundle.getString("voicePath");
+			mPlayTime = Float.valueOf(bundle.getString("recordTime"));
+			if (mCurrentVoicePath == null) {
+				mDisplayVoiceLayout.setVisibility(View.GONE);
+			} else {
+				mDisplayVoiceLayout.setVisibility(View.VISIBLE);
+				mUgcVoiceDelete.setVisibility(View.VISIBLE);
+				// voiceGallery.setVisibility(View.VISIBLE);
+				mDisplayVoicePlay
+						.setImageResource(R.drawable.globle_player_btn_play);
+				mDisplayVoiceProgressBar.setMax((int) mPlayTime);
+				mDisplayVoiceProgressBar.setProgress(0);
+				mDisplayVoiceTime.setText((int) mPlayTime + "″");
+			}
 		}
 	}
 

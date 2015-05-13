@@ -50,6 +50,7 @@ public class PhotoDetailActivity extends Activity implements OnClickListener,
 	private Activity myActivity;
 	private MsgDto msgdto;
 	private Handler myHandler;
+	private TextView usernameT;
 	private File headData;
 	private File picData;
 
@@ -69,6 +70,7 @@ public class PhotoDetailActivity extends Activity implements OnClickListener,
 		collect = (ImageButton) findViewById(R.id.collect);
 		commentBtn = (ImageButton) findViewById(R.id.comment);
 		headImageView = (RoundedImageView) findViewById(R.id.headImageView);
+		usernameT = (TextView) findViewById(R.id.user_name);
 		photo = (ImageView) findViewById(R.id.photo);
 
 		myActivity = this;
@@ -181,6 +183,11 @@ public class PhotoDetailActivity extends Activity implements OnClickListener,
 					photo.setImageBitmap(mImageFetcher
 							.decodeSampledBitmapFromFile(picData.toString(),
 									300, 300));
+					if (msgdto.getContent() != null)
+						description.setText(msgdto.getContent());
+					if (msgdto.getLocationName() != null)
+						position.setText(msgdto.getLocationName());
+					usernameT.setText(userName);
 				}
 			}
 		};
