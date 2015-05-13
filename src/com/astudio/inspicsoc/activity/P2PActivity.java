@@ -38,14 +38,14 @@ public class P2PActivity extends Activity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				Cat cat = catList.get(position);
-				Toast.makeText(P2PActivity.this, cat.getName(),
-						Toast.LENGTH_SHORT).show();
+				InsApplication app = (InsApplication) getApplication();
+				app.sendP2PMessageTo(cat.getName(), "Hello World!!!");
 			}
 		});
 	}
 
 	private void initCats() {
-		Cat cc = new Cat("cc", R.drawable.cc);
+		Cat cc = new Cat("miao", R.drawable.cc);
 		catList.add(cc);
 		Cat totoro = new Cat("totoro", R.drawable.totoro);
 		catList.add(totoro);
