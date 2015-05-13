@@ -21,9 +21,11 @@ import android.widget.RelativeLayout;
 import com.ab.http.AbHttpUtil;
 import com.ab.http.AbStringHttpResponseListener;
 import com.ab.util.AbToastUtil;
+import com.astudio.dodowaterfall.Helper;
 import com.astudio.inspicsoc.R;
 import com.astudio.inspicsoc.common.InsUrl;
 import com.astudio.inspicsoc.common.StringUtils;
+import com.astudio.inspicsoc.utils.EncryptHelper;
 
 public class LoginActivity extends Activity implements OnClickListener {
 	Button rebackBtn, loginBtn, forgetPasswdBtn;
@@ -32,7 +34,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 	RelativeLayout loginLayout;
 	Button registBtn;
 	private Activity mActivity = this;
-	protected InsApplication mKXApplication;
+	protected InsApplication mInsApplication;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -50,11 +52,15 @@ public class LoginActivity extends Activity implements OnClickListener {
 		loginLayout = (RelativeLayout) findViewById(R.id.login_layout);
 		registBtn = (Button) findViewById(R.id.main_regist_btn);
 		registBtn.setOnClickListener(this);
-		mKXApplication = (InsApplication) getApplication();
+		mInsApplication = (InsApplication) getApplication();
 	}
 
 	@Override
 	public void onClick(View v) {
+		if (!Helper.checkConnection(this.getApplicationContext())) {
+			AbToastUtil.showToast(getApplicationContext(), "请检查您的网络再试");
+			return;
+		}
 		int viewId = v.getId();
 		switch (viewId) {
 		case R.id.login_reback_btn:// 返回按钮
@@ -76,7 +82,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 				AbHttpUtil httpUtil = AbHttpUtil.getInstance(getApplication());
 
 				String loginUrl = InsUrl.USER_LOGIN.replace("@un", userEditStr)
-						.replace("@ps", passwdEditStr);
+						.replace("@ps", EncryptHelper.md5(passwdEditStr));
 
 				httpUtil.get(loginUrl, new AbStringHttpResponseListener() {
 					@Override
@@ -89,7 +95,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 						}
 
 						try {
-							mKXApplication.userName = userEditStr;
+							mInsApplication.userName = userEditStr;
 							Intent intent = new Intent(getApplication(),
 									MainActivity.class);
 							intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

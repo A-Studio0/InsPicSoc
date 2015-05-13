@@ -40,4 +40,5 @@ public class InsUrl {
 	public static final String UPLOAD_IMAGE_BASE = BASE_URL
 			+ "/image/uploadImage.json";
 
+	public static final String ADD_MSG = GET_MSG_BASE + "/addmsg.json";
 }

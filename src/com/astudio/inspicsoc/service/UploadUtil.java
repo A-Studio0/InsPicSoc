@@ -16,6 +16,8 @@ import java.util.UUID;
 
 import android.util.Log;
 
+import com.astudio.inspicsoc.model.UploadItem;
+
 /**
  * 
  * 上传工具类
@@ -71,6 +73,8 @@ public class UploadUtil {
 	protected static final int WHAT_TO_UPLOAD = 1;
 	protected static final int WHAT_UPLOAD_DONE = 2;
 
+	public static final int ONPROSS = 5;
+
 	/**
 	 * android上传文件到服务器
 	 * 
@@ -78,48 +82,30 @@ public class UploadUtil {
 	 * @param fileKey
 	 * @param RequestURL
 	 */
-	public void uploadFile(String filePath, String RequestURL,
-			Map<String, String> param) {
-		if (filePath == null) {
-			sendMessage(UPLOAD_FILE_NOT_EXISTS_CODE, "文件不存在");
-			return;
-		}
-		try {
-			File file = new File(filePath);
-			uploadFile(file, RequestURL, param);
-		} catch (Exception e) {
-			sendMessage(UPLOAD_FILE_NOT_EXISTS_CODE, "文件不存在");
-			e.printStackTrace();
-			return;
-		}
-	}
-
-	public void uploadFile(final List<String> paths, final String RequestURL,
-			final Map<String, String> param) {
-		if (paths == null) {
-			sendMessage(UPLOAD_FILE_NOT_EXISTS_CODE, "文件不存在");
-			return;
-		} else {
-			final List<File> files = new ArrayList<File>();
-			for (String path : paths) {
-				File file = new File(path);
-				if (!file.exists()) {
-					sendMessage(UPLOAD_FILE_NOT_EXISTS_CODE, "文件" + path
-							+ "不存在");
-					return;
-				}
-				files.add(file);
-			}
-
-			new Thread(new Runnable() { // 开启线程上传文件
-						@Override
-						public void run() {
-							toUploadFile(files, RequestURL, param);
-						}
-					}).start();
-		}
-
-	}
+	/*
+	 * public void uploadFile(String filePath, String RequestURL, Map<String,
+	 * String> param) { if (filePath == null) {
+	 * sendMessage(UPLOAD_FILE_NOT_EXISTS_CODE, "文件不存在"); return; } try { File
+	 * file = new File(filePath); uploadFile(file, RequestURL, param); } catch
+	 * (Exception e) { sendMessage(UPLOAD_FILE_NOT_EXISTS_CODE, "文件不存在");
+	 * e.printStackTrace(); return; } }
+	 * 
+	 * public void uploadFile(final List<String> paths, final String RequestURL,
+	 * final Map<String, String> param) { if (paths == null) {
+	 * sendMessage(UPLOAD_FILE_NOT_EXISTS_CODE, "文件不存在"); return; } else { final
+	 * List<UploadItem> files = new ArrayList<UploadItem>(); UploadItem item=new
+	 * UploadItem(); item.setFile(file); item.setPath(path); files.add(item);
+	 * for (String path : paths) { File file = new File(path); if
+	 * (!file.exists()) { sendMessage(UPLOAD_FILE_NOT_EXISTS_CODE, "文件" + path +
+	 * "不存在"); return; } files.add(file); }
+	 * 
+	 * new Thread(new Runnable() { // 开启线程上传文件
+	 * 
+	 * @Override public void run() { toUploadFile(files, RequestURL, param); }
+	 * }).start(); }
+	 * 
+	 * }
+	 */
 
 	/**
 	 * android上传文件到服务器
@@ -128,8 +114,8 @@ public class UploadUtil {
 	 * @param fileKey
 	 * @param RequestURL
 	 */
-	public void uploadFile(final File file, final String RequestURL,
-			final Map<String, String> param) {
+	public void uploadFile(final File file, final String path,
+			final String RequestURL, final Map<String, String> param) {
 		if (file == null || (!file.exists())) {
 			sendMessage(UPLOAD_FILE_NOT_EXISTS_CODE, "文件不存在");
 			return;
@@ -138,8 +124,11 @@ public class UploadUtil {
 		Log.i(TAG, "请求的URL=" + RequestURL);
 		Log.i(TAG, "请求的fileName=" + file.getName());
 		//
-		final List<File> files = new ArrayList<File>();
-		files.add(file);
+		final List<UploadItem> files = new ArrayList<UploadItem>();
+		UploadItem item = new UploadItem();
+		item.setFile(file);
+		item.setPath(path);
+		files.add(item);
 		new Thread(new Runnable() { // 开启线程上传文件
 					@Override
 					public void run() {
@@ -149,17 +138,17 @@ public class UploadUtil {
 
 	}
 
-	public void uploadFiles(final List<File> files, final String RequestURL,
-			final Map<String, String> param) {
+	public void uploadFiles(final List<UploadItem> files,
+			final String RequestURL, final Map<String, String> param) {
 
 		if (files.isEmpty()) {
 			sendMessage(UPLOAD_FILE_NOT_EXISTS_CODE, "文件不存在");
 			return;
 		} else {
-			for (File file : files) {
-				if (!file.exists()) {
-					sendMessage(UPLOAD_FILE_NOT_EXISTS_CODE,
-							"文件" + file.getName() + "不存在");
+			for (UploadItem item : files) {
+				if (!item.getFile().exists()) {
+					sendMessage(UPLOAD_FILE_NOT_EXISTS_CODE, "文件"
+							+ item.getFile().getName() + "不存在");
 					return;
 				}
 			}
@@ -172,7 +161,7 @@ public class UploadUtil {
 				}).start();
 	}
 
-	private void toUploadFile(List<File> files, String RequestURL,
+	private void toUploadFile(List<UploadItem> files, String RequestURL,
 			Map<String, String> param) {
 		String result = null;
 		requestTime = 0;
@@ -205,7 +194,8 @@ public class UploadUtil {
 			DataOutputStream dos = new DataOutputStream(conn.getOutputStream());
 			StringBuffer sb = null;
 			String params = "";
-			for (File file : files) {
+			sendMessage(ONPROSS, "正在上传");
+			for (UploadItem item : files) {
 
 				/***
 				 * 以下是用于上传参数
@@ -238,19 +228,21 @@ public class UploadUtil {
 				 */
 				sb.append(PREFIX).append(BOUNDARY).append(LINE_END);
 				sb.append("Content-Disposition:form-data; name=\""
-						+ file.getPath() + "\"; filename=\"" + file.getName()
-						+ "\"" + LINE_END);
-				sb.append("Content-Type:image/pjpeg" + LINE_END); // 这里配置的Content-type很重要的
-																	// ，用于服务器端辨别文件的类型的
+						+ item.getPath() + "\"; filename=\""
+						+ item.getFile().getName() + "\"" + LINE_END);
+				// sb.append("Content-Type:image/pjpeg" + LINE_END); //
+				// 这里配置的Content-type很重要的
+				// ，用于服务器端辨别文件的类型的
 				sb.append(LINE_END);
 				params = sb.toString();
 				sb = null;
 
-				Log.i(TAG, file.getName() + "=" + params + "##");
+				Log.i(TAG, item.getFile().getName() + "=" + params + "##");
 				dos.write(params.getBytes());
 				/** 上传文件 */
-				InputStream is = new FileInputStream(file);
-				onUploadProcessListener.initUpload((int) file.length());
+				InputStream is = new FileInputStream(item.getFile());
+				onUploadProcessListener.initUpload((int) item.getFile()
+						.length());
 				byte[] bytes = new byte[1024];
 				int len = 0;
 				int curLen = 0;

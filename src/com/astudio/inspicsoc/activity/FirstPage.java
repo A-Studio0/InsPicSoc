@@ -132,11 +132,6 @@ public class FirstPage extends Fragment implements IXListViewListener {
 						newsInfo1.setUserNickName(newObject
 								.isNull("userNickName") ? "" : newObject
 								.getString("userNickName"));
-						// newsInfo1.setHeight((int) computePicHeight(Float
-						// .parseFloat(newsInfoLeftObject
-						// .getString("width")), Float
-						// .parseFloat(newsInfoLeftObject
-						// .getString("height"))));
 						Msgs.add(newsInfo1);
 					}
 				}
