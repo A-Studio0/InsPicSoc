@@ -106,7 +106,7 @@ public class InsApplication extends Application implements WebSocketEvents {
 		 * 初始化默认数据
 		 */
 		mHeadBitmap=PhotoUtil.saveToLocal(PhotoUtil.toRoundCorner(
-				BitmapFactory.decodeResource(getResources(), R.drawable.img_test_face),
+				BitmapFactory.decodeResource(getResources(), R.drawable.head_default_miao),
 				15));
 		mName="麦兜兜";
 		PerCenItem percen1 = new PerCenItem(PhotoUtil.saveToLocal(BitmapFactory.decodeResource(getResources(), R.drawable.pinpho1)),"this is description","120.19, 30.26",
