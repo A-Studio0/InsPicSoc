@@ -3,7 +3,6 @@
  */
 package com.astudio.inspicsoc.model;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,9 +17,11 @@ public class MsgDto {
 
 	private String userNickName;
 
-	private Date time;
+	private String time;
 
 	private String headPic;
+
+	private String singlePic;
 
 	private List<String> pics;
 
@@ -28,7 +29,7 @@ public class MsgDto {
 
 	private String content;
 
-	private int msgId;
+	private String msgId;
 
 	private int commentsNum;
 
@@ -41,6 +42,14 @@ public class MsgDto {
 	private Double locationY;
 
 	private String locationName;
+
+	public String getSinglePic() {
+		return singlePic;
+	}
+
+	public void setSinglePic(String singlePic) {
+		this.singlePic = singlePic;
+	}
 
 	public String getHeadPic() {
 		return headPic;
@@ -122,11 +131,11 @@ public class MsgDto {
 		this.userNickName = userNickName;
 	}
 
-	public Date getTime() {
+	public String getTime() {
 		return time;
 	}
 
-	public void setTime(Date time) {
+	public void setTime(String time) {
 		this.time = time;
 	}
 
@@ -146,11 +155,11 @@ public class MsgDto {
 		this.content = content;
 	}
 
-	public int getMsgId() {
+	public String getMsgId() {
 		return msgId;
 	}
 
-	public void setMsgId(int msgId) {
+	public void setMsgId(String msgId) {
 		this.msgId = msgId;
 	}
 

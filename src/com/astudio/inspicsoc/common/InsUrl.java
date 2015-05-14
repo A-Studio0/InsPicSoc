@@ -47,4 +47,13 @@ public class InsUrl {
 
 	public static final String CHANGE_USER_HEADPIC = USER_BASE
 			+ "/changeHeadpic.json";
+
+	public static final String GET_FRIENDSLIST = USER_BASE
+			+ "/getFriendsList.json?username=@un";
+
+	public static final String ADD_CONCERN = USER_BASE
+			+ "/addConcern.json?username=@un&consernName=@cn";
+
+	public static final String GET_USERMSGLIST = GET_MSG_BASE
+			+ "/getUsermsgList.json?username=@un";
 }

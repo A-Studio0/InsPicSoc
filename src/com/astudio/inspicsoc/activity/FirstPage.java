@@ -29,6 +29,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.astudio.android.bitmapfun.util.ImageFetcher;
+import com.astudio.android.bitmapfun.util.ImageResizer;
 import com.astudio.dodowaterfall.Helper;
 import com.astudio.dodowaterfall.widget.ScaleImageView;
 import com.astudio.inspicsoc.R;
@@ -139,7 +140,7 @@ public class FirstPage extends Fragment implements IXListViewListener {
 						newsInfo1.setUserNickName(newObject
 								.isNull("userNickName") ? "" : newObject
 								.getString("userNickName"));
-						File data = mImageFetcher.downloadBitmap(
+						File data = ImageFetcher.downloadBitmap(
 								myActivity.getApplicationContext(),
 								newsInfo1.getHeadPic());
 						newsInfo1.setHeadPic(data.toString());
@@ -208,7 +209,7 @@ public class FirstPage extends Fragment implements IXListViewListener {
 			// mImageFetcher.loadImage(, holder.headPic);
 
 			holder.headPic
-					.setImageBitmap(mImageFetcher.decodeSampledBitmapFromFile(
+					.setImageBitmap(ImageResizer.decodeSampledBitmapFromFile(
 							BriefMsg.getHeadPic(), 80, 80));
 			holder.nickName.setText(BriefMsg.getUserNickName());
 			// holder.numView.setText(BriefMsg.getCommentNum() == null ? 0

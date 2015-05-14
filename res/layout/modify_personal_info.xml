@@ -3,8 +3,8 @@
     xmlns:android1="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@drawable/img_bg_texture">
+    android:background="@drawable/img_bg_texture"
+    android:orientation="vertical" >
     
     <LinearLayout
             android:layout_width="fill_parent"
@@ -132,8 +132,8 @@
                              android:textSize="20dp"/>
 
                         <EditText
-                            android1:id="@+id/textView3" 
-                            android1:layout_width="150dp"
+                            android1:id="@+id/editname" 
+                            android1:layout_width="240dp"
                             android1:layout_height="wrap_content"
                             android1:layout_alignBaseline="@+id/textView2"
                             android1:layout_alignParentRight="true"
@@ -177,16 +177,13 @@
                             android1:gravity="center_vertical"
                             android1:text="性别" 
                              android:textSize="20dp"/>
-
-                        <EditText
-                            android1:id="@+id/textView9"
-                            
-                            android1:layout_width="150dp"
-                            android1:layout_height="wrap_content"
-                            android1:layout_alignBaseline="@+id/textView8"
-                            android1:layout_alignParentRight="true"
-                            android1:gravity="center_vertical"
-                            android1:hint="F" />
+                           <EditText
+                             android:id="@+id/editgender"
+                             android1:layout_width="240dp"
+                             android1:layout_height="wrap_content"
+                             android1:layout_alignParentRight="true"
+                             android1:gravity="center_vertical"
+                             android1:hint="" />
                        
                     </RelativeLayout>
                     
@@ -227,13 +224,13 @@
                              android:textSize="20dp" />
  
                          <EditText
-                              
-                             android1:layout_width="150dp"
+                             android:id="@+id/editemail"
+                             android1:layout_width="240dp"
                              android1:layout_height="wrap_content"
                              android1:layout_alignBaseline="@+id/textView4"
                              android1:layout_alignParentRight="true"
                              android1:gravity="center_vertical"
-                             android1:hint="67976@qq.com" />
+                             android1:hint="" />
 
                     </RelativeLayout>
                     
@@ -274,7 +271,8 @@
                             android:textSize="20dp"/> 
 
                             <EditText
-                                android1:layout_width="match_parent"
+                                android:id="@+id/editaddress"
+                                android1:layout_width="240dp"
                                 android1:layout_height="wrap_content"
                                 android1:layout_alignBaseline="@+id/textView5"
                                 android1:layout_alignParentRight="true"
@@ -321,7 +319,8 @@
                             android:textSize="20dp" />
  
                          <EditText 
-                             android1:layout_width="match_parent"
+                            android:id="@+id/editphone"
+                             android1:layout_width="240dp"
                              android1:layout_height="wrap_content"
                              android1:layout_alignBaseline="@+id/textView6"
                              android1:layout_alignParentRight="true"
@@ -365,14 +364,13 @@
                             android:gravity="center_vertical"
                             android:text="生日"
                             android:textSize="20dp" />
- 
-                         <EditText 
-                             android:layout_width="match_parent"
-                             android:layout_height="wrap_content"
-                             android:layout_alignBaseline="@+id/textView7"
-                             android:layout_alignParentRight="true"
-                             android:gravity="center_vertical"
-                             android:hint="7月26日" />
+
+                          <EditText
+                              android:id="@+id/editbirthday"
+                              android1:layout_width="240dp"
+                              android1:layout_height="wrap_content"
+                              android1:layout_alignParentRight="true"
+                              android1:gravity="center_vertical" />
 
                     </RelativeLayout>
                     
@@ -384,14 +382,14 @@
 		 	
 		    <!-- 登出按钮 -->        
 		    <Button 
-		        android:id="@+id/button_settings_logout" 
+		        android:id="@+id/button_modify" 
 		        android:background="@drawable/selector_deny_bg" 
 		        android:layout_width="fill_parent" 
 		        android:layout_height="46.0dip" 
 		        android:layout_marginLeft="10.0dip" 
 		        android:layout_marginTop="16.0dip" 
 		        android:layout_marginRight="10.0dip" 
-		        android:text="登     出"   />
+		        android:text="修  改"   />
         
     	</LinearLayout>
  <!--   </ScrollView> --> 

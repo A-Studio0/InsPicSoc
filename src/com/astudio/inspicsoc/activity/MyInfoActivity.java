@@ -21,10 +21,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.astudio.android.bitmapfun.util.ImageFetcher;
+import com.astudio.android.bitmapfun.util.ImageResizer;
 import com.astudio.dodowaterfall.Helper;
 import com.astudio.inspicsoc.R;
 import com.astudio.inspicsoc.common.InsUrl;
 import com.astudio.inspicsoc.model.UserDetail;
+import com.astudio.inspicsoc.utils.DateUtil;
 
 public class MyInfoActivity extends Activity implements OnClickListener {
 
@@ -40,12 +42,10 @@ public class MyInfoActivity extends Activity implements OnClickListener {
 	private TextView phone;
 	private TextView birthday;
 	private Activity activity;
-	private ImageFetcher mImageFetcher;
 	private String username;
 	private View settingBtnLayout;
 	private Activity mActivity = this;
 	private RelativeLayout mAccount;
-	private ImageView mHead;
 	UserDetail user = new UserDetail();
 
 	@Override
@@ -73,11 +73,11 @@ public class MyInfoActivity extends Activity implements OnClickListener {
 		birthday = (TextView) findViewById(R.id.birthday);
 		headImageView = (ImageView) findViewById(R.id.face);
 		mKXApplication = (InsApplication) this.getApplication();
-		headImageView.setImageBitmap(mKXApplication.getPhoneAlbum(mKXApplication.mHeadBitmap));
+		headImageView.setImageBitmap(mKXApplication
+				.getPhoneAlbum(mKXApplication.mHeadBitmap));
 
 		activity = this;
 		username = mKXApplication.userName;
-		mImageFetcher = new ImageFetcher(headImageView.getContext(), 240);
 
 		ContentTask task = new ContentTask(this, 2);
 		task.execute(username);
@@ -100,7 +100,7 @@ public class MyInfoActivity extends Activity implements OnClickListener {
 			String path = loadHeadPic(params[0]);
 			File data = null;
 			if (null != path) {
-				data = mImageFetcher.downloadBitmap(
+				data = ImageFetcher.downloadBitmap(
 						activity.getApplicationContext(), path);
 			}
 			if (null != data)
@@ -115,7 +115,7 @@ public class MyInfoActivity extends Activity implements OnClickListener {
 
 				// mImageFetcher.loadImage(result, headImageView);
 				if (null != result) {
-					headImageView.setImageBitmap(mImageFetcher
+					headImageView.setImageBitmap(ImageResizer
 							.decodeSampledBitmapFromFile(result.toString(), 80,
 									80));
 					nickName.setText(username);
@@ -124,12 +124,14 @@ public class MyInfoActivity extends Activity implements OnClickListener {
 					personalGraph.setText(user.getPersonalGraph());
 					phone.setText(user.getPhone());
 					email.setText(user.getEmail());
-					birthday.setText(user.getBirthDay());
+					birthday.setText(DateUtil.formatDate(DateUtil.parseDateStr(
+							user.getBirthDay(), DateUtil.TIME_FORMAT_SEPERATE),
+							DateUtil.TIME_FORMAT_SEPERATE));
 
 				}
 			} else if (mType == 2) {
 				if (null != result) {
-					headImageView.setImageBitmap(mImageFetcher
+					headImageView.setImageBitmap(ImageResizer
 							.decodeSampledBitmapFromFile(result.toString(), 80,
 									80));
 					nickName.setText(username);
@@ -138,6 +140,7 @@ public class MyInfoActivity extends Activity implements OnClickListener {
 					email.setText(user.getEmail());
 					personalGraph.setText(user.getPersonalGraph());
 					phone.setText(user.getPhone());
+
 					birthday.setText(user.getBirthDay());
 				}
 			}

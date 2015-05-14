@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.astudio.android.bitmapfun.util.ImageFetcher;
+import com.astudio.android.bitmapfun.util.ImageResizer;
 import com.astudio.dodowaterfall.Helper;
 import com.astudio.inspicsoc.R;
 import com.astudio.inspicsoc.common.InsUrl;
@@ -107,7 +108,7 @@ public class LeftSlidingMenuFragment extends Fragment implements
 		@Override
 		protected File doInBackground(String... params) {
 			String path = loadHeadPic(params[0]);
-			File data = mImageFetcher.downloadBitmap(
+			File data = ImageFetcher.downloadBitmap(
 					mActivity.getApplicationContext(), path);
 			if (null != data)
 				return data;
@@ -121,14 +122,14 @@ public class LeftSlidingMenuFragment extends Fragment implements
 
 				// mImageFetcher.loadImage(result, headImageView);
 				if (null != result) {
-					headImageView.setImageBitmap(mImageFetcher
+					headImageView.setImageBitmap(ImageResizer
 							.decodeSampledBitmapFromFile(result.toString(), 80,
 									80));
 					nickName.setText(userName);
 				}
 			} else if (mType == 2) {
 				if (null != result) {
-					headImageView.setImageBitmap(mImageFetcher
+					headImageView.setImageBitmap(ImageResizer
 							.decodeSampledBitmapFromFile(result.toString(), 80,
 									80));
 					nickName.setText(userName);

@@ -23,6 +23,7 @@ import com.ab.http.AbHttpUtil;
 import com.ab.http.AbStringHttpResponseListener;
 import com.ab.util.AbToastUtil;
 import com.astudio.android.bitmapfun.util.ImageFetcher;
+import com.astudio.android.bitmapfun.util.ImageResizer;
 import com.astudio.inspicsoc.R;
 import com.astudio.inspicsoc.common.InsUrl;
 import com.astudio.inspicsoc.model.MsgDto;
@@ -32,6 +33,7 @@ import com.google.gson.Gson;
 public class PhotoDetailActivity extends Activity implements OnClickListener,
 		Callback {
 
+	protected InsApplication mKXApplication;
 	private Button guanzhuBtn;
 	private ImageButton commentBtn;
 	private ImageButton collectBtn;
@@ -53,6 +55,7 @@ public class PhotoDetailActivity extends Activity implements OnClickListener,
 	private TextView usernameT;
 	private File headData;
 	private File picData;
+	private TextView timeVIew;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +75,9 @@ public class PhotoDetailActivity extends Activity implements OnClickListener,
 		headImageView = (RoundedImageView) findViewById(R.id.headImageView);
 		usernameT = (TextView) findViewById(R.id.user_name);
 		photo = (ImageView) findViewById(R.id.photo);
+		timeVIew = (TextView) findViewById(R.id.time);
 
+		mKXApplication = (InsApplication) getApplication();
 		myActivity = this;
 		Intent intent = getIntent();
 
@@ -158,6 +163,10 @@ public class PhotoDetailActivity extends Activity implements OnClickListener,
 
 		});
 
+		if (mKXApplication.userName.equals(userName)) {
+			guanzhuBtn.setText("已关注");
+			guanzhuBtn.setVisibility(Button.INVISIBLE);
+		}
 		guanzhuBtn.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -166,8 +175,47 @@ public class PhotoDetailActivity extends Activity implements OnClickListener,
 				guanzhuBtn.setText("已关注");
 				guanzhuBtn.setBackgroundDrawable(getResources().getDrawable(
 						R.drawable.guanzhubackground));
-				Toast.makeText(PhotoDetailActivity.this, "添加关注成功~",
-						Toast.LENGTH_SHORT).show();
+
+				AbHttpUtil httpUtil = AbHttpUtil.getInstance(getApplication());
+
+				String getMagDetailUrl = InsUrl.ADD_CONCERN.replace("@un",
+						mKXApplication.userName).replace("@cn", userName);
+
+				httpUtil.get(getMagDetailUrl,
+						new AbStringHttpResponseListener() {
+							@Override
+							public void onSuccess(int i, String s) {
+
+								if ("fail".equals(s)) {
+									AbToastUtil.showToast(
+											getApplicationContext(),
+											"获取信息失败……T_T");
+									return;
+								}
+								Toast.makeText(PhotoDetailActivity.this,
+										"添加关注成功~", Toast.LENGTH_SHORT).show();
+								guanzhuBtn.setVisibility(Button.INVISIBLE);
+
+							}
+
+							@Override
+							public void onStart() {
+								Log.d(getClass().getName(), "调用了OnStart.");
+							}
+
+							@Override
+							public void onFinish() {
+
+							}
+
+							@Override
+							public void onFailure(int i, String s,
+									Throwable throwable) {
+								AbToastUtil.showToast(getApplicationContext(),
+										"抱歉，出错了！异常:" + s);
+							}
+						});
+
 			}
 
 		});
@@ -177,10 +225,10 @@ public class PhotoDetailActivity extends Activity implements OnClickListener,
 			@Override
 			public void handleMessage(Message msg) {
 				if (msg.arg1 == 1) {
-					headImageView.setImageBitmap(mImageFetcher
+					headImageView.setImageBitmap(ImageResizer
 							.decodeSampledBitmapFromFile(headData.toString(),
 									80, 80));
-					photo.setImageBitmap(mImageFetcher
+					photo.setImageBitmap(ImageResizer
 							.decodeSampledBitmapFromFile(picData.toString(),
 									300, 300));
 					if (msgdto.getContent() != null)
@@ -188,6 +236,8 @@ public class PhotoDetailActivity extends Activity implements OnClickListener,
 					if (msgdto.getLocationName() != null)
 						position.setText(msgdto.getLocationName());
 					usernameT.setText(userName);
+					timeVIew.setText(msgdto.getTime());
+
 				}
 			}
 		};
