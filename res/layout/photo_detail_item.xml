@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="vertical" >
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+             <com.astudio.inspicsoc.view.RoundedImageView 
+	            android:layout_gravity="center_horizontal" 
+	            android:id="@+id/PhotoDetailitem_userHead" 
+	            android:layout_width="wrap_content" 
+	            android:layout_height="wrap_content" 
+	            android:layout_marginTop="5.0dip" 
+	            android:src="@drawable/head_default_miao" 
+	            android:adjustViewBounds="true" 
+	            android:maxHeight="60dip" 
+	            android:maxWidth="60dip"/>
+
+            <TextView
+                android:id="@+id/PhotoDetailitem_userName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/guanzhu"
+                android:layout_alignBottom="@+id/guanzhu"
+                android:layout_toRightOf="@id/PhotoDetailitem_userHead"
+                android:layout_centerVertical="true"
+                android:text="McDull"
+                android:layout_margin="15dp" />
+
+            <Button
+                android:id="@+id/guanzhu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/attention_button" />
+
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/PhotoDetailitem_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/img05"
+            android:layout_margin="10dp" />
+
+        
+        <TextView
+            android:id="@+id/PhotoDetailitem_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Good Day"
+            android:layout_marginLeft="10dp" />
+<RelativeLayout android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/PhotoDetailitem_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="#UniversalStudio#" 
+            android:textSize="15dp"
+            android:layout_marginLeft="10dp"
+            android:clickable="true"/>
+         <TextView
+            android:id="@+id/PhotoDetailitem_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2015-05-12" 
+            android:textSize="15dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:clickable="true"/>
+</RelativeLayout>
+<RelativeLayout android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+ 	<TextView
+            android:id="@+id/PhotoDetailitem_position"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="121.45, 23.90" 
+            android:textSize="15dp"
+            android:layout_marginLeft="10dp"
+            android:clickable="true"/>
+ 	  <TextView
+            android:id="@+id/PhotoDetailitem_viewNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="浏览数：90" 
+            android:textSize="15dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:clickable="true"/>
+ 	</RelativeLayout>
+ 	
+        <RelativeLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent">
+		
+            <ImageButton
+                android:id="@+id/collect"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:clickable="true" 
+                android:background="#ffffff"
+                android:focusable="false"
+                android:src="@drawable/collect_button" />
+
+            <ImageButton
+                android:id="@+id/shareweibo"
+                android:layout_width="50dp"
+                android:layout_height="50dp" 
+                android:layout_toLeftOf="@id/collect"
+                android:layout_centerVertical="true" 
+                android:clickable="true"
+                android:focusable="false"
+                 android:layout_marginLeft="10dp"
+                android:background="#ffffff"
+                android:src="@drawable/zan_button" />
+
+            <ImageButton
+                android:id="@+id/comment"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerVertical="true"
+                android:background="#ffffff"
+                android:layout_toLeftOf="@+id/shareweibo"
+                android:clickable="true"
+                android:focusable="false"
+                android:src="@drawable/comment_button" />
+          
+        </RelativeLayout>
+            <LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+			 <ImageView
+	            android:id="@+id/PhotoDetailitem_comment"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:src="@drawable/percen_comment1"
+	            android:visibility="visible"
+	            
+	             />
+            
+             </LinearLayout>
+    </LinearLayout>
+		
+</LinearLayout>
+ 

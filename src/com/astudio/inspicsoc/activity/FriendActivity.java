@@ -19,9 +19,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 
@@ -29,8 +32,10 @@ import com.ab.http.AbHttpUtil;
 import com.ab.http.AbStringHttpResponseListener;
 import com.ab.util.AbToastUtil;
 import com.astudio.inspicsoc.R;
+import com.astudio.inspicsoc.adapter.CatAdapter;
 import com.astudio.inspicsoc.adapter.SortAdapter;
 import com.astudio.inspicsoc.common.InsUrl;
+import com.astudio.inspicsoc.model.Cat;
 import com.astudio.inspicsoc.model.SortModel;
 import com.astudio.inspicsoc.model.UserDto;
 import com.astudio.inspicsoc.utils.CharacterParser;
@@ -44,6 +49,16 @@ import com.google.gson.reflect.TypeToken;
 public class FriendActivity extends Activity implements OnClickListener {
 
 	protected InsApplication mKXApplication;
+
+	private Button btn_friends_all = null;
+	private Button btn_friends_group = null;
+	private boolean isFriendView = true;
+	private TextView addfriendgroup = null;
+	private ListView groupListView = null;
+	private List<Cat> catList = new ArrayList<Cat>();
+	CatAdapter groupadapter = null;
+	private FrameLayout frame = null;
+
 	private ImageButton back = null;
 	private View circleBtnLayout;
 
@@ -137,7 +152,37 @@ public class FriendActivity extends Activity implements OnClickListener {
 						.showToast(getApplicationContext(), "抱歉，出错了！异常:" + s);
 			}
 		});
+		btn_friends_all = (Button) this.findViewById(R.id.btn_friends_all);
+		btn_friends_group = (Button) this.findViewById(R.id.btn_friends_group);
+		addfriendgroup = (TextView) this.findViewById(R.id.addfriendgroup);
+		frame = (FrameLayout) this.findViewById(R.id.friendview_framelayout);
+
 		initViews();
+		initGroup();
+	}
+
+	private void initGroup() {
+		Cat cc = new Cat("app", R.drawable.cc);
+		catList.add(cc);
+		Cat totoro = new Cat("c++", R.drawable.totoro);
+		catList.add(totoro);
+		Cat kitty = new Cat("java", R.drawable.kitty);
+		catList.add(kitty);
+		Cat nyankosensi = new Cat("c#", R.drawable.nyankosensi);
+		catList.add(nyankosensi);
+		Cat happy = new Cat("happy", R.drawable.happy);
+		catList.add(happy);
+		Cat chi = new Cat("chi", R.drawable.chi);
+		catList.add(chi);
+		Cat doraemon = new Cat("doraemon", R.drawable.doraemon);
+		catList.add(doraemon);
+		Cat mica = new Cat("mica", R.drawable.mica);
+		catList.add(mica);
+		Cat garfield = new Cat("garfield", R.drawable.garfield);
+		catList.add(garfield);
+		Cat luoxiaohei = new Cat("luoxiaohei", R.drawable.luoxiaohei);
+		catList.add(luoxiaohei);
+
 	}
 
 	private void initViews() {
@@ -179,6 +224,10 @@ public class FriendActivity extends Activity implements OnClickListener {
 				i.putExtra("friendUserName",
 						((SortModel) adapter.getItem(position)).getName());
 				startActivity(i);
+				Toast.makeText(getApplication(),
+						((SortModel) adapter.getItem(position)).getName(),
+						Toast.LENGTH_SHORT).show();
+
 			}
 		});
 
@@ -192,14 +241,28 @@ public class FriendActivity extends Activity implements OnClickListener {
 					Collections.sort(SourceDateList, pinyinComparator);
 					adapter = new SortAdapter(mactivity, SourceDateList);
 					sortListView.setAdapter(adapter);
-
 				}
 			}
-
 		};
 
-		// 根据a-z进行排序源数据
+		groupadapter = new CatAdapter(this, R.layout.friend_item, catList);
+		groupListView.setAdapter(groupadapter);
+		groupListView = (ListView) this.findViewById(R.id.listview_group);
+		groupListView.setOnItemClickListener(new OnItemClickListener() {
 
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// 杩欓噷瑕佸埄鐢╝dapter.getItem(position)鏉ヨ幏鍙栧綋鍓峱osition鎵�搴旂殑瀵硅薄
+				Cat cat = catList.get(position);
+				Intent intent = new Intent(FriendActivity.this,
+						GroupInfoActivity.class);
+				Bundle bundle = new Bundle();
+				bundle.putSerializable("groupname", cat.getName());
+				intent.putExtras(bundle);
+				startActivity(intent);
+			}
+		});
 		mClearEditText = (ClearEditText) findViewById(R.id.filter_edit);
 
 		// 根据输入框输入值的改变来过滤搜索
@@ -225,7 +288,9 @@ public class FriendActivity extends Activity implements OnClickListener {
 
 		invite = (ImageButton) this.findViewById(R.id.invite);
 		invite.setOnClickListener(this);
-
+		btn_friends_all.setOnClickListener(this);
+		btn_friends_group.setOnClickListener(this);
+		addfriendgroup.setOnClickListener(this);
 	}
 
 	/**
@@ -317,7 +382,34 @@ public class FriendActivity extends Activity implements OnClickListener {
 			// oks.setSiteUrl("http://sharesdk.cn");
 
 			oks.show(arg0.getContext());
-
+			break;
+		case R.id.btn_friends_all:
+			if (!isFriendView) {
+				isFriendView = true;
+				frame.setVisibility(View.VISIBLE);
+				groupListView.setVisibility(View.GONE);
+				mClearEditText.setVisibility(View.VISIBLE);
+				btn_friends_all
+						.setBackgroundResource(R.drawable.bottomtabbutton_leftred);
+				btn_friends_group
+						.setBackgroundResource(R.drawable.bottomtabbutton_rightwhite);
+			}
+			break;
+		case R.id.btn_friends_group:
+			if (isFriendView) {
+				isFriendView = false;
+				frame.setVisibility(View.GONE);
+				groupListView.setVisibility(View.VISIBLE);
+				mClearEditText.setVisibility(View.GONE);
+				btn_friends_all
+						.setBackgroundResource(R.drawable.bottomtabbutton_leftwhite);
+				btn_friends_group
+						.setBackgroundResource(R.drawable.bottomtabbutton_rightred);
+			}
+			break;
+		case R.id.addfriendgroup:
+			Intent intent = new Intent(this, AddGroupActivity.class);
+			startActivity(intent);
 			break;
 		}
 	}

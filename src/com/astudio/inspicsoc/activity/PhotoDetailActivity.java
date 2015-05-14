@@ -1,20 +1,49 @@
 package com.astudio.inspicsoc.activity;
 
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.ShareSDK;
+
+import com.astudio.inspicsoc.R;
+import com.astudio.inspicsoc.adapter.PhotoDetailAdapter;
+import com.astudio.inspicsoc.model.ExchangeItem;
+import com.astudio.inspicsoc.model.PerCenItem;
+import com.astudio.inspicsoc.model.PhotoDetailItem;
+
+import cn.sharesdk.onekeyshare.*;
+import cn.sharesdk.sina.weibo.SinaWeibo;
+
 import java.io.File;
 
 import android.app.Activity;
 import android.content.Intent;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Handler.Callback;
 import android.os.Message;
+
+import android.app.Activity;
+import android.app.ListActivity;
+import android.view.Menu;
+
 import android.util.Log;
+
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+
+import android.widget.ListView;
+
 import android.widget.TextView;
+
 import android.widget.Toast;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
@@ -33,7 +62,19 @@ import com.google.gson.Gson;
 public class PhotoDetailActivity extends Activity implements OnClickListener,
 		Callback {
 
+<<<<<<< .mine
 	protected InsApplication mKXApplication;
+
+
+
+
+=======
+	private String[] data = { "photoDetail01"};
+	
+	private List<PhotoDetailItem> photoDetailItemList = new ArrayList<PhotoDetailItem>();
+
+
+>>>>>>> .theirs
 	private Button guanzhuBtn;
 	private ImageButton commentBtn;
 	private ImageButton collectBtn;
@@ -57,15 +98,27 @@ public class PhotoDetailActivity extends Activity implements OnClickListener,
 	private File picData;
 	private TextView timeVIew;
 
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.photo_detail);
-		ShareSDK.initSDK(this);
+
+		PhotoDetailAdapter adapter = new PhotoDetailAdapter(this,
+				R.layout.photo_detail_item, photoDetailItemList);
+		ListView listView = (ListView) findViewById(R.id.photo_detail);
+		listView.setAdapter(adapter);
+		
+		
+		/*ShareSDK.initSDK(this);
 		findViewById(R.id.shareweibo).setOnClickListener(this);
 		guanzhuBtn = (Button) findViewById(R.id.guanzhu);
 		collectBtn = (ImageButton) findViewById(R.id.collect);
 		shareBtn = (ImageButton) findViewById(R.id.shareweibo);
+<<<<<<< HEAD
+		//showComment = (ImageView) findViewById(R.id.photo_comment);
+		guanzhuBtn.setOnClickListener(new OnClickListener(){
+=======
 		showComment = (ImageView) findViewById(R.id.photo_comment);
 		description = (TextView) findViewById(R.id.description);
 		position = (TextView) findViewById(R.id.position);
@@ -150,6 +203,7 @@ public class PhotoDetailActivity extends Activity implements OnClickListener,
 		}
 
 		commentBtn.setOnClickListener(new OnClickListener() {
+>>>>>>> 1f15566bfd4ade4cdb5aa7313d948f40c6f6f73a
 
 			@Override
 			public void onClick(View v) {
@@ -160,6 +214,13 @@ public class PhotoDetailActivity extends Activity implements OnClickListener,
 				commentBtn.setVisibility(View.INVISIBLE);
 				showComment.setVisibility(View.VISIBLE);
 			}
+<<<<<<< HEAD
+			
+		});*/
+		/*
+		commentBtn = (ImageButton)findViewById(R.id.comment);
+		commentBtn.setOnClickListener(new OnClickListener(){
+=======
 
 		});
 
@@ -168,6 +229,7 @@ public class PhotoDetailActivity extends Activity implements OnClickListener,
 			guanzhuBtn.setVisibility(Button.INVISIBLE);
 		}
 		guanzhuBtn.setOnClickListener(new OnClickListener() {
+>>>>>>> 1f15566bfd4ade4cdb5aa7313d948f40c6f6f73a
 
 			@Override
 			public void onClick(View v) {
@@ -192,10 +254,19 @@ public class PhotoDetailActivity extends Activity implements OnClickListener,
 											"获取信息失败……T_T");
 									return;
 								}
+<<<<<<< .mine
 								Toast.makeText(PhotoDetailActivity.this,
 										"添加关注成功~", Toast.LENGTH_SHORT).show();
 								guanzhuBtn.setVisibility(Button.INVISIBLE);
 
+=======
+<<<<<<< HEAD
+			
+		});*/
+		initData();
+>>>>>>> .theirs
+
+<<<<<<< .mine
 							}
 
 							@Override
@@ -215,11 +286,39 @@ public class PhotoDetailActivity extends Activity implements OnClickListener,
 										"抱歉，出错了！异常:" + s);
 							}
 						});
+=======
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+>>>>>>> .theirs
+
+<<<<<<< .mine
 			}
 
 		});
 
+=======
+		//});
+
+
+
+>>>>>>> .theirs
 		myHandler = new Handler() {
 
 			@Override
@@ -243,6 +342,16 @@ public class PhotoDetailActivity extends Activity implements OnClickListener,
 		};
 	}
 
+	
+	
+	private void initData() {
+		PhotoDetailItem photoDetail01 = new PhotoDetailItem(R.drawable.head_default_miao,"miao",R.drawable.pinpho1,
+				"this is description","120.19, 30.26",
+				"2015-05-12","浏览数：834",R.drawable.percen_comment1,"#thisIsTag#");
+		photoDetailItemList.add(photoDetail01);
+		
+	}
+	
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub

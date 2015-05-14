@@ -80,7 +80,7 @@ public class MyInfoActivity extends Activity implements OnClickListener {
 		username = mKXApplication.userName;
 
 		ContentTask task = new ContentTask(this, 2);
-		task.execute(username);
+		//task.execute(username);
 
 	}
 

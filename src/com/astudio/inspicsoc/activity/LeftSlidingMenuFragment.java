@@ -85,7 +85,7 @@ public class LeftSlidingMenuFragment extends Fragment implements
 
 		task = new ContentTask(this.getActivity(), 2);
 		userName = mKXApplication.userName;
-		task.execute(userName);
+		//task.execute(userName);
 
 		// settingBtnLayout = view.findViewById(R.id.inviteFriendBtnLayout);
 		// settingBtnLayout.setOnClickListener(this);
